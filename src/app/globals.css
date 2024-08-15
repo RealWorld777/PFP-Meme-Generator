@@ -18,12 +18,35 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
+}
+
+@font-face {
+  font-family: 'BricolageSemibold';
+  src: url('../app/assets/BricolageGrotesque_24pt_Condensed-SemiBold.ttf') format('truetype');
+       
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'WorkSans';
+  src: url('../app/assets/WorkSans-VariableFont_wght.ttf') format('truetype');
+       
+  font-weight: 500;
+  font-style: normal;
+}
+
+.bricolageSemibold{
+  font-family: 'BricolageSemibold'
+}
+.workSans{
+  font-family: 'WorkSans';
 }
 
 @layer utilities {
