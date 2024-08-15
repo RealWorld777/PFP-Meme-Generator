@@ -49,6 +49,34 @@ body {
   font-family: 'WorkSans';
 }
 
+.react-colorful__saturation{
+  border-radius: 0px !important;
+}
+
+.react-colorful__last-control{
+  border-radius: 0px !important;
+}
+
+.react-colorful__pointer{
+  width: 15px !important;
+  height: 15px !important;
+}
+.react-colorful{
+  border: 2px solid black;
+}
+
+input{
+  margin-top: 5px;
+  padding: 5px;
+  border: 2px solid black;
+  width: 200px;
+}
+input:focus{
+  outline: none;
+  border: 0px;
+  border: 2px solid black;
+  width: 200px;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
