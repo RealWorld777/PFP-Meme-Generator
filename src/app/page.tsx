@@ -131,9 +131,11 @@ export default function Home() {
 
                   <div className="flex flex-wrap gap-3">
                     {headsImages.map((url, index) => (
-                      <div key={index} className="border-2 border-black" onClick={()=>{
-                        setselectedHead(`${url}`)
-                      }}>
+                      <div key={index} className="border-2 border-black" 
+                      // onClick={()=>{
+                      //   setselectedHead(`${url}`)
+                      // }}
+                      >
                         <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
                       </div>
                     ))}
