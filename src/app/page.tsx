@@ -17,8 +17,8 @@ export default function Home() {
   const [headsImages, setHeadsImages] = useState([""]);
   const [bodiesImages, setBodiesImages] = useState([""]);
   const [loading, setLoading] = useState(true);
-  const [selectedBody, setselectedBody] = useState(defaultBody)
-  const [selectedHead, setselectedHead] = useState(defaultHead)
+  const [selectedBody, setselectedBody] = useState("https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/bodies%2FBODY_Cfb_var0.png?alt=media&token=6111f162-f6dc-4262-bb57-81eb33c543d6")
+  const [selectedHead, setselectedHead] = useState("https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/heads%2FHEAD_Cfb_var0.png?alt=media&token=e1ff5ea0-f6cf-4678-a91c-146ba907359f")
 
 
 
