@@ -1,3 +1,4 @@
+
 import head1 from "../../app/assets/HEAD_Rick_var1.png"
 import head2 from "../../app/assets/HEAD_Cfb_var0.png"
 import head3 from "../../app/assets/HEAD_King_var0.png"
