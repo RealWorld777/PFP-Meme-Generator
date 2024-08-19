@@ -16,17 +16,9 @@ export default function Home() {
   const [headsImages, setHeadsImages] = useState([""]);
   const [bodiesImages, setBodiesImages] = useState([""]);
   const [loading, setLoading] = useState(true);
-  // const [images, setImages] = useState([]);
+  const [selectedBody, setselectedBody] = useState(images.body1)
+  const [selectedHead, setselectedHead] = useState(images.head1)
 
-  // const fetchImagesFromFolder = async (folder) => {
-  //   try {
-  //     const response = await axios.get(`/config/fetchImages?folder=${folder}`);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error('Error fetching images:', error);
-  //     return [];
-  //   }
-  // };
 
 
   const captureImage = () => {
@@ -50,24 +42,25 @@ export default function Home() {
       );
 
       setHeadsImages(urls);
-      console.log("urls",urls)
+      console.log("urls", urls)
     };
 
     const fetchBody = async () => {
-      const listRef = ref(storage, 'heads/');
+      const listRef = ref(storage, 'bodies/');
       const res = await listAll(listRef);
 
       const urls = await Promise.all(
         res.items.map((itemRef) => getDownloadURL(itemRef))
       );
 
-      setHeadsImages(urls);
-      console.log("urls",urls)
+      setBodiesImages(urls);
+      console.log("urls", urls)
     };
 
     fetchHeads();
+    fetchBody();
   }, []);
- 
+
   return (
     <div className="bg-[#E1E1E1] flex  justify-center ">
 
@@ -132,15 +125,19 @@ export default function Home() {
               {
                 tab === "head" &&
                 <>
-                  <div>
-                    head
+                  <div className="workSans text-2xl mb-5">
+                    Select Head
                   </div>
 
-                  {/* <div>
-                    {headsImages.map((image) => (
-                      <img key={image.public_id} src={image.secure_url} alt={image.public_id} />
+                  <div className="flex flex-wrap gap-3">
+                    {headsImages.map((url, index) => (
+                      <div className="border-2 border-black" onClick={()=>{
+                        setselectedHead(`${url}`)
+                      }}>
+                        <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
+                      </div>
                     ))}
-                  </div> */}
+                  </div>
 
                 </>
               }
@@ -151,11 +148,11 @@ export default function Home() {
                     body
                   </div>
 
-                  {/* <div>
-                    {bodiesImages.map((image) => (
-                      <img key={image.public_id} src={image.secure_url} alt={image.public_id} />
+                  <div>
+                    {bodiesImages.map((url, index) => (
+                      <img key={index} src={url} alt={`Image ${index}`} style={{ width: '100px', height: '100px' }} />
                     ))}
-                  </div> */}
+                  </div>
                 </>
               }
             </div>
@@ -165,8 +162,8 @@ export default function Home() {
           <div className=" w-[30%]">
             <div ref={captureRef} style={{ position: 'relative', width: '250px', height: '250px', backgroundColor: color }}>
 
-              <Image alt="" src={images.body1} style={{ position: 'absolute', top: 0, left: 0 }} />
-              <Image alt="" src={images.head1} style={{ position: 'absolute', top: 0, left: 0 }} />
+              <Image alt="" fill={true} src={selectedBody} style={{ position: 'absolute', top: 0, left: 0 }} />
+              <Image alt="" fill={true} src={selectedHead} style={{ position: 'absolute', top: 0, left: 0 }} />
             </div>
             <button onClick={captureImage}>Download Image</button>
           </div>
