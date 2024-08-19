@@ -7,7 +7,8 @@ import { HexColorPicker, HexColorInput } from "react-colorful";
 import images from "./config/images";
 import { storage } from './config/firebase';
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
-
+import defaultBody from "../app/assets/BODY_Cfb_var1.png";
+import defaultHead from "./assets/HEAD_Cfb_var0.png"
 export default function Home() {
 
   const captureRef = useRef<HTMLDivElement>(null);
@@ -16,14 +17,14 @@ export default function Home() {
   const [headsImages, setHeadsImages] = useState([""]);
   const [bodiesImages, setBodiesImages] = useState([""]);
   const [loading, setLoading] = useState(true);
-  const [selectedBody, setselectedBody] = useState(images.body1)
-  const [selectedHead, setselectedHead] = useState(images.head1)
+  const [selectedBody, setselectedBody] = useState(defaultBody)
+  const [selectedHead, setselectedHead] = useState(defaultHead)
 
 
 
   const captureImage = () => {
     if (captureRef.current) {
-      html2canvas(captureRef.current).then((canvas) => {
+      html2canvas(captureRef.current, { useCORS: true }).then((canvas) => {
         const link = document.createElement('a');
         link.download = 'combined-image.png';
         link.href = canvas.toDataURL('image/png');
@@ -131,10 +132,10 @@ export default function Home() {
 
                   <div className="flex flex-wrap gap-3">
                     {headsImages.map((url, index) => (
-                      <div key={index} className="border-2 border-black" 
-                      // onClick={()=>{
-                      //   setselectedHead(`${url}`)
-                      // }}
+                      <div key={index} className="border-2 border-black"
+                        onClick={() => {
+                          setselectedHead(url)
+                        }}
                       >
                         <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
                       </div>
@@ -146,13 +147,19 @@ export default function Home() {
               {
                 tab === "body" &&
                 <>
-                  <div>
-                    body
+                  <div className="workSans text-2xl mb-5">
+                    Select Body
                   </div>
 
-                  <div>
+                  <div className="flex flex-wrap gap-3">
                     {bodiesImages.map((url, index) => (
-                      <img key={index} src={url} alt={`Image ${index}`} style={{ width: '100px', height: '100px' }} />
+                      <div key={index} className="border-2 border-black"
+                        onClick={() => {
+                          setselectedBody(url)
+                        }}
+                      >
+                        <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
+                      </div>
                     ))}
                   </div>
                 </>
@@ -163,9 +170,20 @@ export default function Home() {
 
           <div className=" w-[30%]">
             <div ref={captureRef} style={{ position: 'relative', width: '250px', height: '250px', backgroundColor: color }}>
-
-              <Image alt="" fill={true} src={selectedBody} style={{ position: 'absolute', top: 0, left: 0 }} />
-              <Image alt="" fill={true} src={selectedHead} style={{ position: 'absolute', top: 0, left: 0 }} />
+              <Image
+                alt=""
+                src={selectedBody}
+                style={{ position: 'absolute', top: 0, left: 0 }}
+                width={250} // Add width here
+                height={250} // Add height here
+              />
+              <Image
+                alt=""
+                src={selectedHead}
+                style={{ position: 'absolute', top: 0, left: 0 }}
+                width={250} // Add width here
+                height={250} // Add height here
+              />
             </div>
             <button onClick={captureImage}>Download Image</button>
           </div>
