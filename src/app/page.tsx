@@ -33,6 +33,43 @@ export default function Home() {
     }
   };
 
+  function getRandomElementFromArray<T>(arr: T[]): T {
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    return arr[randomIndex];
+  }
+  
+  function getRandomHexColor(): string {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  
+  function getRandomImageAndColor(headsImages: string[], bodiesImages: string[]): { head: string; body: string; color: string } {
+    if (!Array.isArray(headsImages) || !Array.isArray(bodiesImages)) {
+      throw new Error('Both inputs must be arrays.');
+    }
+  
+    if (headsImages.length === 0 || bodiesImages.length === 0) {
+      throw new Error('Both arrays must have at least one element.');
+    }
+  
+    const randomHead = getRandomElementFromArray(headsImages);
+    setselectedHead(randomHead)
+    const randomBody = getRandomElementFromArray(bodiesImages);
+    setselectedBody(randomBody)
+    const randomColor = getRandomHexColor();
+    setColor(randomColor)
+    console.log("shuffled results",randomHead,randomBody,randomColor);
+    return {
+      head: randomHead,
+      body: randomBody,
+      color: randomColor,
+    };
+  }
+
   useEffect(() => {
     const fetchHeads = async () => {
       const listRef = ref(storage, 'heads/');
@@ -60,6 +97,8 @@ export default function Home() {
 
     fetchHeads();
     fetchBody();
+
+    
   }, []);
 
   return (
@@ -164,28 +203,38 @@ export default function Home() {
                   </div>
                 </>
               }
+
+              <div className="mt-5 grid grid-cols-2 bricolageSemibold gap-5 self-end">
+                <div className="border-2 border-black text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={()=>{
+                  getRandomImageAndColor(headsImages,bodiesImages);
+                }}>
+                  SHUFFLE
+                </div>
+                <div className="border-2 border-black text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={captureImage}>
+                  DOWNLOAD
+                </div>
+              </div>
             </div>
           </div>
 
 
-          <div className=" w-[30%]">
-            <div ref={captureRef} style={{ position: 'relative', width: '250px', height: '250px', backgroundColor: color }}>
+          <div className=" w-[30%] min-h-[500px]">
+            <div ref={captureRef} className="border-2 border-black" style={{ position: 'relative', width: '350px', height: '350px', backgroundColor: color }}>
               <Image
                 alt=""
                 src={selectedBody}
                 style={{ position: 'absolute', top: 0, left: 0 }}
-                width={250} // Add width here
-                height={250} // Add height here
+                width={350} // Add width here
+                height={350} // Add height here
               />
               <Image
                 alt=""
                 src={selectedHead}
                 style={{ position: 'absolute', top: 0, left: 0 }}
-                width={250} // Add width here
-                height={250} // Add height here
+                width={350} // Add width here
+                height={350} // Add height here
               />
             </div>
-            <button onClick={captureImage}>Download Image</button>
           </div>
 
 
