@@ -50,7 +50,7 @@ export default function Home() {
     "#D35400", // Dark Orange
     "#16A085", // Dark Turquoise
     "#F39C12"  // Dark Yellow
-];
+  ];
 
   function getRandomElementFromArray<T>(arr: T[]): T {
     const randomIndex = Math.floor(Math.random() * arr.length);
@@ -69,16 +69,16 @@ export default function Home() {
   function extractMetadata(url: string): string | null {
     const regex = /%(.*?\.png)/;
     const match = url.match(regex);
-    
+
     if (match) {
-        const extracted = match[1];
-        return extracted.substring(2);
+      const extracted = match[1];
+      return extracted.substring(2);
     }
 
     return null;
   }
 
-  
+
 
 
   function getRandomImageAndColor(headsImages: string[], bodiesImages: string[]): { head: string; body: string; color: string } {
@@ -191,10 +191,24 @@ export default function Home() {
             <div className="p-12 h-[90%] flex flex-col justify-between">
 
               {tab === "background" &&
-                <div>
-                  <HexColorPicker color={color} onChange={setColor} />
-                  <HexColorInput color={color} onChange={setColor} />
+                <div className="flex ">
+                  <div className="mr-10">
 
+                    <HexColorPicker color={color} onChange={setColor} />
+                    <HexColorInput color={color} onChange={setColor} />
+
+                  </div>
+
+                  <div className=" flex flex-wrap gap-2">
+                    {hexColors.map(color => (
+                      <div
+                        key={color}
+                        style={{ backgroundColor: color }}
+                        className="w-16 h-16 border-2 border-black cursor-pointer"
+                        onClick={() => setColor(color)}
+                      ></div>
+                    ))}
+                  </div>
 
                 </div>
               }
@@ -273,18 +287,18 @@ export default function Home() {
             </div>
 
             <div className=" w-[320px]">
-                <div className=" bricolageSemibold text-4xl mt-5 ">
-                  METADATA
-                </div>
-                <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
-                  background: {color}
-                </div>
-                <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
-                  head: {extractMetadata(selectedHead)}
-                </div>
-                <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
-                  body: {extractMetadata(selectedBody)}
-                </div>
+              <div className=" bricolageSemibold text-4xl mt-5 ">
+                METADATA
+              </div>
+              <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
+                background: {color}
+              </div>
+              <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
+                head: {extractMetadata(selectedHead)}
+              </div>
+              <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
+                body: {extractMetadata(selectedBody)}
+              </div>
             </div>
           </div>
 
