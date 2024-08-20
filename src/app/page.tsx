@@ -151,27 +151,27 @@ export default function Home() {
         </nav>
 
 
-        <div className="flex w-[100%] border-t-2 border-b-2 border-black">
-          <div className="w-[50%] border-r-2 border-black">
+        <div className="sm:flex w-[100%]  border-t-2 border-b-2 border-black">
+          <div className="w-[100%] sm:w-[50%] border-b-2 sm:border-b-0  sm:border-r-2 border-black">
             <Image alt="" src={images.rick} className="w-[100%]" />
           </div>
-          <div className="flex flex-col justify-between px-12 py-8 w-1/2 bg-white">
+          <div className=" flex flex-col justify-between px-7 py-5 md:px-12 md:py-8 w-[100%] sm:w-1/2 bg-white">
             <div>
 
-              <div className="bricolageSemibold text-7xl">CREATE & DOWNLOAD YOUR PUNKS 12PX PFP!</div>
-              <div className="mt-3 text-2xl workSans">Pick and choose between various elements to compose your Punk 12px PFP</div>
-            </div>
-            <div className="bricolageSemibold text-4xl ">Read <span className=" text-[#FF6B00] underline cursor-pointer">instructions</span>  for more info</div>
+              <div className="bricolageSemibold text-3xl md:text-5xl lg:text-7xl">CREATE & DOWNLOAD YOUR PUNKS 12PX PFP!</div>
+              <div className="mt-3 text-base md:text-xl lg:text-2xl workSans">Pick and choose between various elements to compose your Punk 12px PFP</div>
+            </div>  
+            <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl ">Read <span className=" text-[#FF6B00] underline cursor-pointer">instructions</span>  for more info</div>
           </div>
         </div>
 
 
 
-        <div className="flex p-12 justify-between">
+        <div className="lg:flex p-6 lg:p-12 justify-between">
 
-          <div className="w-[60%] border-2 border-black bg-white ">
-            <div className="grid grid-cols-3 bricolageSemibold text-3xl border-b-2 border-black">
-              <div className="p-4 text-center border-r-2 border-black cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
+          <div className="w-full mb-5 lg:mb-0 lg:w-[60%] border-2 border-black bg-white ">
+            <div className="grid grid-cols-4 sm:grid-cols-3 bricolageSemibold text-xl md:text-3xl border-b-2 border-black">
+              <div className="col-span-2 sm:col-span-1 p-4 text-center  border-r-2 border-black cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
                 setTab("background")
               }}>
                 BACKGROUND
@@ -191,8 +191,8 @@ export default function Home() {
             <div className="p-12 h-[90%] flex flex-col justify-between">
 
               {tab === "background" &&
-                <div className="flex ">
-                  <div className="mr-10">
+                <div className="sm:flex ">
+                  <div className="mr-10 mb-5 sm:mb-0">
 
                     <HexColorPicker color={color} onChange={setColor} />
                     <HexColorInput color={color} onChange={setColor} />
@@ -255,12 +255,12 @@ export default function Home() {
               }
 
               <div className="mt-5 grid grid-cols-2 bricolageSemibold gap-5 ">
-                <div className="border-2 border-black text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
+                <div className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
                   getRandomImageAndColor(headsImages, bodiesImages);
                 }}>
                   SHUFFLE
                 </div>
-                <div className="border-2 border-black text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={captureImage}>
+                <div className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={captureImage}>
                   DOWNLOAD
                 </div>
               </div>
