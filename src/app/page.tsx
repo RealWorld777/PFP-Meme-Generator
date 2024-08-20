@@ -33,6 +33,25 @@ export default function Home() {
     }
   };
 
+  const hexColors = [
+    "#FF5733", // Red-Orange
+    "#33FF57", // Green
+    "#3357FF", // Blue
+    "#F1C40F", // Yellow
+    "#9B59B6", // Purple
+    "#E74C3C", // Red
+    "#1ABC9C", // Turquoise
+    "#2ECC71", // Green
+    "#3498DB", // Light Blue
+    "#E67E22", // Orange
+    "#2980B9", // Dark Blue
+    "#8E44AD", // Dark Purple
+    "#C0392B", // Dark Red
+    "#D35400", // Dark Orange
+    "#16A085", // Dark Turquoise
+    "#F39C12"  // Dark Yellow
+];
+
   function getRandomElementFromArray<T>(arr: T[]): T {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
@@ -59,12 +78,7 @@ export default function Home() {
     return null;
   }
 
-  // function extractBodyMetadata(url: string): string | null {
-  //   const regex = /(BODY.*\.png)/;
-  //   const match = url.match(regex);
-  //   return match ? match[0] : null;
-  // }
-
+  
 
 
   function getRandomImageAndColor(headsImages: string[], bodiesImages: string[]): { head: string; body: string; color: string } {
@@ -155,7 +169,7 @@ export default function Home() {
 
         <div className="flex p-12 justify-between">
 
-          <div className="w-[60%] border-2 border-black bg-white">
+          <div className="w-[60%] border-2 border-black bg-white ">
             <div className="grid grid-cols-3 bricolageSemibold text-3xl border-b-2 border-black">
               <div className="p-4 text-center border-r-2 border-black cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
                 setTab("background")
@@ -174,12 +188,14 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="p-12">
+            <div className="p-12 h-[90%] flex flex-col justify-between">
 
               {tab === "background" &&
                 <div>
                   <HexColorPicker color={color} onChange={setColor} />
                   <HexColorInput color={color} onChange={setColor} />
+
+
                 </div>
               }
               {
@@ -224,7 +240,7 @@ export default function Home() {
                 </div>
               }
 
-              <div className="mt-5 grid grid-cols-2 bricolageSemibold gap-5 self-end">
+              <div className="mt-5 grid grid-cols-2 bricolageSemibold gap-5 ">
                 <div className="border-2 border-black text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
                   getRandomImageAndColor(headsImages, bodiesImages);
                 }}>
