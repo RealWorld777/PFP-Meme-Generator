@@ -37,7 +37,7 @@ export default function Home() {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
   }
-  
+
   function getRandomHexColor(): string {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -46,23 +46,43 @@ export default function Home() {
     }
     return color;
   }
-  
+
+  function extractMetadata(url: string): string | null {
+    const regex = /%(.*?\.png)/;
+    const match = url.match(regex);
+    
+    if (match) {
+        const extracted = match[1];
+        return extracted.substring(2);
+    }
+
+    return null;
+  }
+
+  // function extractBodyMetadata(url: string): string | null {
+  //   const regex = /(BODY.*\.png)/;
+  //   const match = url.match(regex);
+  //   return match ? match[0] : null;
+  // }
+
+
+
   function getRandomImageAndColor(headsImages: string[], bodiesImages: string[]): { head: string; body: string; color: string } {
     if (!Array.isArray(headsImages) || !Array.isArray(bodiesImages)) {
       throw new Error('Both inputs must be arrays.');
     }
-  
+
     if (headsImages.length === 0 || bodiesImages.length === 0) {
       throw new Error('Both arrays must have at least one element.');
     }
-  
+
     const randomHead = getRandomElementFromArray(headsImages);
     setselectedHead(randomHead)
     const randomBody = getRandomElementFromArray(bodiesImages);
     setselectedBody(randomBody)
     const randomColor = getRandomHexColor();
     setColor(randomColor)
-    console.log("shuffled results",randomHead,randomBody,randomColor);
+    console.log("shuffled results", randomHead, randomBody, randomColor);
     return {
       head: randomHead,
       body: randomBody,
@@ -98,7 +118,7 @@ export default function Home() {
     fetchHeads();
     fetchBody();
 
-    
+
   }, []);
 
   return (
@@ -157,14 +177,14 @@ export default function Home() {
             <div className="p-12">
 
               {tab === "background" &&
-                <>
+                <div>
                   <HexColorPicker color={color} onChange={setColor} />
                   <HexColorInput color={color} onChange={setColor} />
-                </>
+                </div>
               }
               {
                 tab === "head" &&
-                <>
+                <div>
                   <div className="workSans text-2xl mb-5">
                     Select Head
                   </div>
@@ -181,11 +201,11 @@ export default function Home() {
                     ))}
                   </div>
 
-                </>
+                </div>
               }
               {
                 tab === "body" &&
-                <>
+                <div>
                   <div className="workSans text-2xl mb-5">
                     Select Body
                   </div>
@@ -201,12 +221,12 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                </>
+                </div>
               }
 
               <div className="mt-5 grid grid-cols-2 bricolageSemibold gap-5 self-end">
-                <div className="border-2 border-black text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={()=>{
-                  getRandomImageAndColor(headsImages,bodiesImages);
+                <div className="border-2 border-black text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
+                  getRandomImageAndColor(headsImages, bodiesImages);
                 }}>
                   SHUFFLE
                 </div>
@@ -218,8 +238,8 @@ export default function Home() {
           </div>
 
 
-          <div className=" w-[30%] min-h-[500px]">
-            <div ref={captureRef} className="border-2 border-black" style={{ position: 'relative', width: '350px', height: '350px', backgroundColor: color }}>
+          <div className=" w-[30%] min-h-[400px]">
+            <div ref={captureRef} className="border-2 border-black" style={{ position: 'relative', width: '320px', height: '320px', backgroundColor: color }}>
               <Image
                 alt=""
                 src={selectedBody}
@@ -234,6 +254,21 @@ export default function Home() {
                 width={350} // Add width here
                 height={350} // Add height here
               />
+            </div>
+
+            <div className=" w-[320px]">
+                <div className=" bricolageSemibold text-4xl mt-5 ">
+                  METADATA
+                </div>
+                <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
+                  background: {color}
+                </div>
+                <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
+                  head: {extractMetadata(selectedHead)}
+                </div>
+                <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
+                  body: {extractMetadata(selectedBody)}
+                </div>
             </div>
           </div>
 
