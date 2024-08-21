@@ -9,6 +9,8 @@ import { storage } from './config/firebase';
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import defaultBody from "../app/assets/BODY_Cfb_var1.png";
 import defaultHead from "./assets/HEAD_Cfb_var0.png"
+import mainImg from "./assets/Frame5.svg"
+
 export default function Home() {
 
   const captureRef = useRef<HTMLDivElement>(null);
@@ -142,10 +144,10 @@ export default function Home() {
 
 
         <nav className="w-[100%] flex justify-between p-4">
-          <h2 className="text-2xl bricolageSemibold">
+          <h2 className="text-2xl bricolageSemibold text-black">
             MEME GENERATOR
           </h2>
-          <h2 className="text-xl workSans">
+          <h2 className="text-xl workSans text-black">
             about
           </h2>
         </nav>
@@ -153,15 +155,15 @@ export default function Home() {
 
         <div className="sm:flex w-[100%]  border-t-2 border-b-2 border-black">
           <div className="w-[100%] sm:w-[50%] border-b-2 sm:border-b-0  sm:border-r-2 border-black">
-            <Image alt="" src={images.rick} className="w-[100%]" />
+            <Image alt="" src={mainImg} className="w-[100%]" />
           </div>
           <div className=" flex flex-col justify-between px-7 py-5 md:px-12 md:py-8 w-[100%] sm:w-1/2 bg-white">
             <div>
 
-              <div className="bricolageSemibold text-3xl md:text-5xl lg:text-7xl">CREATE & DOWNLOAD YOUR PUNKS 12PX PFP!</div>
-              <div className="mt-3 text-base md:text-xl lg:text-2xl workSans">Pick and choose between various elements to compose your Punk 12px PFP</div>
+              <div className="bricolageSemibold text-3xl md:text-5xl lg:text-7xl text-black">CREATE & DOWNLOAD YOUR PUNKS 12PX PFP!</div>
+              <div className="mt-3 text-base md:text-xl lg:text-2xl workSans text-black">Pick and choose between various elements to compose your Punk 12px PFP</div>
             </div>  
-            <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl ">Read <span className=" text-[#FF6B00] underline cursor-pointer">instructions</span>  for more info</div>
+            <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl text-black ">Read <span className=" text-[#FF6B00] underline cursor-pointer">instructions</span>  for more info</div>
           </div>
         </div>
 
@@ -215,7 +217,7 @@ export default function Home() {
               {
                 tab === "head" &&
                 <div>
-                  <div className="workSans text-2xl mb-5">
+                  <div className="workSans text-2xl mb-5 text-black">
                     Select Head
                   </div>
 
@@ -236,7 +238,7 @@ export default function Home() {
               {
                 tab === "body" &&
                 <div>
-                  <div className="workSans text-2xl mb-5">
+                  <div className="workSans text-2xl mb-5 text-black">
                     Select Body
                   </div>
 
@@ -255,12 +257,12 @@ export default function Home() {
               }
 
               <div className="mt-5 grid grid-cols-2 bricolageSemibold gap-5 ">
-                <div className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
+                <div className="border-2 border-black text-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
                   getRandomImageAndColor(headsImages, bodiesImages);
                 }}>
                   SHUFFLE
                 </div>
-                <div className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={captureImage}>
+                <div className="border-2 border-black text-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={captureImage}>
                   DOWNLOAD
                 </div>
               </div>
@@ -287,16 +289,16 @@ export default function Home() {
             </div>
 
             <div className=" w-[320px]">
-              <div className=" bricolageSemibold text-4xl mt-5 ">
+              <div className=" bricolageSemibold text-4xl mt-5 text-black">
                 METADATA
               </div>
-              <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
+              <div className="text-xl bg-white border-2 text-black border-dashed workSans border-black py-5 px-2 mt-2">
                 background: {color}
               </div>
-              <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
+              <div className="text-xl bg-white border-2 border-dashed text-black workSans border-black py-5 px-2 mt-2">
                 head: {extractMetadata(selectedHead)}
               </div>
-              <div className="text-xl bg-white border-2 border-dashed workSans border-black py-5 px-2 mt-2">
+              <div className="text-xl bg-white border-2 border-dashed text-black workSans border-black py-5 px-2 mt-2">
                 body: {extractMetadata(selectedBody)}
               </div>
             </div>
@@ -306,11 +308,11 @@ export default function Home() {
         </div>
 
         <footer className="border-t-2 border-black">
-          <div className="p-12 bg-[#FF6B00]">
-            <div className="bricolageSemibold text-6xl">
+          <div className="p-12 bg-[#FF6B00]" id="aboutus">
+            <div className="bricolageSemibold text-6xl text-black">
               ABOUT US
             </div>
-            <div className="workSans text-2xl mt-4">
+            <div className="workSans text-2xl mt-4 text-black">
               Punks 12px are a free self-inscribe (Bitcoin) pixel art collection (Anno 2024) - first is first - with a total of 10 000 Punks (12×12px)
             </div>
             <div className=" bricolageSemibold bg-black text-white text-2xl py-2 w-52 mt-4 text-center border-b-2 border-black ">
@@ -318,7 +320,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className=" bg-white p-12 bricolageSemibold text-2xl border-t-2 border-black">
+          <div className=" bg-white p-12 bricolageSemibold text-black text-2xl border-t-2 border-black">
             IllEGAL MEMES © 2024 - ALL RIGHTS ARE RESERVED.
           </div>
         </footer>
