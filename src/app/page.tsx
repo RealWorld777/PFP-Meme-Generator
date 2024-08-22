@@ -82,40 +82,46 @@ export default function Home() {
   }
 
 
-
-
   function getRandomImageAndColor(headsImages: string[], bodiesImages: string[]): { head: string; body: string; color: string } {
     if (!Array.isArray(headsImages) || !Array.isArray(bodiesImages)) {
       throw new Error('Both inputs must be arrays.');
     }
-
+  
     if (headsImages.length === 0 || bodiesImages.length === 0) {
       throw new Error('Both arrays must have at least one element.');
     }
-
+  
+    // Function to extract the var number from the URL
     const getVarNumber = (url: string): number => {
-      const match = url.match(/var(\d+)/);
-      return match ? parseInt(match[1], 10) : -1;
+      const match = url.match(/var(\d+|ALL)/);
+      if (match) {
+        return match[1] === 'ALL' ? -1 : parseInt(match[1], 10);
+      }
+      return -1;
     };
-
-    const randomHead = getRandomElementFromArray(headsImages);
-    const headVarNumber = getVarNumber(randomHead);
-
-    let randomBody: string;
-    if (headVarNumber === 4) {
-      randomBody = getRandomElementFromArray(bodiesImages);
+  
+    // Get a random body image
+    const randomBody = getRandomElementFromArray(bodiesImages);
+    const bodyVarNumber = getVarNumber(randomBody);
+  
+    // Get a random head image that matches the body’s var number
+    let randomHead: string;
+    if (bodyVarNumber === -1) { // If body has varALL
+      randomHead = getRandomElementFromArray(headsImages);
     } else {
       do {
-        randomBody = getRandomElementFromArray(bodiesImages);
-      } while (getVarNumber(randomBody) !== headVarNumber);
+        randomHead = getRandomElementFromArray(headsImages);
+      } while (getVarNumber(randomHead) !== bodyVarNumber);
     }
-
+  
+    // Generate a random color
     const randomColor = getRandomHexColor();
-
-    console.log("Shuffled results", headVarNumber, getVarNumber(randomBody), randomColor);
+  
+    console.log("Shuffled results", bodyVarNumber, getVarNumber(randomHead), randomColor);
     setColor(randomColor)
     setselectedBody(randomBody)
     setselectedHead(randomHead)
+  
     return {
       head: randomHead,
       body: randomBody,
