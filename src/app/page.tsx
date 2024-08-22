@@ -93,19 +93,36 @@ export default function Home() {
       throw new Error('Both arrays must have at least one element.');
     }
 
+    const getVarNumber = (url: string): number => {
+      const match = url.match(/var(\d+)/);
+      return match ? parseInt(match[1], 10) : -1;
+    };
+
     const randomHead = getRandomElementFromArray(headsImages);
-    setselectedHead(randomHead)
-    const randomBody = getRandomElementFromArray(bodiesImages);
-    setselectedBody(randomBody)
+    const headVarNumber = getVarNumber(randomHead);
+
+    let randomBody: string;
+    if (headVarNumber === 4) {
+      randomBody = getRandomElementFromArray(bodiesImages);
+    } else {
+      do {
+        randomBody = getRandomElementFromArray(bodiesImages);
+      } while (getVarNumber(randomBody) !== headVarNumber);
+    }
+
     const randomColor = getRandomHexColor();
+
+    console.log("Shuffled results", headVarNumber, getVarNumber(randomBody), randomColor);
     setColor(randomColor)
-    console.log("shuffled results", randomHead, randomBody, randomColor);
+    setselectedBody(randomBody)
+    setselectedHead(randomHead)
     return {
       head: randomHead,
       body: randomBody,
       color: randomColor,
     };
   }
+
 
   useEffect(() => {
     const fetchHeads = async () => {
