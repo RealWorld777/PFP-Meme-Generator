@@ -140,6 +140,7 @@ export default function Home() {
       );
 
       setHeadsImages(urls);
+
       console.log("urls", urls)
     };
 
@@ -157,7 +158,6 @@ export default function Home() {
 
     fetchHeads();
     fetchBody();
-
 
   }, []);
 
