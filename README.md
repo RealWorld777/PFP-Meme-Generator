@@ -2,7 +2,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+install packages
+
+```bash
+npm i
+```
+
+run the development server:
 
 ```bash
 npm run dev
@@ -20,7 +26,7 @@ bun dev
 - at the root of your firebase bucket storage, create two folders: heads & bodies
 - insert assets in their respective folders
 - in the rules section of firebase storage paste this
-
+```javascript
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
@@ -29,4 +35,5 @@ service firebase.storage {
     }
   }
 }
+```
 

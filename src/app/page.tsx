@@ -299,8 +299,17 @@ export default function Home() {
                 {
                   tab === "body" &&
                   <div>
-                    <div className="workSans text-2xl mb-5 text-black">
-                      Select Body
+                    <div className="flex justify-between">
+                      <div className="workSans text-2xl mb-5 text-black">
+                        Select Body
+
+                      </div>
+                      <div className="text-black text-2xl workSans cursor-pointer" onClick={()=>{
+                        setBodiesImages(initialBodies)
+                        setHeadsImages(initialHeads)
+                      }}>
+                        Reset Options
+                        </div>
                     </div>
 
                     <div className="flex flex-wrap gap-3">
