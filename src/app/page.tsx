@@ -198,17 +198,17 @@ export default function Home() {
 
             <div className="w-full mb-5 lg:mb-0 lg:w-[60%] border-2 border-black bg-white ">
               <div className="grid grid-cols-4 sm:grid-cols-3 bricolageSemibold text-xl md:text-3xl border-b-2 border-black">
-                <div className="col-span-2 sm:col-span-1 p-4 text-center  border-r-2 border-black cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
+                <div className="col-span-2 sm:col-span-1 p-4 text-black text-center  border-r-2 border-black cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
                   setTab("background")
                 }}>
                   BACKGROUND
                 </div>
-                <div className="p-4 text-center border-r-2 border-black cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
+                <div className="p-4 text-center border-r-2 text-black border-black cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
                   setTab("head")
                 }}>
                   HEAD
                 </div>
-                <div className="p-4 text-center cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
+                <div className="p-4 text-center cursor-pointer text-black hover:bg-[#FF6B00] transition duration-200" onClick={() => {
                   setTab("body")
                 }}>
                   BODY
