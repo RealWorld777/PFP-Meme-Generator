@@ -5,8 +5,8 @@ const About: React.FC = () => {
         <Layout >
 
             <div>
-                <h1>About Page</h1>
-                <p>This is the about page.</p>
+                <h1 className="text-black">About Page</h1>
+                <p className="text-black">This is the about page.</p>
             </div>
         </Layout>
     );

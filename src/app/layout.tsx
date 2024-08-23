@@ -24,10 +24,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               MEME GENERATOR
             </h2>
             <ul className='flex relative right-[2%] gap-3 '>
-              <li className='hidden sm:block workSans'>
+              <li className='hidden sm:block workSans text-black'>
                 <Link href="/">Home</Link>
               </li>
-              <li className='hidden sm:block workSans'>
+              <li className='hidden sm:block workSans text-black'>
                 <Link href="/about">About</Link>
               </li>
             </ul>

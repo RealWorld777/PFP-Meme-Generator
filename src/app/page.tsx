@@ -22,7 +22,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [selectedBody, setselectedBody] = useState("https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/bodies%2FBODY_Cfb_var0.png?alt=media&token=6111f162-f6dc-4262-bb57-81eb33c543d6")
   const [selectedHead, setselectedHead] = useState("https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/heads%2FHEAD_Cfb_var0.png?alt=media&token=e1ff5ea0-f6cf-4678-a91c-146ba907359f")
-
+  const [initialBodies, setInitialBodies] = useState([""])
+  const [initialHeads, setInitialHeads] = useState([""])
 
 
   const captureImage = () => {
@@ -81,16 +82,50 @@ export default function Home() {
     return null;
   }
 
+  function setBodyType(url: string): string[] {
+    const match = url.match(/var(\d+)/);
+    if (!match) {
+      return [];
+    }
+
+    const varNumber = match[1];
+
+    const matchedImages = initialBodies.filter(imageUrl => {
+      return imageUrl.includes(`var${varNumber}`);
+    });
+
+    setBodiesImages(matchedImages)
+    return matchedImages;
+  }
+
+  function setHeadType(url: string): string[] {
+
+    const match = url.match(/var(\d+)/);
+    if (!match) {
+      console.log("not matchingg")
+      return [];
+    }
+
+    const varNumber = match[1];
+
+
+    const matchedImages = initialHeads.filter(imageUrl => {
+      return imageUrl.includes(`var${varNumber}`);
+    });
+
+    setHeadsImages(matchedImages);
+    return matchedImages;
+  }
 
   function getRandomImageAndColor(headsImages: string[], bodiesImages: string[]): { head: string; body: string; color: string } {
     if (!Array.isArray(headsImages) || !Array.isArray(bodiesImages)) {
       throw new Error('Both inputs must be arrays.');
     }
-  
+
     if (headsImages.length === 0 || bodiesImages.length === 0) {
       throw new Error('Both arrays must have at least one element.');
     }
-  
+
     // Function to extract the var number from the URL
     const getVarNumber = (url: string): number => {
       const match = url.match(/var(\d+|ALL)/);
@@ -99,11 +134,11 @@ export default function Home() {
       }
       return -1;
     };
-  
+
     // Get a random body image
     const randomBody = getRandomElementFromArray(bodiesImages);
     const bodyVarNumber = getVarNumber(randomBody);
-  
+
     // Get a random head image that matches the body’s var number
     let randomHead: string;
     if (bodyVarNumber === -1) { // If body has varALL
@@ -113,15 +148,15 @@ export default function Home() {
         randomHead = getRandomElementFromArray(headsImages);
       } while (getVarNumber(randomHead) !== bodyVarNumber);
     }
-  
+
     // Generate a random color
     const randomColor = getRandomHexColor();
-  
+
     console.log("Shuffled results", bodyVarNumber, getVarNumber(randomHead), randomColor);
     setColor(randomColor)
     setselectedBody(randomBody)
     setselectedHead(randomHead)
-  
+
     return {
       head: randomHead,
       body: randomBody,
@@ -140,7 +175,7 @@ export default function Home() {
       );
 
       setHeadsImages(urls);
-
+      setInitialHeads(urls)
       console.log("urls", urls)
     };
 
@@ -153,6 +188,7 @@ export default function Home() {
       );
 
       setBodiesImages(urls);
+      setInitialBodies(urls)
       console.log("urls", urls)
     };
 
@@ -166,17 +202,6 @@ export default function Home() {
       <div className="bg-[#E1E1E1] flex  justify-center ">
 
         <div className="w-[100%]  flex flex-col    ">
-
-
-          {/* <nav className="w-[100%] flex justify-between p-4">
-            <h2 className="text-2xl bricolageSemibold text-black">
-              MEME GENERATOR
-            </h2>
-            <h2 className="text-xl workSans text-black">
-              about
-            </h2>
-          </nav> */}
-
 
           <div className="sm:flex w-[100%]  border-t-2 border-b-2 border-black">
             <div className="w-[100%] sm:w-[50%] border-b-2 sm:border-b-0  sm:border-r-2 border-black">
@@ -242,15 +267,26 @@ export default function Home() {
                 {
                   tab === "head" &&
                   <div>
-                    <div className="workSans text-2xl mb-5 text-black">
-                      Select Head
+                    <div className="flex justify-between">
+                      <div className="workSans text-2xl mb-5 text-black">
+                        Select Head
+
+                      </div>
+                      <div className="text-black text-2xl workSans cursor-pointer" onClick={()=>{
+                        setBodiesImages(initialBodies)
+                        setHeadsImages(initialHeads)
+                      }}>
+                        Reset Options
+                        </div>
                     </div>
+
 
                     <div className="flex flex-wrap gap-3">
                       {headsImages.map((url, index) => (
-                        <div key={index} className="border-2 border-black"
+                        <div key={index} className="border-2 border-black cursor-pointer"
                           onClick={() => {
                             setselectedHead(url)
+                            setBodyType(url)
                           }}
                         >
                           <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
@@ -269,9 +305,10 @@ export default function Home() {
 
                     <div className="flex flex-wrap gap-3">
                       {bodiesImages.map((url, index) => (
-                        <div key={index} className="border-2 border-black"
+                        <div key={index} className="border-2 border-black cursor-pointer"
                           onClick={() => {
                             setselectedBody(url)
+                            setHeadType(url)
                           }}
                         >
                           <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
