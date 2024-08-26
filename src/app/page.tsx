@@ -20,8 +20,8 @@ export default function Home() {
   const [headsImages, setHeadsImages] = useState([""]);
   const [bodiesImages, setBodiesImages] = useState([""]);
   const [loading, setLoading] = useState(true);
-  const [selectedBody, setselectedBody] = useState("https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/bodies%2FBODY_Cfb_var0.png?alt=media&token=6111f162-f6dc-4262-bb57-81eb33c543d6")
-  const [selectedHead, setselectedHead] = useState("https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/heads%2FHEAD_Cfb_var0.png?alt=media&token=e1ff5ea0-f6cf-4678-a91c-146ba907359f")
+  const [selectedBody, setselectedBody] = useState("")
+  const [selectedHead, setselectedHead] = useState("")
   const [initialBodies, setInitialBodies] = useState([""])
   const [initialHeads, setInitialHeads] = useState([""])
 
@@ -95,27 +95,38 @@ export default function Home() {
     });
 
     setBodiesImages(matchedImages)
+
+    if (matchedImages.length > 0) {
+      const randomUrl = matchedImages[Math.floor(Math.random() * matchedImages.length)];
+      setselectedBody(randomUrl);
+    }
+
     return matchedImages;
   }
 
   function setHeadType(url: string): string[] {
-
     const match = url.match(/var(\d+)/);
     if (!match) {
-      console.log("not matchingg")
+      console.log("not matching");
       return [];
     }
-
+  
     const varNumber = match[1];
-
-
+  
     const matchedImages = initialHeads.filter(imageUrl => {
       return imageUrl.includes(`var${varNumber}`);
     });
-
+  
     setHeadsImages(matchedImages);
+  
+    if (matchedImages.length > 0) {
+      const randomUrl = matchedImages[Math.floor(Math.random() * matchedImages.length)];
+      setselectedHead(randomUrl);
+    }
+  
     return matchedImages;
   }
+  
 
   function getRandomImageAndColor(headsImages: string[], bodiesImages: string[]): { head: string; body: string; color: string } {
     if (!Array.isArray(headsImages) || !Array.isArray(bodiesImages)) {
@@ -275,6 +286,8 @@ export default function Home() {
                       <div className="text-black text-2xl workSans cursor-pointer" onClick={()=>{
                         setBodiesImages(initialBodies)
                         setHeadsImages(initialHeads)
+                        setselectedBody("")
+                        setselectedHead("")
                       }}>
                         Reset Options
                         </div>
@@ -343,6 +356,8 @@ export default function Home() {
 
             <div className=" w-[30%] min-h-[400px]">
               <div ref={captureRef} className="border-2 border-black" style={{ position: 'relative', width: '320px', height: '320px', backgroundColor: color }}>
+              {selectedBody !== ""
+                &&
                 <Image
                   alt=""
                   src={selectedBody}
@@ -350,6 +365,10 @@ export default function Home() {
                   width={350} // Add width here
                   height={350} // Add height here
                 />
+              }
+                {selectedHead !== ""
+                &&
+
                 <Image
                   alt=""
                   src={selectedHead}
@@ -357,6 +376,7 @@ export default function Home() {
                   width={350} // Add width here
                   height={350} // Add height here
                 />
+                }
               </div>
 
               <div className=" w-[320px]">
