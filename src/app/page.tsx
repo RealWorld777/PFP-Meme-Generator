@@ -131,10 +131,10 @@ export default function Home() {
 
     setHeadsImages(matchedImages);
 
-    if (matchedImages.length > 0) {
-      const randomUrl = matchedImages[Math.floor(Math.random() * matchedImages.length)];
-      setselectedHead(randomUrl);
-    }
+    // if (matchedImages.length > 0) {
+    //   const randomUrl = matchedImages[Math.floor(Math.random() * matchedImages.length)];
+    //   setselectedHead(randomUrl);
+    // }
 
     return matchedImages;
   }
