@@ -160,26 +160,27 @@ export default function Home() {
     };
 
     // Get a random body image
-    const randomBody = getRandomElementFromArray(bodiesImages);
-    const bodyVarNumber = getVarNumber(randomBody);
+    const randomHead = getRandomElementFromArray(headsImages);
+    const headVarNumber = getVarNumber(randomHead);
 
     // Get a random head image that matches the body’s var number
-    let randomHead: string;
-    if (bodyVarNumber === -1) { // If body has varALL
-      randomHead = getRandomElementFromArray(headsImages);
+    let randomBody: string;
+    if (headVarNumber === -1) { // If body has varALL
+      randomBody = getRandomElementFromArray(bodiesImages);
     } else {
       do {
-        randomHead = getRandomElementFromArray(headsImages);
-      } while (getVarNumber(randomHead) !== bodyVarNumber);
+        randomBody = getRandomElementFromArray(bodiesImages);
+      } while (getVarNumber(randomBody) !== headVarNumber);
     }
 
     // Generate a random color
     const randomColor = getRandomHexColor();
 
-    console.log("Shuffled results", bodyVarNumber, getVarNumber(randomHead), randomColor);
+    console.log("Shuffled results", headVarNumber, getVarNumber(randomHead), randomColor);
     setColor(randomColor)
     setselectedBody(randomBody)
     setselectedHead(randomHead)
+    setBodyType(randomBody)
 
     return {
       head: randomHead,
@@ -331,8 +332,10 @@ export default function Home() {
 
                       </div>
                       <div className="text-black text-2xl workSans cursor-pointer" onClick={() => {
-                        setBodiesImages(initialBodies)
-                        setHeadsImages(initialHeads)
+                         setBodiesImages(initialBodies)
+                         setHeadsImages(initialHeads)
+                         setselectedBody("")
+                         setselectedHead("")
                       }}>
                         Reset Options
                       </div>
@@ -355,7 +358,7 @@ export default function Home() {
 
                 <div className="mt-5 grid grid-cols-2 bricolageSemibold gap-5 ">
                   <div className="border-2 border-black text-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {
-                    getRandomImageAndColor(headsImages, bodiesImages);
+                    getRandomImageAndColor(initialHeads, initialBodies);
                   }}>
                     SHUFFLE
                   </div>
