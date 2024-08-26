@@ -294,9 +294,9 @@ export default function Home() {
                     </div>
 
 
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-3 h-[400px] overflow-y-scroll">
                       {headsImages.map((url, index) => (
-                        <div key={index} className="border-2 border-black cursor-pointer"
+                        <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]"
                           onClick={() => {
                             setselectedHead(url)
                             setBodyType(url)
@@ -325,15 +325,15 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-3 h-[350px] overflow-y-scroll">
                       {bodiesImages.map((url, index) => (
-                        <div key={index} className="border-2 border-black cursor-pointer"
+                        <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]  "
                           onClick={() => {
                             setselectedBody(url)
                             setHeadType(url)
                           }}
                         >
-                          <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
+                          <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} className="relative bottom-[4px]"/>
                         </div>
                       ))}
                     </div>
