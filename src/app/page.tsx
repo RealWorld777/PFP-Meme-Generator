@@ -83,18 +83,24 @@ export default function Home() {
   }
 
   function setBodyType(url: string): string[] {
-    const match = url.match(/var(\d+)/);
+    const match = url.match(/var(\d+|ALL)/); // Match either a number or "ALL"
     if (!match) {
       return [];
     }
 
     const varNumber = match[1];
 
-    const matchedImages = initialBodies.filter(imageUrl => {
-      return imageUrl.includes(`var${varNumber}`);
-    });
+    let matchedImages: string[] = [];
 
-    setBodiesImages(matchedImages)
+    if (varNumber === "ALL") {
+      matchedImages = initialBodies; // Set to all initial bodies if "varALL" is found
+    } else {
+      matchedImages = initialBodies.filter(imageUrl => {
+        return imageUrl.includes(`var${varNumber}`);
+      });
+    }
+
+    setBodiesImages(matchedImages);
 
     if (matchedImages.length > 0) {
       const randomUrl = matchedImages[Math.floor(Math.random() * matchedImages.length)];
@@ -105,28 +111,35 @@ export default function Home() {
   }
 
   function setHeadType(url: string): string[] {
-    const match = url.match(/var(\d+)/);
+    const match = url.match(/var(\d+|ALL)/); // Match either a number or "ALL"
     if (!match) {
       console.log("not matching");
       return [];
     }
-  
+
     const varNumber = match[1];
-  
-    const matchedImages = initialHeads.filter(imageUrl => {
-      return imageUrl.includes(`var${varNumber}`);
-    });
-  
+
+    let matchedImages: string[] = [];
+
+    if (varNumber === "ALL") {
+      matchedImages = initialHeads; // Set to all initial heads if "varALL" is found
+    } else {
+      matchedImages = initialHeads.filter(imageUrl => {
+        return imageUrl.includes(`var${varNumber}`);
+      });
+    }
+
     setHeadsImages(matchedImages);
-  
+
     if (matchedImages.length > 0) {
       const randomUrl = matchedImages[Math.floor(Math.random() * matchedImages.length)];
       setselectedHead(randomUrl);
     }
-  
+
     return matchedImages;
   }
-  
+
+
 
   function getRandomImageAndColor(headsImages: string[], bodiesImages: string[]): { head: string; body: string; color: string } {
     if (!Array.isArray(headsImages) || !Array.isArray(bodiesImages)) {
@@ -283,14 +296,14 @@ export default function Home() {
                         Select Head
 
                       </div>
-                      <div className="text-black text-2xl workSans cursor-pointer" onClick={()=>{
+                      <div className="text-black text-2xl workSans cursor-pointer" onClick={() => {
                         setBodiesImages(initialBodies)
                         setHeadsImages(initialHeads)
                         setselectedBody("")
                         setselectedHead("")
                       }}>
                         Reset Options
-                        </div>
+                      </div>
                     </div>
 
 
@@ -317,12 +330,12 @@ export default function Home() {
                         Select Body
 
                       </div>
-                      <div className="text-black text-2xl workSans cursor-pointer" onClick={()=>{
+                      <div className="text-black text-2xl workSans cursor-pointer" onClick={() => {
                         setBodiesImages(initialBodies)
                         setHeadsImages(initialHeads)
                       }}>
                         Reset Options
-                        </div>
+                      </div>
                     </div>
 
                     <div className="flex flex-wrap gap-3 h-[350px] overflow-y-scroll">
@@ -333,7 +346,7 @@ export default function Home() {
                             setHeadType(url)
                           }}
                         >
-                          <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} className="relative bottom-[4px]"/>
+                          <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} className="relative bottom-[4px]" />
                         </div>
                       ))}
                     </div>
@@ -356,26 +369,26 @@ export default function Home() {
 
             <div className=" w-[30%] min-h-[400px]">
               <div ref={captureRef} className="border-2 border-black" style={{ position: 'relative', width: '320px', height: '320px', backgroundColor: color }}>
-              {selectedBody !== ""
-                &&
-                <Image
-                  alt=""
-                  src={selectedBody}
-                  style={{ position: 'absolute', top: 0, left: 0 }}
-                  width={350} // Add width here
-                  height={350} // Add height here
-                />
-              }
+                {selectedBody !== ""
+                  &&
+                  <Image
+                    alt=""
+                    src={selectedBody}
+                    style={{ position: 'absolute', top: 0, left: 0 }}
+                    width={350} // Add width here
+                    height={350} // Add height here
+                  />
+                }
                 {selectedHead !== ""
-                &&
+                  &&
 
-                <Image
-                  alt=""
-                  src={selectedHead}
-                  style={{ position: 'absolute', top: 0, left: 0 }}
-                  width={350} // Add width here
-                  height={350} // Add height here
-                />
+                  <Image
+                    alt=""
+                    src={selectedHead}
+                    style={{ position: 'absolute', top: 0, left: 0 }}
+                    width={350} // Add width here
+                    height={350} // Add height here
+                  />
                 }
               </div>
 
