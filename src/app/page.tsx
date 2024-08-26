@@ -102,10 +102,10 @@ export default function Home() {
 
     setBodiesImages(matchedImages);
 
-    if (matchedImages.length > 0) {
-      const randomUrl = matchedImages[Math.floor(Math.random() * matchedImages.length)];
-      setselectedBody(randomUrl);
-    }
+    // if (matchedImages.length > 0) {
+    //   const randomUrl = matchedImages[Math.floor(Math.random() * matchedImages.length)];
+    //   setselectedBody(randomUrl);
+    // }
 
     return matchedImages;
   }
