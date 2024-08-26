@@ -180,8 +180,8 @@ export default function Home() {
     setColor(randomColor)
     setselectedBody(randomBody)
     setselectedHead(randomHead)
-    setBodyType(randomBody)
-
+    setBodyType(randomHead)
+    setHeadType(randomHead)
     return {
       head: randomHead,
       body: randomBody,
