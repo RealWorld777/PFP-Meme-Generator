@@ -23,17 +23,22 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <h2 className="text-2xl bricolageSemibold text-black">
               MEME GENERATOR
             </h2>
-            <ul className='flex relative right-[2%] gap-3 '>
+            {/* <ul className='flex relative right-[2%] gap-3 '>
               <li className='hidden sm:block workSans text-black'>
                 <Link href="/">Home</Link>
               </li>
               <li className='hidden sm:block workSans text-black'>
                 <Link href="/about">About</Link>
               </li>
-            </ul>
+            </ul> */}
+            <div className='flex gap-2'>
+            <h2 className="hidden sm:block text-xl workSans text-black">
+              <Link href="/">Home</Link>
+            </h2>
             <h2 className="hidden sm:block text-xl workSans text-black">
               <Link href="/about">About</Link>
             </h2>
+            </div>
             <div className='w-5 h-5 block sm:hidden cursor-pointer' onClick={()=>{
               setMenuOpen(!menuOpen)
             }}>
