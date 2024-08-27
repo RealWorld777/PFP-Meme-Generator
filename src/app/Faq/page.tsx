@@ -67,10 +67,10 @@ const Faq: React.FC = () => {
             {faqData.map((faq, index) => (
               <div key={index} className="bg-white flex justify-between p-5 border-2 border-black mb-5">
                 <div>
-                  <div className="bricolageSemibold text-xl sm:text-4xl">
+                  <div className="bricolageSemibold text-black text-xl sm:text-4xl">
                     {faq.title}
                   </div>
-                  <div className={`workSans sm:text-2xl mt-5 faq-content ${faq.active ? 'active' : ''}`}>
+                  <div className={`workSans sm:text-2xl text-black mt-5 faq-content ${faq.active ? 'active' : ''}`}>
                     {faq.content}
                   </div>
                 </div>
