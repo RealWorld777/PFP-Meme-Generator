@@ -54,11 +54,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           menuOpen &&
 
           <div className='sm:hidden absolute bg-[#E1E1E1] w-[100vw] top-[66px] p-6 flex flex-col items-center border-b-2 workSans border-black'>
-            <Link href="/" className='text-black'>Home</Link>
+            <Link href="/" className='text-black text-xl mb-5'>Home</Link>
 
-            <Link href="/about" className='text-black'>About</Link>
+            <Link href="/about" className='text-black text-xl mb-5'>About</Link>
 
-            <Link href="/Faq" className='text-black'>FAQ</Link>
+            <Link href="/Faq" className='text-black text-xl'>FAQ</Link>
 
           </div>
         }
