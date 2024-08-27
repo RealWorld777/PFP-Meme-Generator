@@ -12,9 +12,8 @@ import defaultHead from "./assets/HEAD_Cfb_var0.png"
 import mainImg from "./assets/Frame5.svg"
 import Layout from "./layout";
 import './globals.css';
-// import { ring } from 'ldrs'
-
-
+import Loader from "react-dots-loader";
+import 'react-dots-loader/index.css'
 
 export default function Home() {
 
@@ -61,20 +60,20 @@ export default function Home() {
     "#F39C12"  // Dark Yellow
   ];
 
-  const shuffleColours = ["#fb85ab","#f8d63f","#5d71fc","#b3fbfe"]
+  const shuffleColours = ["#fb85ab", "#f8d63f", "#5d71fc", "#b3fbfe"]
 
   function getRandomElementFromArray<T>(arr: T[]): T {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
   }
 
-  
 
-  function getRandomHexColor() : string {
+
+  function getRandomHexColor(): string {
 
     const randomIndex = Math.floor(Math.random() * shuffleColours.length)
 
-    return shuffleColours[randomIndex];  
+    return shuffleColours[randomIndex];
   }
 
   function extractMetadata(url: string): string | null {
@@ -94,11 +93,11 @@ export default function Home() {
     if (!match) {
       return [];
     }
-  
+
     const varIdentifier = match[1];
-  
+
     let matchedImages: string[] = [];
-  
+
     if (varIdentifier === "ALL") {
       matchedImages = initialBodies; // Set to all initial bodies if "varALL" is found
     } else {
@@ -106,17 +105,17 @@ export default function Home() {
         return imageUrl.includes(`var${varIdentifier}`) || imageUrl.includes('varALL');
       });
     }
-  
+
     setBodiesImages(matchedImages);
-  
+
     // if (matchedImages.length > 0) {
     //   const randomUrl = matchedImages[Math.floor(Math.random() * matchedImages.length)];
     //   setselectedBody(randomUrl);
     // }
-  
+
     return matchedImages;
   }
-  
+
 
   function setHeadType(url: string): string[] {
     const match = url.match(/var(\d+|ALL)/); // Match either a number or "ALL"
@@ -320,23 +319,22 @@ export default function Home() {
 
                     {imagesLoaded ?
 
-                      <div className="flex flex-wrap gap-3 h-[400px] overflow-y-scroll">
-                        {
-                          headsImages.map((url, index) => (
-                            <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]"
-                              onClick={() => {
-                                setselectedHead(url)
-                                setBodyType(url)
-                              }}
-                            >
-                              <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
-                            </div>
-                          ))
-                        }
-                      </div>
-                      :
-                      // <l-ring size="60" color="black"></l-ring>
-                    <div>testing</div>
+                    <div className="flex flex-wrap gap-3 h-[400px] overflow-y-scroll">
+                      {
+                        headsImages.map((url, index) => (
+                          <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]"
+                            onClick={() => {
+                              setselectedHead(url)
+                              setBodyType(url)
+                            }}
+                          >
+                            <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
+                          </div>
+                        ))
+                      }
+                    </div>
+                    :
+                      <Loader />
 
                     }
 
@@ -360,23 +358,22 @@ export default function Home() {
                         Reset Options
                       </div>
                     </div>
-                    {imagesLoaded ? 
-                    
-                    <div className="flex flex-wrap gap-3 h-[350px] overflow-y-scroll">
-                      {bodiesImages.map((url, index) => (
-                        <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]  "
-                          onClick={() => {
-                            setselectedBody(url)
-                            setHeadType(url)
-                          }}
-                        >
-                          <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} className="relative bottom-[4px]" />
-                        </div>
-                      ))}
-                    </div>
-                    :
-                    // <l-ring size="60" color="black"></l-ring>
-                    <div>testing</div>
+                    {imagesLoaded ?
+
+                      <div className="flex flex-wrap gap-3 h-[350px] overflow-y-scroll">
+                        {bodiesImages.map((url, index) => (
+                          <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]  "
+                            onClick={() => {
+                              setselectedBody(url)
+                              setHeadType(url)
+                            }}
+                          >
+                            <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} className="relative bottom-[4px]" />
+                          </div>
+                        ))}
+                      </div>
+                      :
+                      <Loader />
 
                     }
 
