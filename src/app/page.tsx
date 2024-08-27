@@ -335,7 +335,9 @@ export default function Home() {
                         }
                       </div>
                       :
-                      <l-ring size="60" color="black"></l-ring>
+                      // <l-ring size="60" color="black"></l-ring>
+                    <div>testing</div>
+
                     }
 
 
@@ -373,7 +375,8 @@ export default function Home() {
                       ))}
                     </div>
                     :
-                    <l-ring size="60" color="black"></l-ring>
+                    // <l-ring size="60" color="black"></l-ring>
+                    <div>testing</div>
 
                     }
 
