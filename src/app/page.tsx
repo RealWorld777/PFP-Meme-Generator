@@ -12,6 +12,10 @@ import defaultHead from "./assets/HEAD_Cfb_var0.png"
 import mainImg from "./assets/Frame5.svg"
 import Layout from "./layout";
 import './globals.css';
+import { ring } from 'ldrs'
+
+
+
 export default function Home() {
 
   const captureRef = useRef<HTMLDivElement>(null);
@@ -24,7 +28,8 @@ export default function Home() {
   const [selectedHead, setselectedHead] = useState("")
   const [initialBodies, setInitialBodies] = useState([""])
   const [initialHeads, setInitialHeads] = useState([""])
-
+  const [imagesLoaded, setImagesLoaded] = useState(false)
+  ring.register()
 
   const captureImage = () => {
     if (captureRef.current) {
@@ -87,28 +92,29 @@ export default function Home() {
     if (!match) {
       return [];
     }
-
-    const varNumber = match[1];
-
+  
+    const varIdentifier = match[1];
+  
     let matchedImages: string[] = [];
-
-    if (varNumber === "ALL") {
+  
+    if (varIdentifier === "ALL") {
       matchedImages = initialBodies; // Set to all initial bodies if "varALL" is found
     } else {
       matchedImages = initialBodies.filter(imageUrl => {
-        return imageUrl.includes(`var${varNumber}`);
+        return imageUrl.includes(`var${varIdentifier}`) || imageUrl.includes('varALL');
       });
     }
-
+  
     setBodiesImages(matchedImages);
-
+  
     // if (matchedImages.length > 0) {
     //   const randomUrl = matchedImages[Math.floor(Math.random() * matchedImages.length)];
     //   setselectedBody(randomUrl);
     // }
-
+  
     return matchedImages;
   }
+  
 
   function setHeadType(url: string): string[] {
     const match = url.match(/var(\d+|ALL)/); // Match either a number or "ALL"
@@ -210,11 +216,14 @@ export default function Home() {
 
       const urls = await Promise.all(
         res.items.map((itemRef) => getDownloadURL(itemRef))
+
       );
 
       setBodiesImages(urls);
       setInitialBodies(urls)
       console.log("urls", urls)
+      setImagesLoaded(true)
+
     };
 
     fetchHeads();
@@ -307,19 +316,26 @@ export default function Home() {
                       </div>
                     </div>
 
+                    {imagesLoaded ?
 
-                    <div className="flex flex-wrap gap-3 h-[400px] overflow-y-scroll">
-                      {headsImages.map((url, index) => (
-                        <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]"
-                          onClick={() => {
-                            setselectedHead(url)
-                            setBodyType(url)
-                          }}
-                        >
-                          <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
-                        </div>
-                      ))}
-                    </div>
+                      <div className="flex flex-wrap gap-3 h-[400px] overflow-y-scroll">
+                        {
+                          headsImages.map((url, index) => (
+                            <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]"
+                              onClick={() => {
+                                setselectedHead(url)
+                                setBodyType(url)
+                              }}
+                            >
+                              <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
+                            </div>
+                          ))
+                        }
+                      </div>
+                      :
+                      <l-ring size="60" color="black"></l-ring>
+                    }
+
 
                   </div>
                 }
@@ -332,15 +348,16 @@ export default function Home() {
 
                       </div>
                       <div className="text-black text-2xl workSans cursor-pointer" onClick={() => {
-                         setBodiesImages(initialBodies)
-                         setHeadsImages(initialHeads)
-                         setselectedBody("")
-                         setselectedHead("")
+                        setBodiesImages(initialBodies)
+                        setHeadsImages(initialHeads)
+                        setselectedBody("")
+                        setselectedHead("")
                       }}>
                         Reset Options
                       </div>
                     </div>
-
+                    {imagesLoaded ? 
+                    
                     <div className="flex flex-wrap gap-3 h-[350px] overflow-y-scroll">
                       {bodiesImages.map((url, index) => (
                         <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]  "
@@ -353,6 +370,11 @@ export default function Home() {
                         </div>
                       ))}
                     </div>
+                    :
+                    <l-ring size="60" color="black"></l-ring>
+
+                    }
+
                   </div>
                 }
 
