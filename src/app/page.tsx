@@ -24,8 +24,8 @@ export default function Home() {
   const [headsImages, setHeadsImages] = useState([""]);
   const [bodiesImages, setBodiesImages] = useState([""]);
   const [loading, setLoading] = useState(true);
-  const [selectedBody, setselectedBody] = useState("")
-  const [selectedHead, setselectedHead] = useState("")
+  const [selectedBody, setselectedBody] = useState("https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/bodies%2FBODY_Cfb_var0.png?alt=media&token=6111f162-f6dc-4262-bb57-81eb33c543d6")
+  const [selectedHead, setselectedHead] = useState("https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/heads%2FHEAD_Cfb_var0.png?alt=media&token=e1ff5ea0-f6cf-4678-a91c-146ba907359f")
   const [initialBodies, setInitialBodies] = useState([""])
   const [initialHeads, setInitialHeads] = useState([""])
   const [imagesLoaded, setImagesLoaded] = useState(false)
@@ -61,18 +61,20 @@ export default function Home() {
     "#F39C12"  // Dark Yellow
   ];
 
+  const shuffleColours = ["#fb85ab","#f8d63f","#5d71fc","#b3fbfe"]
+
   function getRandomElementFromArray<T>(arr: T[]): T {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
   }
 
-  function getRandomHexColor(): string {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+  
+
+  function getRandomHexColor() : string {
+
+    const randomIndex = Math.floor(Math.random() * shuffleColours.length)
+
+    return shuffleColours[randomIndex];  
   }
 
   function extractMetadata(url: string): string | null {
