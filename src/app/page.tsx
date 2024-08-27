@@ -12,7 +12,7 @@ import defaultHead from "./assets/HEAD_Cfb_var0.png"
 import mainImg from "./assets/Frame5.svg"
 import Layout from "./layout";
 import './globals.css';
-import { ring } from 'ldrs'
+// import { ring } from 'ldrs'
 
 
 
@@ -29,7 +29,7 @@ export default function Home() {
   const [initialBodies, setInitialBodies] = useState([""])
   const [initialHeads, setInitialHeads] = useState([""])
   const [imagesLoaded, setImagesLoaded] = useState(false)
-  ring.register()
+  // ring.register()
 
   const captureImage = () => {
     if (captureRef.current) {
