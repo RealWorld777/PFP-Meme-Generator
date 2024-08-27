@@ -9,6 +9,8 @@ import body3 from "../../app/assets/BODY_King_var1.png"
 import body4 from "../../app/assets/BODY_King_var0.png"
 import body5 from "../../app/assets/BODY_Logan_var0.png"
 import rick from "../../app/assets/rick.png"
+import plus from "../assets/plus.png"
+import minus from "../assets/minus.png"
 
 const images = {
     head1,
@@ -20,7 +22,9 @@ const images = {
     body3,
     body4,
     body5,
-    rick
+    rick,
+    plus,
+    minus
 }
 
 export default images;

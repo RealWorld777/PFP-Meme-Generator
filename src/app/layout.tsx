@@ -38,6 +38,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <h2 className="hidden sm:block text-xl workSans text-black">
               <Link href="/about">About</Link>
             </h2>
+            <h2 className="hidden sm:block text-xl workSans text-black">
+              <Link href="/Faq">FAQ</Link>
+            </h2>
             </div>
             <div className='w-5 h-5 block sm:hidden cursor-pointer' onClick={()=>{
               setMenuOpen(!menuOpen)
@@ -54,6 +57,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Link href="/" className='text-black'>Home</Link>
 
             <Link href="/about" className='text-black'>About</Link>
+
+            <Link href="/Faq" className='text-black'>FAQ</Link>
 
           </div>
         }

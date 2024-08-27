@@ -83,3 +83,17 @@ input:focus{
     text-wrap: balance;
   }
 }
+
+.faq-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.faq-content.active {
+  max-height: 200px; /* Adjust based on content size */
+  opacity: 1;
+  visibility: visible;
+}
