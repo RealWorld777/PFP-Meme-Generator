@@ -2,14 +2,13 @@ import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD7UKCW_dgzRHLPZ7ZC_NPVIdrJPLP5vH8",
-    authDomain: "meme-1851b.firebaseapp.com",
-    projectId: "meme-1851b",
-    storageBucket: "meme-1851b.appspot.com",
-    messagingSenderId: "193393556959",
-    appId: "1:193393556959:web:e2fb6d773fde3ed10e186a",
-    measurementId: "G-7DDT6MN2QJ"
-  };
+  apiKey: 'AIzaSyDs-NW6rIbID9XF5009wb-yMecbo00l7io',
+  authDomain: 'pfp-generator-dc1dc.firebaseapp.com',
+  projectId: 'pfp-generator-dc1dc',
+  storageBucket: 'pfp-generator-dc1dc.appspot.com',
+  messagingSenderId: '1066849244601',
+  appId: '1:1066849244601:web:de886383dccff1ba63d268',
+};
 
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
