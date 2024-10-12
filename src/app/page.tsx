@@ -10,12 +10,15 @@ function Home() {
   return (
     <>
       <LandingPrimaryImageCtaSection
-        title="PFP Generator"
-        description="Generate your own PFP with CFB"
+        title=""
+        titleComponent={<h1 className="text-6xl">PFP Generator</h1>}
+        description=""
+        descriptionComponent={<p className="text-4xl">Generate your own PFP with CFB</p>}
         imageSrc={titleSvg}
         imageAlt="CFB"
         imagePerspective="paper"
         imageShadow="hard"
+        className="bricolageSemibold text-xl"
       >
         <Button size="xl">
           <Link href="#">Read more</Link>

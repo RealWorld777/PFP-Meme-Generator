@@ -147,8 +147,8 @@ export default function Home() {
         return (
           <div>
             <div className="flex justify-between px-10 pt-3">
-              <div className="text-black text-xl font-semibold">Select Background</div>
-              <div className="text-black text-xl font-bold underline cursor-pointer" onClick={resetSelections}>
+              <div className=" text-xl font-semibold">Select Background</div>
+              <div className=" text-xl font-bold underline cursor-pointer" onClick={resetSelections}>
                 Reset
               </div>
             </div>
@@ -180,8 +180,8 @@ export default function Home() {
         return (
           <div>
             <div className="flex justify-between px-10 pt-3">
-              <div className="text-black text-xl font-semibold">Select {tab.charAt(0).toUpperCase() + tab.slice(1)}</div>
-              <div className="text-black text-xl font-bold underline cursor-pointer" onClick={resetSelections}>
+              <div className=" text-xl font-semibold">Select {tab.charAt(0).toUpperCase() + tab.slice(1)}</div>
+              <div className=" text-xl font-bold underline cursor-pointer" onClick={resetSelections}>
                 Reset
               </div>
             </div>
@@ -210,18 +210,18 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-[#E1E1E1] flex justify-center">
+    <div className="flex justify-center">
       <div className="w-full flex flex-col">
         <div className="sm:flex w-full border-t-2 border-b-2 border-black">
           <div className="w-full sm:w-1/2 border-b-2 sm:border-b-0 sm:border-r-2 border-black">
             <Image alt="Main Image" src={mainImg} className="w-full" />
           </div>
-          <div className="flex flex-col justify-between px-7 py-5 md:px-12 md:py-8 w-full sm:w-1/2 bg-white">
+          <div className="flex flex-col justify-between px-7 py-5 md:px-12 md:py-8 w-full sm:w-1/2">
             <div>
-              <h1 className="bricolageSemibold text-3xl md:text-5xl lg:text-7xl text-black">CREATE & DOWNLOAD YOUR PUNKS 12PX PFP!</h1>
-              <p className="mt-3 text-base md:text-xl lg:text-2xl workSans text-black">Pick and choose between various elements to compose your Punk 12px PFP</p>
+              <h1 className="bricolageSemibold text-3xl md:text-5xl lg:text-7xl ">CREATE & DOWNLOAD YOUR PUNKS 12PX PFP!</h1>
+              <p className="mt-3 text-base md:text-xl lg:text-2xl workSans ">Pick and choose between various elements to compose your Punk 12px PFP</p>
             </div>
-            <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl text-black">
+            <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl ">
               Read <span className="text-[#FF6B00] underline cursor-pointer">instructions</span> for more info
             </div>
           </div>
@@ -253,10 +253,10 @@ export default function Home() {
               {renderTabContent()}
 
               <div className="grid grid-cols-2 bricolageSemibold gap-5 mt-5">
-                <button className="border-2 border-black text-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImageAndColor}>
+                <button className="border-2 border-black  text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImageAndColor}>
                   SHUFFLE
                 </button>
-                <button className="border-2 border-black text-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {}}>
+                <button className="border-2 border-black  text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {}}>
                   DOWNLOAD
                 </button>
               </div>
@@ -274,18 +274,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        <footer className="border-t-2 border-black">
-          <div className="p-12 bg-[#FF6B00]" id="aboutus">
-            <h2 className="bricolageSemibold text-6xl text-black">ABOUT US</h2>
-            <p className="workSans text-2xl mt-4 text-black">
-              Punks 12px are a free self-inscribe (Bitcoin) pixel art collection (Anno 2024) - first is first - with a total of 10,000 Punks (12×12px)
-            </p>
-            <div className="bricolageSemibold bg-black text-white text-2xl py-2 w-52 mt-4 text-center border-b-2 border-black">LEARN MORE</div>
-          </div>
-
-          <div className="bg-white p-12 bricolageSemibold text-black text-2xl border-t-2 border-black">IllEGAL MEMES © 2024 - ALL RIGHTS ARE RESERVED.</div>
-        </footer>
       </div>
     </div>
   );

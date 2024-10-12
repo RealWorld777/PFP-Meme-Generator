@@ -13,13 +13,11 @@ const Faq: React.FC = () => {
 
   return (
     <div>
-      <div className="p-12 bg-[#FF6B00] border-t-2 border-black" id="aboutus">
-        <h2 className="bricolageSemibold text-6xl text-black">FREQUENTLY ASKED QUESTIONS</h2>
-        <p className="workSans text-2xl mt-4 text-black">
-          Got questions? We’ve got answers! Check out our most frequently asked questions below to help you get started with creating and sharing your memes.
-        </p>
+      <div className="p-12 bg-[#FF6B00] border-t-2" id="aboutus">
+        <h2 className="bricolageSemibold text-6xl">FREQUENTLY ASKED QUESTIONS</h2>
+        <p className="workSans text-2xl mt-4 ">Got questions? We’ve got answers! Check out our most frequently asked questions below to help you get started with creating and sharing your memes.</p>
       </div>
-      <div className="bg-[#E1E1E1]">
+      <div className="">
         <div className="border-t-2 border-black p-10">
           {faqData.map((faq, index) => (
             <div key={index} className="bg-white flex justify-between p-5 border-2 border-black mb-5">
@@ -34,7 +32,6 @@ const Faq: React.FC = () => {
           ))}
         </div>
       </div>
-      <footer className="bg-white p-12 bricolageSemibold text-black text-2xl border-t-2 border-black">IllEGAL MEMES © 2024 - ALL RIGHTS ARE RESERVED.</footer>
     </div>
   );
 };

@@ -3,6 +3,7 @@
 import { ReactNode, useState } from 'react';
 import Header from '../components/layouts/Header';
 import Background from '../components/layouts/Background';
+import Footer from '../components/layouts/Footer';
 
 import './globals.css';
 
@@ -23,6 +24,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Background>
           <main>{children}</main>
         </Background>
+        <Footer />
       </body>
     </html>
   );

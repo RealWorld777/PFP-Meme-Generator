@@ -2,13 +2,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import burgerBtn from '../../../assets/more.png';
+import { Button } from '../../ui/button';
 
 function Header({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (value: boolean) => void }) {
   return (
     <>
       <nav className="relative h-[64px]">
         <div className="w-[100%] absolute flex justify-between p-4 bg-[#0c2b2fb3]">
-          <h2 className="text-2xl bricolageSemibold text-white">MEME GENERATOR</h2>
+          <Button className="text-2xl bricolageSemibold text-white">
+            <Link href="/">MEME GENERATOR</Link>
+          </Button>
           <div className="flex gap-2">
             <h2 className="hidden sm:block text-xl workSans">
               <Link href="/">Home</Link>
