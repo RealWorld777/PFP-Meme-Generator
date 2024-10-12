@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
-import TopRightSvg from '../../assets/svg/top-right';
-import BottomLeftSvg from '../../assets/svg/bottom-left';
+import TopRightSvg from '../../../assets/svg/top-right';
+import BottomLeftSvg from '../../../assets/svg/bottom-left';
 
 interface BackgroundProps {
   children: React.ReactNode;

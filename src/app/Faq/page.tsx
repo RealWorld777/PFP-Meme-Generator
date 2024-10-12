@@ -1,4 +1,3 @@
-// Start of Selection
 'use client';
 import { useState } from 'react';
 import images from '../../config/images';

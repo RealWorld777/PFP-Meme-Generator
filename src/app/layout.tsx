@@ -1,10 +1,11 @@
 'use client';
 
 import { ReactNode, useState } from 'react';
-import Header from '../components/Header';
-import Background from '../components/Background';
+import Header from '../components/layouts/Header';
+import Background from '../components/layouts/Background';
 
 import './globals.css';
+
 interface LayoutProps {
   children: ReactNode;
 }

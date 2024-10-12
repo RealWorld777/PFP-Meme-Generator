@@ -1,5 +1,3 @@
-import Layout from '../layout';
-
 const About: React.FC = () => {
   return (
     <div>

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import burgerBtn from '../../assets/more.png';
+import burgerBtn from '../../../assets/more.png';
 
 function Header({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (value: boolean) => void }) {
   return (
