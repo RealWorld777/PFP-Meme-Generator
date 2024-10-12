@@ -6,7 +6,6 @@ import { HexColorPicker, HexColorInput } from 'react-colorful';
 import { storage } from '../../config/firebase';
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import mainImg from '../../assets/Frame5.svg';
-import '../globals.css';
 import Loader from 'react-dots-loader';
 import 'react-dots-loader/index.css';
 

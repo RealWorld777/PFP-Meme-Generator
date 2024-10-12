@@ -1,5 +1,4 @@
 import Layout from '../layout';
-import '../globals.css';
 
 const About: React.FC = () => {
   return (

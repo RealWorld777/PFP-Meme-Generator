@@ -2,7 +2,9 @@
 
 import { ReactNode, useState } from 'react';
 import Header from '../components/Header';
+import Background from '../components/Background';
 
+import './globals.css';
 interface LayoutProps {
   children: ReactNode;
 }
@@ -17,7 +19,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </head>
       <body className="">
         <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-        <main>{children}</main>
+        <Background>
+          <main>{children}</main>
+        </Background>
       </body>
     </html>
   );

@@ -1,25 +1,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import burgerBtn from '../assets/more.png';
+import burgerBtn from '../../assets/more.png';
 
 function Header({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (value: boolean) => void }) {
   return (
     <>
-      <nav className="relative h-[64px] bg-[#E1E1E1]">
-        <div className="w-[100%] absolute flex justify-between p-4 bg-[#E1E1E1]">
-          <h2 className="text-2xl bricolageSemibold text-black">MEME GENERATOR</h2>
+      <nav className="relative h-[64px]">
+        <div className="w-[100%] absolute flex justify-between p-4 bg-[#0c2b2fb3]">
+          <h2 className="text-2xl bricolageSemibold text-white">MEME GENERATOR</h2>
           <div className="flex gap-2">
-            <h2 className="hidden sm:block text-xl workSans text-black">
+            <h2 className="hidden sm:block text-xl workSans">
               <Link href="/">Home</Link>
             </h2>
-            <h2 className="hidden sm:block text-xl workSans text-black">
+            <h2 className="hidden sm:block text-xl workSans">
               <Link href="/generator">Generator</Link>
             </h2>
-            <h2 className="hidden sm:block text-xl workSans text-black">
+            <h2 className="hidden sm:block text-xl workSans">
               <Link href="/about">About</Link>
             </h2>
-            <h2 className="hidden sm:block text-xl workSans text-black">
+            <h2 className="hidden sm:block text-xl workSans">
               <Link href="/faq">FAQ</Link>
             </h2>
           </div>
