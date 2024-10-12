@@ -2,12 +2,13 @@ import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDs-NW6rIbID9XF5009wb-yMecbo00l7io',
-  authDomain: 'pfp-generator-dc1dc.firebaseapp.com',
-  projectId: 'pfp-generator-dc1dc',
-  storageBucket: 'pfp-generator-dc1dc.appspot.com',
-  messagingSenderId: '1066849244601',
-  appId: '1:1066849244601:web:de886383dccff1ba63d268',
+  apiKey: "AIzaSyDXJ5-mHMMfisr6k_9ghnxhwKUt8AhpZeU",
+  authDomain: "image-27e04.firebaseapp.com",
+  projectId: "image-27e04",
+  storageBucket: "image-27e04.appspot.com",
+  messagingSenderId: "933418615350",
+  appId: "1:933418615350:web:8b5b8ac538afedae080e97",
+  measurementId: "G-2ZZF7CCR1Y"
 };
 
 const app = initializeApp(firebaseConfig);

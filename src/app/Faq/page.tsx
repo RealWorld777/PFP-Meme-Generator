@@ -75,14 +75,14 @@ const Faq: React.FC = () => {
                   </div>
                 </div>
                 <div
-                  className="w-[25px] h-[25px] cursor-pointer"
+                  className="w-[50px] h-[50px] sm:w-[25px] sm:h-[25px] cursor-pointer"
                   onClick={() => {
                     toggleFaqActive(index)
                   }}>
                   {faq.active ?
                     <Image src={images.minus} alt="" />
                     :
-                    <Image src={images.plus} alt="" />
+                    <Image src={images.plus} alt=""  className="max-w-none"/>
                   }
                 </div>
               </div>
