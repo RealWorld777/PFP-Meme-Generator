@@ -28,7 +28,7 @@ body {
 
 @font-face {
   font-family: 'BricolageSemibold';
-  src: url('../app/assets/BricolageGrotesque_24pt_Condensed-SemiBold.ttf') format('truetype');
+  src: url('../assets/BricolageGrotesque_24pt_Condensed-SemiBold.ttf') format('truetype');
        
   font-weight: normal;
   font-style: normal;
@@ -36,7 +36,7 @@ body {
 
 @font-face {
   font-family: 'WorkSans';
-  src: url('../app/assets/WorkSans-VariableFont_wght.ttf') format('truetype');
+  src: url('../assets/WorkSans-VariableFont_wght.ttf') format('truetype');
        
   font-weight: 500;
   font-style: normal;

@@ -1,15 +1,13 @@
-import Layout from "../layout";
-import "../globals.css"
-const About: React.FC = () => {
-    return (
-        <Layout >
+import Layout from '../layout';
+import '../globals.css';
 
-            <div>
-                <h1 className="text-black">About Page</h1>
-                <p className="text-black">This is the about page.</p>
-            </div>
-        </Layout>
-    );
+const About: React.FC = () => {
+  return (
+    <div>
+      <h1 className="text-black">About Page</h1>
+      <p className="text-black">This is the about page.</p>
+    </div>
+  );
 };
 
 export default About;
