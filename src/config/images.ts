@@ -1,29 +1,26 @@
-import head1 from '../assets/HEAD_Rick_var1.png';
-import head2 from '../assets/HEAD_Cfb_var0.png';
-import head3 from '../assets/HEAD_King_var0.png';
-import head4 from '../assets/HEAD_Logan_var0.png';
-import body1 from '../assets/BODY_Cfb_var0.png';
-import body2 from '../assets/BODY_Cfb_var1.png';
-import body3 from '../assets/BODY_King_var1.png';
-import body4 from '../assets/BODY_King_var0.png';
-import body5 from '../assets/BODY_Logan_var0.png';
-import rick from '../assets/rick.png';
+import sample1 from '../assets/sample_1.webp';
+import sample2 from '../assets/sample_2.webp';
+import sample3 from '../assets/sample_3.webp';
+import sample4 from '../assets/sample_4.webp';
+import sample5 from '../assets/sample_5.webp';
+import sample6 from '../assets/sample_6.webp';
 import plus from '../assets/plus.png';
 import minus from '../assets/minus.png';
 
+import homeImg from '../assets/home.webp';
+import homeImg2 from '../assets/home2.webp';
+
 const images = {
-  head1,
-  head2,
-  head3,
-  head4,
-  body1,
-  body2,
-  body3,
-  body4,
-  body5,
-  rick,
+  sample1,
+  sample2,
+  sample3,
+  sample4,
+  sample5,
+  sample6,
   plus,
   minus,
 };
 
 export default images;
+
+export { homeImg, homeImg2 };
