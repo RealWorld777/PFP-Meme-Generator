@@ -19,12 +19,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <head>
         <title>PFP Generator</title>
       </head>
-      <body className="">
+      <body className="text-white">
         <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <Background>
           <main>{children}</main>
+          <Footer />
         </Background>
-        <Footer />
       </body>
     </html>
   );
