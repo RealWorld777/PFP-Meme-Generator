@@ -94,34 +94,35 @@ export default function Home() {
     return matchedImages;
   };
 
-  //   const getRandomImageAndColor = useCallback(() => {
-  //     if (initialBody.length === 0) return;
+  const getRandomImageAndColor = useCallback(() => {
+    console.log('image categories: ', imageCategories);
+    if (Object.values(imageCategories).some((category) => category.initial[0].length === 0)) {
+      console.log("length")
+      return;
+    }
 
-  //     const randomBody = getRandomElement(initialBody);
-  //     const bodyVarNumber = parseVar(randomBody);
+    const randomColor = getRandomHexColor();
+    const newSelected = { ...selected };
+    console.log('random color: ', randomColor);
+    console.log('new selected: ', newSelected);
 
-  //     let randomBody =
-  //       bodyVarNumber === -1
-  //         ? getRandomElement(initialBody)
-  //         : (() => {
-  //             let body;
-  //             do {
-  //               body = getRandomElement(initialBody);
-  //             } while (parseVar(body) !== headVarNumber && parseVar(body) !== -1);
-  //             return body;
-  //           })();
+    for (const [category, { initial }] of Object.entries(imageCategories)) {
+      const randomImage = getRandomElement(initial[0]);
+      newSelected[category as keyof typeof selected] = randomImage;
+    }
 
-  //     const randomColor = getRandomHexColor();
-  //     console.log('Shuffled results', headVarNumber, parseVar(randomHead), randomColor);
+    console.log('Shuffled results', newSelected, randomColor);
 
-  //     setColor(randomColor);
-  //     setSelected((prev) => ({ ...prev, body: randomBody, head: randomHead }));
-  //     setBodyType(randomHead);
-  //     setHeadType(randomHead);
+    setColor(randomColor);
+    setSelected(newSelected);
 
-  //     return { head: randomHead, body: randomBody, color: randomColor };
-  //   }, [initialBody]);
-  const getRandomImageAndColor = () => {};
+    // Update body type based on the new body selection
+    if (newSelected.body) {
+      setBodyType(newSelected.body);
+    }
+
+    return { ...newSelected, color: randomColor };
+  }, [initialBody]);
 
   const fetchImages = useCallback(async (category: keyof typeof imageCategories, folder: string) => {
     const listRef = ref(storage, folder);
@@ -140,7 +141,7 @@ export default function Home() {
     fetchImages('top', 'LD_ASSETS/top/');
     fetchImages('mouth', 'LD_ASSETS/mouth/');
     fetchImages('glasses', 'LD_ASSETS/glasses/');
-    fetchImages('earrings', 'LD_ASSETS/earringsrings/');
+    fetchImages('earrings', 'LD_ASSETS/earrings/');
   }, [fetchImages]);
 
   const resetSelections = () => {
@@ -212,7 +213,7 @@ export default function Home() {
                       setSelected((prev) => ({ ...prev, [tab]: url }));
                     }}
                   >
-                    <img src={url} alt={`Image ${index}`} className="w-36 h-36 object-cover" />
+                    <Image src={url} alt={`Image ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
                   </div>
                 ))}
               </div>
@@ -245,7 +246,7 @@ export default function Home() {
         </div>
 
         <div className="lg:flex p-6 lg:p-12 justify-between">
-          <div className="w-full mb-5 lg:mb-0 lg:w-3/5 border-2 border-black bg-white">
+          <div className="w-full mb-5 lg:mb-0 lg:w-3/5 border-2 border-black">
             <div className="grid grid-cols-4 bricolageSemibold text-xl md:text-3xl border-b-2 border-black">
               {[
                 { label: 'Background', value: 'background' },
@@ -283,13 +284,13 @@ export default function Home() {
 
           <div className="w-1/3 min-h-[400px]">
             <div ref={captureRef} className="border-2 border-black relative w-80 h-80" style={{ backgroundColor: color }}>
-              {selected.body && <Image alt="Body" src={selected.body} className="absolute top-0 left-0 z-0 w-full h-full" fill />}
-              {selected.skin && <Image alt="Skin" src={selected.skin} className="absolute top-0 left-0 z-1 w-full h-full" fill />}
-              {selected.eyes && <Image alt="Eyes" src={selected.eyes} className="absolute top-0 left-0 z-2 w-full h-full" fill />}
-              {selected.top && <Image alt="Top" src={selected.top} className="absolute top-0 left-0 z-3 w-full h-full" fill />}
-              {selected.mouth && <Image alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-4 w-full h-full" fill />}
-              {selected.glasses && <Image alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-5 w-full h-full" fill />}
-              {selected.earrings && <Image alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-6 w-full h-full" fill />}
+              {selected.body && <Image alt="Body" src={selected.body} className="absolute top-0 left-0 z-0 w-full h-full" fill loading="lazy" />}
+              {selected.skin && <Image alt="Skin" src={selected.skin} className="absolute top-0 left-0 z-1 w-full h-full" fill loading="lazy" />}
+              {selected.eyes && <Image alt="Eyes" src={selected.eyes} className="absolute top-0 left-0 z-2 w-full h-full" fill loading="lazy" />}
+              {selected.top && <Image alt="Top" src={selected.top} className="absolute top-0 left-0 z-3 w-full h-full" fill loading="lazy" />}
+              {selected.mouth && <Image alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-4 w-full h-full" fill loading="lazy" />}
+              {selected.glasses && <Image alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-5 w-full h-full" fill loading="lazy" />}
+              {selected.earrings && <Image alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-6 w-full h-full" fill loading="lazy" />}
             </div>
           </div>
         </div>
