@@ -12,51 +12,64 @@ import 'react-dots-loader/index.css';
 export default function Home() {
   const captureRef = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState('#aabbcc');
-  const [tab, setTab] = useState<'background' | 'top' | 'eyes' | 'glasses' | 'mouth' | 'earring' | 'body'>('background');
+  const [tab, setTab] = useState<'background' | 'body' | 'skin' | 'eyes' | 'top' | 'mouth' | 'glasses' | 'earrings'>('background');
 
   const imageCategories = {
-    bodies: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
-    glasses: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
+    body: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
+    skin: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
     eyes: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
     top: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
-    ear: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
     mouth: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
+    glasses: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
+    earrings: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
   };
 
-  const [[bodiesImages, setBodiesImages], [glassesImages, setGlassesImages], [eyesImages, setEyesImages], [topImages, setTopImages], [earImages, setEarImages], [mouthImages, setMouthImages]] = [
-    imageCategories.bodies.state,
-    imageCategories.glasses.state,
+  const [
+    [bodyImages, setBodyImages],
+    [skinImages, setSkinImages],
+    [eyesImages, setEyesImages],
+    [topImages, setTopImages],
+    [mouthImages, setMouthImages],
+    [glassesImages, setGlassesImages],
+    [earringsImages, setearringsImages],
+  ] = [
+    imageCategories.body.state,
+    imageCategories.skin.state,
     imageCategories.eyes.state,
     imageCategories.top.state,
-    imageCategories.ear.state,
     imageCategories.mouth.state,
+    imageCategories.glasses.state,
+    imageCategories.earrings.state,
   ];
 
-  const [[initialBodies], [initialGlasses], [initialEyes], [initialTop], [initialEar], [initialMouth]] = [
-    imageCategories.bodies.initial,
-    imageCategories.glasses.initial,
+  const [[initialBody], [initialSkin], [initialEyes], [initialTop], [initialMouth], [initialGlasses], [initialearrings]] = [
+    imageCategories.body.initial,
+    imageCategories.skin.initial,
     imageCategories.eyes.initial,
     imageCategories.top.initial,
-    imageCategories.ear.initial,
     imageCategories.mouth.initial,
+    imageCategories.glasses.initial,
+    imageCategories.earrings.initial,
   ];
 
   const [selected, setSelected] = useState({
-    body: 'https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/bodies%2FBODY_Cfb_var0.png?alt=media&token=6111f162-f6dc-4262-bb57-81eb33c543d6',
+    body: 'https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/body%2FBODY_Cfb_var0.png?alt=media&token=6111f162-f6dc-4262-bb57-81eb33c543d6',
+    skin: '',
     eyes: '',
-    glasses: '',
     top: '',
-    ear: '',
     mouth: '',
+    glasses: '',
+    earrings: '',
   });
 
   const [imagesLoaded, setImagesLoaded] = useState({
+    body: false,
+    skin: false,
     eyes: false,
-    glasses: false,
     top: false,
-    ear: false,
     mouth: false,
-    general: false,
+    glasses: false,
+    earrings: false,
   });
 
   const shuffleColours = ['#fb85ab', '#f8d63f', '#5d71fc', '#b3fbfe'];
@@ -71,29 +84,29 @@ export default function Home() {
   };
 
   const filterImagesByVar = (images: string[], varIdentifier: string): string[] =>
-    varIdentifier === 'ALL' ? initialBodies : images.filter((img) => img.includes(`var${varIdentifier}`) || img.includes('varALL'));
+    varIdentifier === 'ALL' ? initialBody : images.filter((img) => img.includes(`var${varIdentifier}`) || img.includes('varALL'));
 
   const setBodyType = (url: string): string[] => {
     const varIdentifier = url.match(/var(\d+|ALL)/)?.[1];
     if (!varIdentifier) return [];
-    const matchedImages = filterImagesByVar(initialBodies, varIdentifier);
-    setBodiesImages(matchedImages);
+    const matchedImages = filterImagesByVar(initialBody, varIdentifier);
+    setBodyImages(matchedImages);
     return matchedImages;
   };
 
   //   const getRandomImageAndColor = useCallback(() => {
-  //     if (initialBodies.length === 0) return;
+  //     if (initialBody.length === 0) return;
 
-  //     const randomBody = getRandomElement(initialBodies);
+  //     const randomBody = getRandomElement(initialBody);
   //     const bodyVarNumber = parseVar(randomBody);
 
   //     let randomBody =
   //       bodyVarNumber === -1
-  //         ? getRandomElement(initialBodies)
+  //         ? getRandomElement(initialBody)
   //         : (() => {
   //             let body;
   //             do {
-  //               body = getRandomElement(initialBodies);
+  //               body = getRandomElement(initialBody);
   //             } while (parseVar(body) !== headVarNumber && parseVar(body) !== -1);
   //             return body;
   //           })();
@@ -107,7 +120,7 @@ export default function Home() {
   //     setHeadType(randomHead);
 
   //     return { head: randomHead, body: randomBody, color: randomColor };
-  //   }, [initialBodies]);
+  //   }, [initialBody]);
   const getRandomImageAndColor = () => {};
 
   const fetchImages = useCallback(async (category: keyof typeof imageCategories, folder: string) => {
@@ -121,23 +134,25 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetchImages('mouth', 'LD_ASSETS/mouth/');
-    fetchImages('ear', 'LD_ASSETS/earrings/');
-    fetchImages('top', 'LD_ASSETS/top/');
-    fetchImages('glasses', 'LD_ASSETS/glasses/');
-    fetchImages('bodies', 'LD_ASSETS/bodies/');
+    fetchImages('body', 'LD_ASSETS/body/');
+    fetchImages('skin', 'LD_ASSETS/skin/');
     fetchImages('eyes', 'LD_ASSETS/eyes/');
+    fetchImages('top', 'LD_ASSETS/top/');
+    fetchImages('mouth', 'LD_ASSETS/mouth/');
+    fetchImages('glasses', 'LD_ASSETS/glasses/');
+    fetchImages('earrings', 'LD_ASSETS/earringsrings/');
   }, [fetchImages]);
 
   const resetSelections = () => {
-    setBodiesImages(initialBodies);
+    setBodyImages(initialBody);
     setSelected({
       body: '',
+      skin: '',
       eyes: '',
-      glasses: '',
       top: '',
-      ear: '',
       mouth: '',
+      glasses: '',
+      earrings: '',
     });
   };
 
@@ -160,19 +175,21 @@ export default function Home() {
             </div>
           </div>
         );
-      case 'eyes':
-      case 'glasses':
-      case 'top':
-      case 'earring':
-      case 'mouth':
       case 'body':
+      case 'skin':
+      case 'eyes':
+      case 'top':
+      case 'mouth':
+      case 'glasses':
+      case 'earrings':
         const categoryMap: Record<string, { images: string[]; loaded: boolean }> = {
+          body: { images: bodyImages, loaded: imagesLoaded.body },
+          skin: { images: skinImages, loaded: imagesLoaded.skin },
           eyes: { images: eyesImages, loaded: imagesLoaded.eyes },
-          glasses: { images: glassesImages, loaded: imagesLoaded.glasses },
           top: { images: topImages, loaded: imagesLoaded.top },
-          earring: { images: earImages, loaded: imagesLoaded.ear },
           mouth: { images: mouthImages, loaded: imagesLoaded.mouth },
-          body: { images: bodiesImages, loaded: imagesLoaded.general },
+          glasses: { images: glassesImages, loaded: imagesLoaded.glasses },
+          earrings: { images: earringsImages, loaded: imagesLoaded.earrings },
         };
 
         const currentCategory = categoryMap[tab];
@@ -232,12 +249,13 @@ export default function Home() {
             <div className="grid grid-cols-4 bricolageSemibold text-xl md:text-3xl border-b-2 border-black">
               {[
                 { label: 'Background', value: 'background' },
-                { label: 'Top', value: 'top' },
-                { label: 'Eyes', value: 'eyes' },
-                { label: 'Glasses', value: 'glasses' },
-                { label: 'Mouth', value: 'mouth' },
-                { label: 'Earring', value: 'earring' },
                 { label: 'Body', value: 'body' },
+                { label: 'Skin', value: 'skin' },
+                { label: 'Eyes', value: 'eyes' },
+                { label: 'Top', value: 'top' },
+                { label: 'Mouth', value: 'mouth' },
+                { label: 'Glasses', value: 'glasses' },
+                { label: 'Earrings', value: 'earrings' },
               ].map((tabItem) => (
                 <div
                   key={tabItem.value}
@@ -266,11 +284,12 @@ export default function Home() {
           <div className="w-1/3 min-h-[400px]">
             <div ref={captureRef} className="border-2 border-black relative w-80 h-80" style={{ backgroundColor: color }}>
               {selected.body && <Image alt="Body" src={selected.body} className="absolute top-0 left-0 z-0 w-full h-full" fill />}
+              {selected.skin && <Image alt="Skin" src={selected.skin} className="absolute top-0 left-0 z-1 w-full h-full" fill />}
               {selected.eyes && <Image alt="Eyes" src={selected.eyes} className="absolute top-0 left-0 z-2 w-full h-full" fill />}
-              {selected.glasses && <Image alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-2 w-full h-full" fill />}
-              {selected.top && <Image alt="Top" src={selected.top} className="absolute top-0 left-0 z-2 w-full h-full" fill />}
-              {selected.mouth && <Image alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-2 w-full h-full" fill />}
-              {selected.ear && <Image alt="Earring" src={selected.ear} className="absolute top-0 left-0 z-2 w-full h-full" fill />}
+              {selected.top && <Image alt="Top" src={selected.top} className="absolute top-0 left-0 z-3 w-full h-full" fill />}
+              {selected.mouth && <Image alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-4 w-full h-full" fill />}
+              {selected.glasses && <Image alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-5 w-full h-full" fill />}
+              {selected.earrings && <Image alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-6 w-full h-full" fill />}
             </div>
           </div>
         </div>
