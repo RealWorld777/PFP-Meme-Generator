@@ -236,8 +236,8 @@ export default function Home() {
           </div>
           <div className="flex flex-col justify-between px-7 py-5 md:px-12 md:py-8 w-full sm:w-1/2">
             <div>
-              <h1 className="bricolageSemibold text-3xl md:text-5xl lg:text-7xl ">CREATE & DOWNLOAD YOUR PUNKS 12PX PFP!</h1>
-              <p className="mt-3 text-base md:text-xl lg:text-2xl workSans ">Pick and choose between various elements to compose your Punk 12px PFP</p>
+              <h1 className="bricolageSemibold text-3xl md:text-5xl lg:text-7xl ">CREATE & DOWNLOAD YOUR FAVOURITE CFB PFP!</h1>
+              <p className="mt-3 text-base md:text-xl lg:text-2xl workSans ">Pick and choose between various elements to compose your CFB PFP</p>
             </div>
             <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl ">
               Read <span className="text-[#FF6B00] underline cursor-pointer">instructions</span> for more info

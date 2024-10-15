@@ -1,61 +1,46 @@
-import Image from 'next/image';
+'use client';
+
+import * as React from 'react';
 import Link from 'next/link';
-import React from 'react';
-import burgerBtn from '../../../assets/more.png';
-import { Button } from '../../ui/button';
+import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger, NavigationMenuIndicator } from '../../ui/navigation-menu';
+import Image from 'next/image';
 
-function Header({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (value: boolean) => void }) {
+function Header() {
   return (
-    <>
-      <nav className="relative h-[64px]">
-        <div className="w-[100%] absolute flex justify-between p-4 bg-[#0c2b2fb3]">
-          <Button className="text-2xl bricolageSemibold text-white">
-            <Link href="/">MEME GENERATOR</Link>
-          </Button>
-          <div className="flex gap-2">
-            <h2 className="hidden sm:block text-xl workSans">
-              <Link href="/">Home</Link>
-            </h2>
-            <h2 className="hidden sm:block text-xl workSans">
-              <Link href="/generator">Generator</Link>
-            </h2>
-            <h2 className="hidden sm:block text-xl workSans">
-              <Link href="/about">About</Link>
-            </h2>
-            <h2 className="hidden sm:block text-xl workSans">
-              <Link href="/faq">FAQ</Link>
-            </h2>
-          </div>
-          <div
-            className="w-5 h-5 block sm:hidden cursor-pointer"
-            onClick={() => {
-              setMenuOpen(!menuOpen);
-            }}
-          >
-            <Image alt="burgerBtn" src={burgerBtn} />
-          </div>
-        </div>
-      </nav>
-      {menuOpen && (
-        <div className="sm:hidden absolute bg-[#E1E1E1] w-[100vw] top-[66px] p-6 flex flex-col items-center border-b-2 workSans border-black">
-          <Link href="/" className="text-black text-xl mb-5">
-            Home
-          </Link>
+    <NavigationMenu className="min-w-full justify-between px-4 py-2 bg-[#0c2b2fb3] backdrop-blur">
+      <Link href="/" className="flex items-center">
+        <Image src="/favicon.ico" alt="PFP Generator Logo" width={42} height={42} className="mr-2" />
+        <span className="text-2xl bricolageSemibold text-white">PFP GENERATOR</span>
+      </Link>
 
-          <Link href="/generator" className="text-black text-xl mb-5">
-            Generator
-          </Link>
+      <NavigationMenuList className="flex justify-between items-center">
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild>
+            <Link href="/" className="text-xl workSans px-4">
+              Home
+            </Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild>
+            <Link href="/generator" className="text-xl workSans px-4">
+              Generator
+            </Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild>
+            <Link href="/faq" className="text-xl workSans px-4">
+              FAQ
+            </Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
 
-          <Link href="/about" className="text-black text-xl mb-5">
-            About
-          </Link>
-
-          <Link href="/faq" className="text-black text-xl">
-            FAQ
-          </Link>
-        </div>
-      )}
-    </>
+      <NavigationMenuIndicator className="top-full z-10 flex h-2.5 items-end justify-center overflow-hidden transition-[width,transform_250ms_ease] data-[state=hidden]:animate-fadeOut data-[state=visible]:animate-fadeIn">
+        <div className="relative top-[70%] size-2.5 rotate-45 rounded-tl-sm bg-white" />
+      </NavigationMenuIndicator>
+    </NavigationMenu>
   );
 }
 

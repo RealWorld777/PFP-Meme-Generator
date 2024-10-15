@@ -12,15 +12,15 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <html lang="en">
       <head>
         <title>PFP Generator</title>
       </head>
       <body className="text-white">
-        <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <nav className="relative w-full">
+          <Header />
+        </nav>
         <Background>
           <main>{children}</main>
           <Footer />
