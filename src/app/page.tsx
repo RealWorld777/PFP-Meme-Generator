@@ -64,19 +64,16 @@ function Home() {
       </LandingMarquee>
 
       <LandingProductFeature
-        title="Smart Task Prioritization"
+        title="PFP Generator"
         descriptionComponent={
           <>
-            <p>
-              Our AI-powered task prioritization feature automatically organizes your to-do list based on deadlines, importance, and your work patterns, ensuring you focus on the most critical tasks
-              first.
+            <p className="text-xl">
+              Our PFP Meme Generator allows you to create unique and personalized CFB profile images for your Discord, X, or other platforms.
             </p>
 
-            <Button className="mt-8" variant="secondary" asChild>
-              <Link href="/generator">Try now for free</Link>
+            <Button className="text-lg mt-8" variant="outline" asChild>
+              <Link href="/generator">Generate Now</Link>
             </Button>
-
-            <p className="">First month is on us.</p>
           </>
         }
         imageSrc={homeImg2.src}
