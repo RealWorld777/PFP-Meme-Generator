@@ -1,13 +1,13 @@
 'use client';
-import Image from 'next/image';
+import NextImage from 'next/image';
 import { useEffect, useRef, useState, useCallback } from 'react';
-import html2canvas from 'html2canvas';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
 import { storage } from '../../config/firebase';
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import mainImg from '../../assets/Frame5.svg';
 import Loader from 'react-dots-loader';
 import 'react-dots-loader/index.css';
+import { Button } from '../../components/ui/button';
 
 export default function Home() {
   const captureRef = useRef<HTMLDivElement>(null);
@@ -96,10 +96,7 @@ export default function Home() {
 
   const getRandomImageAndColor = useCallback(() => {
     console.log('image categories: ', imageCategories);
-    if (Object.values(imageCategories).some((category) => category.initial[0].length === 0)) {
-      console.log("length")
-      return;
-    }
+    if (Object.values(imageCategories).some((category) => category.initial[0].length === 0)) return;
 
     const randomColor = getRandomHexColor();
     const newSelected = { ...selected };
@@ -145,7 +142,7 @@ export default function Home() {
   }, [fetchImages]);
 
   const resetSelections = () => {
-    setBodyImages(initialBody);
+    setColor('#aabbcc');
     setSelected({
       body: '',
       skin: '',
@@ -155,6 +152,70 @@ export default function Home() {
       glasses: '',
       earrings: '',
     });
+  };
+
+  const combineImages = async (): Promise<string> => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    if (!ctx) {
+      throw new Error('Canvas context not available');
+    }
+
+    const width = 500;
+    const height = 500;
+    canvas.width = width;
+    canvas.height = height;
+
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, width, height);
+
+    const loadImage = (src: string): Promise<HTMLImageElement> =>
+      new Promise((resolve, reject) => {
+        const img = new Image();
+        // img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+        img.src = src;
+      });
+
+    try {
+      const images = await Promise.all([
+        selected.body ? loadImage(selected.body) : Promise.resolve(null),
+        selected.skin ? loadImage(selected.skin) : Promise.resolve(null),
+        selected.eyes ? loadImage(selected.eyes) : Promise.resolve(null),
+        selected.top ? loadImage(selected.top) : Promise.resolve(null),
+        selected.mouth ? loadImage(selected.mouth) : Promise.resolve(null),
+        selected.glasses ? loadImage(selected.glasses) : Promise.resolve(null),
+        selected.earrings ? loadImage(selected.earrings) : Promise.resolve(null),
+      ]);
+
+      images.forEach((img) => {
+        if (img) {
+          ctx.drawImage(img, 0, 0, width, height);
+        }
+      });
+
+      return canvas.toDataURL('image/png');
+    } catch (error) {
+      console.error('Error combining images:', error);
+      return '';
+    }
+  };
+
+  const captureImage = async () => {
+    const dataUrl = await combineImages();
+
+    if (dataUrl) {
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = 'combined-pfp.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      alert('Failed to generate image.');
+    }
   };
 
   const renderTabContent = () => {
@@ -213,7 +274,7 @@ export default function Home() {
                       setSelected((prev) => ({ ...prev, [tab]: url }));
                     }}
                   >
-                    <Image src={url} alt={`Image ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
+                    <NextImage src={url} alt={`Image ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
                   </div>
                 ))}
               </div>
@@ -232,7 +293,7 @@ export default function Home() {
       <div className="w-full flex flex-col">
         <div className="sm:flex w-full border-t-2 border-b-2 border-black">
           <div className="w-full sm:w-1/2 border-b-2 sm:border-b-0 sm:border-r-2 border-black">
-            <Image alt="Main Image" src={mainImg} className="w-full" />
+            <NextImage alt="Main Image" src={mainImg} className="w-full" />
           </div>
           <div className="flex flex-col justify-between px-7 py-5 md:px-12 md:py-8 w-full sm:w-1/2">
             <div>
@@ -272,25 +333,25 @@ export default function Home() {
               {renderTabContent()}
 
               <div className="grid grid-cols-2 bricolageSemibold gap-5 mt-5">
-                <button className="border-2 border-black  text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImageAndColor}>
+                <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImageAndColor}>
                   SHUFFLE
-                </button>
-                <button className="border-2 border-black  text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={() => {}}>
+                </Button>
+                <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={captureImage}>
                   DOWNLOAD
-                </button>
+                </Button>
               </div>
             </div>
           </div>
 
           <div className="w-1/3 min-h-[400px]">
             <div ref={captureRef} className="border-2 border-black relative w-80 h-80" style={{ backgroundColor: color }}>
-              {selected.body && <Image alt="Body" src={selected.body} className="absolute top-0 left-0 z-0 w-full h-full" fill loading="lazy" />}
-              {selected.skin && <Image alt="Skin" src={selected.skin} className="absolute top-0 left-0 z-1 w-full h-full" fill loading="lazy" />}
-              {selected.eyes && <Image alt="Eyes" src={selected.eyes} className="absolute top-0 left-0 z-2 w-full h-full" fill loading="lazy" />}
-              {selected.top && <Image alt="Top" src={selected.top} className="absolute top-0 left-0 z-3 w-full h-full" fill loading="lazy" />}
-              {selected.mouth && <Image alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-4 w-full h-full" fill loading="lazy" />}
-              {selected.glasses && <Image alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-5 w-full h-full" fill loading="lazy" />}
-              {selected.earrings && <Image alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-6 w-full h-full" fill loading="lazy" />}
+              {selected.body && <NextImage alt="Body" src={selected.body} className="absolute top-0 left-0 z-0 w-full h-full" fill loading="lazy" />}
+              {selected.skin && <NextImage alt="Skin" src={selected.skin} className="absolute top-0 left-0 z-1 w-full h-full" fill loading="lazy" />}
+              {selected.eyes && <NextImage alt="Eyes" src={selected.eyes} className="absolute top-0 left-0 z-2 w-full h-full" fill loading="lazy" />}
+              {selected.top && <NextImage alt="Top" src={selected.top} className="absolute top-0 left-0 z-3 w-full h-full" fill loading="lazy" />}
+              {selected.mouth && <NextImage alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-4 w-full h-full" fill loading="lazy" />}
+              {selected.glasses && <NextImage alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-5 w-full h-full" fill loading="lazy" />}
+              {selected.earrings && <NextImage alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-6 w-full h-full" fill loading="lazy" />}
             </div>
           </div>
         </div>
