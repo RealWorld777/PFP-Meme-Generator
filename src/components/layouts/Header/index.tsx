@@ -13,24 +13,24 @@ function Header() {
         <span className="text-2xl bricolageSemibold text-white">PFP GENERATOR</span>
       </Link>
 
-      <NavigationMenuList className="flex justify-between items-center">
+      <NavigationMenuList className="flex gap-2 justify-around items-center">
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="/" className="text-xl workSans px-4">
+            <Link href="/" className="text-xl workSans">
               Home
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="/generator" className="text-xl workSans px-4">
+            <Link href="/generator" className="text-xl workSans">
               Generator
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="/faq" className="text-xl workSans px-4">
+            <Link href="/faq" className="text-xl workSans">
               FAQ
             </Link>
           </NavigationMenuLink>
