@@ -59,7 +59,7 @@ function Home() {
       </LandingPrimaryImageCtaSection>
       <LandingMarquee withBackground variant="secondary">
         {Object.values(images).map((image, index) => {
-          return <Image src={image} alt="CFB" className="h-48 w-auto" />;
+          return <Image key={index} src={image} alt="CFB" className="h-48 w-auto" />;
         })}
       </LandingMarquee>
 

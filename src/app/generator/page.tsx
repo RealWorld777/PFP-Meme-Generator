@@ -53,7 +53,7 @@ export default function Home() {
   ];
 
   const [selected, setSelected] = useState({
-    body: 'https://firebasestorage.googleapis.com/v0/b/meme-1851b.appspot.com/o/body%2FBODY_Cfb_var0.png?alt=media&token=6111f162-f6dc-4262-bb57-81eb33c543d6',
+    body: '',
     skin: '',
     eyes: '',
     top: '',
@@ -119,7 +119,7 @@ export default function Home() {
     }
 
     return { ...newSelected, color: randomColor };
-  }, [initialBody]);
+  }, [initialBody, imageCategories, selected, setBodyType]);
 
   const fetchImages = useCallback(async (category: keyof typeof imageCategories, folder: string) => {
     const listRef = ref(storage, folder);
@@ -129,7 +129,7 @@ export default function Home() {
     imageCategories[category].initial[1](urls);
     setImagesLoaded((prev) => ({ ...prev, [category]: true }));
     console.log(`${category}`, urls);
-  }, []);
+  }, [imageCategories]);
 
   useEffect(() => {
     fetchImages('body', 'LD_ASSETS/body/');
@@ -139,7 +139,7 @@ export default function Home() {
     fetchImages('mouth', 'LD_ASSETS/mouth/');
     fetchImages('glasses', 'LD_ASSETS/glasses/');
     fetchImages('earrings', 'LD_ASSETS/earrings/');
-  }, [fetchImages]);
+  }, []);
 
   const resetSelections = () => {
     setColor('#aabbcc');
