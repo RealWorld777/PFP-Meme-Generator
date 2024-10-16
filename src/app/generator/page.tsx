@@ -1,3 +1,4 @@
+// Start of Selection
 'use client';
 import NextImage from 'next/image';
 import { useEffect, useRef, useState, useCallback } from 'react';
@@ -17,6 +18,7 @@ export default function Home() {
   const [tab, setTab] = useState<'background' | 'body' | 'skin' | 'eyes' | 'top' | 'mouth' | 'glasses' | 'earrings'>('background');
 
   const imageCategories = {
+    background: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
     body: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
     skin: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
     eyes: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
@@ -27,14 +29,16 @@ export default function Home() {
   };
 
   const [
+    [backgroundImages, setBackgroundImages],
     [bodyImages, setBodyImages],
     [skinImages, setSkinImages],
     [eyesImages, setEyesImages],
     [topImages, setTopImages],
     [mouthImages, setMouthImages],
     [glassesImages, setGlassesImages],
-    [earringsImages, setearringsImages],
+    [earringsImages, setEarringsImages],
   ] = [
+    imageCategories.background.state,
     imageCategories.body.state,
     imageCategories.skin.state,
     imageCategories.eyes.state,
@@ -44,7 +48,8 @@ export default function Home() {
     imageCategories.earrings.state,
   ];
 
-  const [[initialBody], [initialSkin], [initialEyes], [initialTop], [initialMouth], [initialGlasses], [initialearrings]] = [
+  const [[initialBackground], [initialBody], [initialSkin], [initialEyes], [initialTop], [initialMouth], [initialGlasses], [initialEarrings]] = [
+    imageCategories.background.initial,
     imageCategories.body.initial,
     imageCategories.skin.initial,
     imageCategories.eyes.initial,
@@ -55,6 +60,7 @@ export default function Home() {
   ];
 
   const [selected, setSelected] = useState({
+    background: '',
     body: '',
     skin: '',
     eyes: '',
@@ -65,6 +71,7 @@ export default function Home() {
   });
 
   const [imagesLoaded, setImagesLoaded] = useState({
+    background: false,
     body: false,
     skin: false,
     eyes: false,
@@ -96,32 +103,28 @@ export default function Home() {
     return matchedImages;
   };
 
-  const getRandomImageAndColor = useCallback(() => {
+  const getRandomImages = useCallback(() => {
     console.log('image categories: ', imageCategories);
     if (Object.values(imageCategories).some((category) => category.initial[0].length === 0)) return;
 
-    const randomColor = getRandomHexColor();
     const newSelected = { ...selected };
-    console.log('random color: ', randomColor);
-    console.log('new selected: ', newSelected);
+    console.log('new selected before shuffle:', newSelected);
 
     for (const [category, { initial }] of Object.entries(imageCategories)) {
       const randomImage = getRandomElement(initial[0]);
       newSelected[category as keyof typeof selected] = randomImage;
     }
 
-    console.log('Shuffled results', newSelected, randomColor);
+    console.log('Shuffled results', newSelected);
 
-    setColor(randomColor);
     setSelected(newSelected);
 
-    // Update body type based on the new body selection
     if (newSelected.body) {
       setBodyType(newSelected.body);
     }
 
-    return { ...newSelected, color: randomColor };
-  }, [initialBody, imageCategories, selected, setBodyType]);
+    return newSelected;
+  }, [initialBackground, initialBody, imageCategories, selected, setBodyType]);
 
   const fetchImages = useCallback(
     async (category: keyof typeof imageCategories, folder: string) => {
@@ -137,6 +140,7 @@ export default function Home() {
   );
 
   useEffect(() => {
+    fetchImages('background', 'LD_ASSETS/background/');
     fetchImages('body', 'LD_ASSETS/body/');
     fetchImages('skin', 'LD_ASSETS/skin/');
     fetchImages('eyes', 'LD_ASSETS/eyes/');
@@ -149,6 +153,7 @@ export default function Home() {
   const resetSelections = () => {
     setColor('#aabbcc');
     setSelected({
+      background: '',
       body: '',
       skin: '',
       eyes: '',
@@ -172,8 +177,10 @@ export default function Home() {
     canvas.width = width;
     canvas.height = height;
 
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, width, height);
+    if (!selected.background) {
+      ctx.fillStyle = color;
+      ctx.fillRect(0, 0, width, height);
+    }
 
     const loadImage = (src: string): Promise<HTMLImageElement> =>
       new Promise((resolve, reject) => {
@@ -186,6 +193,7 @@ export default function Home() {
 
     try {
       const images = await Promise.all([
+        selected.background ? loadImage(selected.background) : Promise.resolve(null),
         selected.body ? loadImage(selected.body) : Promise.resolve(null),
         selected.skin ? loadImage(selected.skin) : Promise.resolve(null),
         selected.eyes ? loadImage(selected.eyes) : Promise.resolve(null),
@@ -211,7 +219,8 @@ export default function Home() {
   const captureImage = async () => {
     const dataUrl = await combineImages();
 
-    console.log(dataUrl);
+    console.log('Selected', selected);
+    console.log('Data URL', dataUrl);
 
     if (dataUrl) {
       const link = document.createElement('a');
@@ -238,8 +247,39 @@ export default function Home() {
             </div>
             <div className="sm:flex h-[400px] pt-3">
               <div className="mr-10 pl-3 mb-5 sm:mb-0">
-                <HexColorPicker color={color} onChange={setColor} />
-                <HexColorInput color={color} onChange={setColor} />
+                <HexColorPicker
+                  color={color}
+                  onChange={(newColor) => {
+                    setSelected((prev) => ({ ...prev, background: '' }));
+                    setColor(newColor);
+                  }}
+                />
+                <HexColorInput
+                  color={color}
+                  onChange={(newColor) => {
+                    setSelected((prev) => ({ ...prev, background: '' }));
+                    setColor(newColor);
+                  }}
+                />
+              </div>
+              <div className="flex-1 pl-3">
+                {imagesLoaded.background ? (
+                  <div className="flex flex-wrap gap-3 h-[400px] overflow-y-scroll">
+                    {backgroundImages.map((url, index) => (
+                      <div
+                        key={index}
+                        className={`border-2 z-20 border-black cursor-pointer max-h-[150px] ${selected.background === url ? 'border-blue-500' : ''}`}
+                        onClick={() => {
+                          setSelected((prev) => ({ ...prev, background: url }));
+                        }}
+                      >
+                        <NextImage src={url} alt={`Background ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <Loader />
+                )}
               </div>
             </div>
           </div>
@@ -252,6 +292,7 @@ export default function Home() {
       case 'glasses':
       case 'earrings':
         const categoryMap: Record<string, { images: string[]; loaded: boolean }> = {
+          background: { images: backgroundImages, loaded: imagesLoaded.background },
           body: { images: bodyImages, loaded: imagesLoaded.body },
           skin: { images: skinImages, loaded: imagesLoaded.skin },
           eyes: { images: eyesImages, loaded: imagesLoaded.eyes },
@@ -281,7 +322,7 @@ export default function Home() {
                       setSelected((prev) => ({ ...prev, [tab]: url }));
                     }}
                   >
-                    <NextImage src={url} alt={`Image ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
+                    <NextImage src={url} alt={`${tab} ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
                   </div>
                 ))}
               </div>
@@ -304,10 +345,10 @@ export default function Home() {
           </div>
           <div className="flex flex-col justify-between px-7 py-5 md:px-12 md:py-8 w-full sm:w-1/2">
             <div>
-              <h1 className="bricolageSemibold text-3xl md:text-5xl lg:text-7xl ">CREATE & DOWNLOAD YOUR FAVOURITE CFB PFP!</h1>
-              <p className="mt-3 text-base md:text-xl lg:text-2xl workSans ">Pick and choose between various elements to compose your CFB PFP</p>
+              <h1 className="bricolageSemibold text-3xl md:text-5xl lg:text-7xl">CREATE & DOWNLOAD YOUR FAVOURITE CFB PFP!</h1>
+              <p className="mt-3 text-base md:text-xl lg:text-2xl workSans">Pick and choose between various elements to compose your CFB PFP</p>
             </div>
-            <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl ">
+            <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
               Read <span className="text-[#FF6B00] underline cursor-pointer">instructions</span> for more info
             </div>
           </div>
@@ -340,7 +381,7 @@ export default function Home() {
               {renderTabContent()}
 
               <div className="grid grid-cols-2 bricolageSemibold gap-5 mt-5">
-                <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImageAndColor}>
+                <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImages}>
                   SHUFFLE
                 </Button>
                 <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={captureImage}>
@@ -351,14 +392,19 @@ export default function Home() {
           </div>
 
           <div className="w-1/3 min-h-[400px]">
-            <div ref={captureRef} className="border-2 border-black relative w-80 h-80" style={{ backgroundColor: color }}>
-              {selected.body && <NextImage alt="Body" src={selected.body} className="absolute top-0 left-0 z-0 w-full h-full" fill loading="lazy" />}
-              {selected.skin && <NextImage alt="Skin" src={selected.skin} className="absolute top-0 left-0 z-1 w-full h-full" fill loading="lazy" />}
-              {selected.eyes && <NextImage alt="Eyes" src={selected.eyes} className="absolute top-0 left-0 z-2 w-full h-full" fill loading="lazy" />}
-              {selected.top && <NextImage alt="Top" src={selected.top} className="absolute top-0 left-0 z-3 w-full h-full" fill loading="lazy" />}
-              {selected.mouth && <NextImage alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-4 w-full h-full" fill loading="lazy" />}
-              {selected.glasses && <NextImage alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-5 w-full h-full" fill loading="lazy" />}
-              {selected.earrings && <NextImage alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-6 w-full h-full" fill loading="lazy" />}
+            <div ref={captureRef} className="border-2 border-black relative w-80 h-80">
+              {selected.background ? (
+                <NextImage alt="Background" src={selected.background} className="absolute top-0 left-0 z-0 w-full h-full" fill loading="eager" />
+              ) : (
+                <div style={{ backgroundColor: color, width: '100%', height: '100%' }}></div>
+              )}
+              {selected.body && <NextImage alt="Body" src={selected.body} className="absolute top-0 left-0 z-1 w-full h-full" fill loading="eager" />}
+              {selected.skin && <NextImage alt="Skin" src={selected.skin} className="absolute top-0 left-0 z-2 w-full h-full" fill loading="eager" />}
+              {selected.eyes && <NextImage alt="Eyes" src={selected.eyes} className="absolute top-0 left-0 z-3 w-full h-full" fill loading="eager" />}
+              {selected.top && <NextImage alt="Top" src={selected.top} className="absolute top-0 left-0 z-4 w-full h-full" fill loading="eager" />}
+              {selected.mouth && <NextImage alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-5 w-full h-full" fill loading="eager" />}
+              {selected.glasses && <NextImage alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-6 w-full h-full" fill loading="eager" />}
+              {selected.earrings && <NextImage alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-7 w-full h-full" fill loading="eager" />}
             </div>
           </div>
         </div>
