@@ -16,6 +16,7 @@ export default function Home() {
   const captureRef = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState('#aabbcc');
   const [tab, setTab] = useState<'background' | 'body' | 'skin' | 'eyes' | 'top' | 'mouth' | 'glasses' | 'earrings'>('background');
+  const [skinType, setSkinType] = useState<string | null>(null);
 
   const imageCategories = {
     background: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
@@ -85,46 +86,61 @@ export default function Home() {
 
   const getRandomElement = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
-  const getRandomHexColor = (): string => getRandomElement(shuffleColours);
-
-  const parseVar = (url: string): number => {
-    const match = url.match(/var(\d+|ALL)/);
-    return match ? (match[1] === 'ALL' ? -1 : parseInt(match[1], 10)) : -1;
-  };
-
   const filterImagesByVar = (images: string[], varIdentifier: string): string[] =>
-    varIdentifier === 'ALL' ? initialBody : images.filter((img) => img.includes(`var${varIdentifier}`) || img.includes('varALL'));
+    varIdentifier === 'universal' ? images : images.filter((img) => new RegExp(`(${varIdentifier})(?!\\d)`).test(img) || img.includes('universal'));
 
-  const setBodyType = (url: string): string[] => {
-    const varIdentifier = url.match(/var(\d+|ALL)/)?.[1];
-    if (!varIdentifier) return [];
+  const setBodyType = (url: string): string | null => {
+    const varIdentifier = url.match(/(skin\d{1,2}|universal)/)?.[1];
+    console.log('0.8.SETTING BODY TYPE varIdentifier', varIdentifier);
+    if (!varIdentifier) return null;
     const matchedImages = filterImagesByVar(initialBody, varIdentifier);
     setBodyImages(matchedImages);
-    return matchedImages;
+    if (varIdentifier !== 'universal') {
+      setSkinType(varIdentifier);
+      return varIdentifier;
+    } else {
+      setSkinType(null);
+      return null;
+    }
+  };
+
+  const setSkinTypeFromSkin = (url: string): string | null => {
+    const varIdentifier = url.match(/(skin\d{1,2})/)?.[1];
+    console.log('SETTING SKIN TYPE varIdentifier', url, varIdentifier);
+    if (!varIdentifier) return null;
+
+    setSkinType(varIdentifier);
+    const matchedBodyImages = filterImagesByVar(initialBody, varIdentifier);
+    setBodyImages(matchedBodyImages);
+    return varIdentifier;
   };
 
   const getRandomImages = useCallback(() => {
-    console.log('image categories: ', imageCategories);
     if (Object.values(imageCategories).some((category) => category.initial[0].length === 0)) return;
 
     const newSelected = { ...selected };
-    console.log('new selected before shuffle:', newSelected);
 
     for (const [category, { initial }] of Object.entries(imageCategories)) {
       const randomImage = getRandomElement(initial[0]);
       newSelected[category as keyof typeof selected] = randomImage;
     }
 
-    console.log('Shuffled results', newSelected);
+    // Body and Skin type matching
+    const randomBody = getRandomElement(initialBody);
+    newSelected.body = randomBody;
+    const skinType = setBodyType(randomBody);
+    console.log('1.RANDOMMING skinType', skinType);
+
+    let matchingSkins: any;
+    if (skinType !== 'universal') matchingSkins = skinImages.filter((url) => new RegExp(`(${skinType})(?!\\d)`).test(url));
+    else matchingSkins = skinImages;
+    console.log('matchingSkins', matchingSkins);
+    newSelected.skin = getRandomElement(matchingSkins);
 
     setSelected(newSelected);
 
-    if (newSelected.body) {
-      setBodyType(newSelected.body);
-    }
-
     return newSelected;
-  }, [initialBackground, initialBody, imageCategories, selected, setBodyType]);
+  }, [initialBackground, initialBody, imageCategories, selected, setBodyType, skinImages, skinType]);
 
   const fetchImages = useCallback(
     async (category: keyof typeof imageCategories, folder: string) => {
@@ -162,6 +178,8 @@ export default function Home() {
       glasses: '',
       earrings: '',
     });
+    setSkinType(null);
+    setBodyImages(initialBody);
   };
 
   const combineImages = async (): Promise<string> => {
@@ -285,7 +303,63 @@ export default function Home() {
           </div>
         );
       case 'body':
+        return (
+          <div>
+            <div className="flex justify-between px-10 pt-3">
+              <div className=" text-xl font-semibold">Select Body</div>
+              <div className=" text-xl font-bold underline cursor-pointer" onClick={resetSelections}>
+                Reset
+              </div>
+            </div>
+            {imagesLoaded.body ? (
+              <div className="flex flex-wrap gap-3 h-[400px] pt-3 pl-3 overflow-y-scroll">
+                {bodyImages.map((url, index) => (
+                  <div
+                    key={index}
+                    className="border-2 z-20 border-black cursor-pointer max-h-[150px]"
+                    onClick={() => {
+                      setSelected((prev) => ({ ...prev, body: url }));
+                      setBodyType(url);
+                    }}
+                  >
+                    <NextImage src={url} alt={`body ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <Loader />
+            )}
+          </div>
+        );
       case 'skin':
+        return (
+          <div>
+            <div className="flex justify-between px-10 pt-3">
+              <div className=" text-xl font-semibold">Select Skin</div>
+              <div className=" text-xl font-bold underline cursor-pointer" onClick={resetSelections}>
+                Reset
+              </div>
+            </div>
+            {imagesLoaded.skin ? (
+              <div className="flex flex-wrap gap-3 h-[400px] pt-3 pl-3 overflow-y-scroll">
+                {(skinType ? skinImages.filter((url) => new RegExp(`(${skinType})(?!\\d)`).test(url) || url.includes('universal')) : skinImages).map((url, index) => (
+                  <div
+                    key={index}
+                    className="border-2 z-20 border-black cursor-pointer max-h-[150px]"
+                    onClick={() => {
+                      setSelected((prev) => ({ ...prev, skin: url }));
+                      setSkinTypeFromSkin(url);
+                    }}
+                  >
+                    <NextImage src={url} alt={`skin ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <Loader />
+            )}
+          </div>
+        );
       case 'eyes':
       case 'top':
       case 'mouth':
