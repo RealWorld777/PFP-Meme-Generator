@@ -263,7 +263,7 @@ export default function Home() {
                 Reset
               </div>
             </div>
-            <div className="sm:flex h-[400px] pt-3">
+            <div className="sm:flex pt-3">
               <div className="mr-10 pl-3 mb-5 sm:mb-0">
                 <HexColorPicker
                   color={color}

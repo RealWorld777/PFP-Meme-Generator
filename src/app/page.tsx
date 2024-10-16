@@ -61,14 +61,18 @@ function Home() {
         {/* <LandingDiscount discountValueText="$350 off" discountDescriptionText="for the first 10 customers (2 left)" /> */}
 
         <LandingSocialProof className="w-full mt-12" showRating numberOfUsers={100000} suffixText="happy users" avatarItems={avatarItems} size="medium" />
-      </LandingPrimaryImageCtaSection>
-      <LandingMarquee withBackground variant="secondary">
-        {Object.values(images).map((image, index) => {
-          return <Image key={index} src={image} alt="CFB" className="h-48 w-auto" />;
-        })}
-      </LandingMarquee>
 
-      <div className="text-lg">Downloaded Images : {downloadCnt}</div>
+        <div className="text-lg">Total Downloads : {downloadCnt}</div>
+      </LandingPrimaryImageCtaSection>
+
+      <div className="p-12">
+        <LandingMarquee withBackground variant="secondary">
+          {Object.values(images).map((image, index) => {
+            return <Image key={index} src={image} alt="CFB" className="h-48 w-auto" />;
+          })}
+        </LandingMarquee>
+      </div>
+
       <LandingProductFeature
         title="PFP Generator"
         descriptionComponent={
