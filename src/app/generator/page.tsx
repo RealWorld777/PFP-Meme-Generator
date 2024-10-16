@@ -132,7 +132,7 @@ export default function Home() {
     console.log('1.RANDOMMING skinType', skinType);
 
     let matchingSkins: any;
-    if (skinType !== 'universal') matchingSkins = skinImages.filter((url) => new RegExp(`(${skinType})(?!\\d)`).test(url));
+    if (skinType !== null) matchingSkins = skinImages.filter((url) => new RegExp(`(${skinType})(?!\\d)`).test(url));
     else matchingSkins = skinImages;
     console.log('matchingSkins', matchingSkins);
     newSelected.skin = getRandomElement(matchingSkins);
