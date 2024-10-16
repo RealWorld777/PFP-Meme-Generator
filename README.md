@@ -25,10 +25,11 @@ bun dev
 - put the firebase configuration data in src/app/config/firebase.ts (available in firebase project settings > general > your apps)
 - at the root of your firebase bucket storage, create two folders: heads & bodies
 - insert assets in their respective folders
-- make sure assets are named as *var(var number).png, where the var number will correspond to the type of head/body
+- make sure assets are named as \*var(var number).png, where the var number will correspond to the type of head/body
 - selecting a head will show same type of body and vice versa, because of this
-- in the case of having a head asset that matches all bodies, name that asset as *varALL.png
+- in the case of having a head asset that matches all bodies, name that asset as \*varALL.png
 - in the rules section of firebase storage paste this
+
 ```javascript
 rules_version = '2';
 service firebase.storage {
@@ -39,4 +40,8 @@ service firebase.storage {
   }
 }
 ```
+
+### Change Firestore Mode
+
+https://cloud.google.com/datastore/docs/firestore-or-datastore
 

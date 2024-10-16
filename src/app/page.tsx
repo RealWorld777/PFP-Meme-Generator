@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LandingPrimaryImageCtaSection } from '../components/landing/LandingPrimaryCta';
 import { Button } from '../components/ui/button';
 import Link from 'next/link';
@@ -12,6 +12,9 @@ import { LandingProductHuntAward } from '../components/landing/LandingProductHun
 import { LandingDiscount } from '../components/landing/LandingDiscount';
 import { LandingSocialProof } from '../components/landing/LandingSocialProof';
 import { LandingProductFeature } from '../components/landing/LandingProductFeature';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../config/firebase';
+import { getDownloadsCount } from '../config/firestore';
 
 const avatarItems = [
   {
@@ -29,6 +32,8 @@ const avatarItems = [
 ];
 
 function Home() {
+  const downloadCnt = getDownloadsCount();
+
   return (
     <>
       <LandingPrimaryImageCtaSection
@@ -63,13 +68,12 @@ function Home() {
         })}
       </LandingMarquee>
 
+      <div className="text-lg">Downloaded Images : {downloadCnt}</div>
       <LandingProductFeature
         title="PFP Generator"
         descriptionComponent={
           <>
-            <p className="text-xl">
-              Our PFP Meme Generator allows you to create unique and personalized CFB profile images for your Discord, X, or other platforms.
-            </p>
+            <p className="text-xl">Our PFP Meme Generator allows you to create unique and personalized CFB profile images for your Discord, X, or other platforms.</p>
 
             <Button className="text-lg mt-8" variant="outline" asChild>
               <Link href="/generator">Generate Now</Link>

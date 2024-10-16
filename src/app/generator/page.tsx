@@ -8,6 +8,8 @@ import mainImg from '../../assets/Frame5.svg';
 import Loader from 'react-dots-loader';
 import 'react-dots-loader/index.css';
 import { Button } from '../../components/ui/button';
+import { addDownload } from '../../config/firestore';
+import { Timestamp } from 'firebase/firestore';
 
 export default function Home() {
   const captureRef = useRef<HTMLDivElement>(null);
@@ -121,15 +123,18 @@ export default function Home() {
     return { ...newSelected, color: randomColor };
   }, [initialBody, imageCategories, selected, setBodyType]);
 
-  const fetchImages = useCallback(async (category: keyof typeof imageCategories, folder: string) => {
-    const listRef = ref(storage, folder);
-    const res = await listAll(listRef);
-    const urls = await Promise.all(res.items.map(getDownloadURL));
-    imageCategories[category].state[1](urls);
-    imageCategories[category].initial[1](urls);
-    setImagesLoaded((prev) => ({ ...prev, [category]: true }));
-    console.log(`${category}`, urls);
-  }, [imageCategories]);
+  const fetchImages = useCallback(
+    async (category: keyof typeof imageCategories, folder: string) => {
+      const listRef = ref(storage, folder);
+      const res = await listAll(listRef);
+      const urls = await Promise.all(res.items.map(getDownloadURL));
+      imageCategories[category].state[1](urls);
+      imageCategories[category].initial[1](urls);
+      setImagesLoaded((prev) => ({ ...prev, [category]: true }));
+      console.log(`${category}`, urls);
+    },
+    [imageCategories]
+  );
 
   useEffect(() => {
     fetchImages('body', 'LD_ASSETS/body/');
@@ -173,7 +178,7 @@ export default function Home() {
     const loadImage = (src: string): Promise<HTMLImageElement> =>
       new Promise((resolve, reject) => {
         const img = new Image();
-        // img.crossOrigin = 'anonymous';
+        img.crossOrigin = 'anonymous';
         img.onload = () => resolve(img);
         img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
         img.src = src;
@@ -204,18 +209,26 @@ export default function Home() {
   };
 
   const captureImage = async () => {
-    const dataUrl = await combineImages();
+    addDownload({
+      data: {
+        name: 'yeti',
+        data: 'data',
+      },
+      timestamp: Timestamp.now(),
+    });
 
-    if (dataUrl) {
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'combined-pfp.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else {
-      alert('Failed to generate image.');
-    }
+    // const dataUrl = await combineImages();
+
+    // if (dataUrl) {
+    //   const link = document.createElement('a');
+    //   link.href = dataUrl;
+    //   link.download = 'combined-pfp.png';
+    //   document.body.appendChild(link);
+    //   link.click();
+    //   document.body.removeChild(link);
+    // } else {
+    //   alert('Failed to generate image.');
+    // }
   };
 
   const renderTabContent = () => {

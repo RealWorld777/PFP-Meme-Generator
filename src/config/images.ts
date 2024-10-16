@@ -4,8 +4,6 @@ import sample3 from '../assets/sample_3.webp';
 import sample4 from '../assets/sample_4.webp';
 import sample5 from '../assets/sample_5.webp';
 import sample6 from '../assets/sample_6.webp';
-import plus from '../assets/plus.png';
-import minus from '../assets/minus.png';
 
 import homeImg from '../assets/home.webp';
 import homeImg2 from '../assets/home2.webp';
@@ -17,8 +15,6 @@ const images = {
   sample4,
   sample5,
   sample6,
-  plus,
-  minus,
 };
 
 export default images;
