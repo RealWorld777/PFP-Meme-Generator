@@ -15,7 +15,7 @@ const Faq: React.FC = () => {
     <div>
       <div className="p-12 bg-[#FF6B00] border-t-2" id="aboutus">
         <h2 className="bricolageSemibold text-6xl">FREQUENTLY ASKED QUESTIONS</h2>
-        <p className="workSans text-2xl mt-4 ">Got questions? We've got answers! Check out our most frequently asked questions below to help you get started with creating and sharing your memes.</p>
+        <p className="workSans text-2xl mt-4 ">Got questions? We&apos;ve got answers! Check out our most frequently asked questions below to help you get started with creating and sharing your memes.</p>
       </div>
       <div className="">
         <div className="border-t-2 border-black p-10">
