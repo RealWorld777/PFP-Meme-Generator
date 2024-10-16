@@ -4,7 +4,7 @@ import { db } from './firebase';
 const downloadsCollection = collection(db, 'downloads');
 
 export const getDownloads = () => {
-  const querySnapshot = query(downloadsCollection, where('timestamp', '>=', Timestamp.fromDate(new Date(Date.now() - 1000 * 60 * 60 * 24))));
+  const querySnapshot = query(downloadsCollection);
   return getDocs(querySnapshot);
 };
 

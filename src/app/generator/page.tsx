@@ -10,7 +10,7 @@ import Loader from 'react-dots-loader';
 import 'react-dots-loader/index.css';
 import { Button } from '../../components/ui/button';
 import { addDownload } from '../../config/firestore';
-import { Timestamp } from 'firebase/firestore';
+import { serverTimestamp, Timestamp } from 'firebase/firestore';
 
 export default function Home() {
   const captureRef = useRef<HTMLDivElement>(null);
@@ -265,6 +265,12 @@ export default function Home() {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
+      addDownload({
+        selected,
+        createdAt: serverTimestamp(),
+      });
+
     } else {
       alert('Failed to generate image.');
     }

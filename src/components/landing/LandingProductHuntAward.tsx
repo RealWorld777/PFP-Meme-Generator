@@ -17,7 +17,7 @@ export const LandingProductHuntAward = ({
   className,
   place = 1,
   subtitle,
-  title = 'Product of the Day',
+  title = 'Top PFP Generator',
   size = 'default',
   grayscale = true,
   textContainerClassName,
