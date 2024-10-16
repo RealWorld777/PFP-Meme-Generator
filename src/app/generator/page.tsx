@@ -86,6 +86,16 @@ export default function Home() {
 
   const getRandomElement = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
+  const extractFolderAndFileName = (url: string): { folder: string; file: string } => {
+    const [, path] = decodeURIComponent(url).split('/o/');
+    const [pathWithoutQuery] = path.split('?');
+    const parts = pathWithoutQuery.split('%2F');
+    const folder = parts.slice(0, -1).join('/');
+    const file = parts[parts.length - 1];
+
+    return { folder, file };
+  };
+
   const filterImagesByVar = (images: string[], varIdentifier: string): string[] =>
     varIdentifier === 'universal' ? images : images.filter((img) => new RegExp(`(${varIdentifier})(?!\\d)`).test(img) || img.includes('universal'));
 
@@ -139,6 +149,7 @@ export default function Home() {
 
     setSelected(newSelected);
 
+    console.log(newSelected);
     return newSelected;
   }, [initialBackground, initialBody, imageCategories, selected, setBodyType, skinImages, skinType]);
 
@@ -154,6 +165,13 @@ export default function Home() {
     },
     [imageCategories]
   );
+
+  const fetchSingleImage = async (folder: string, imageName: string) => {
+    const listRef = ref(storage, `${folder}/${imageName}`);
+    const url = await getDownloadURL(listRef);
+    console.log('fetched Image: ', url);
+    return url;
+  };
 
   useEffect(() => {
     fetchImages('background', 'LD_ASSETS/background/');
@@ -190,8 +208,8 @@ export default function Home() {
       throw new Error('Canvas context not available');
     }
 
-    const width = 500;
-    const height = 500;
+    const width = 2400;
+    const height = 2400;
     canvas.width = width;
     canvas.height = height;
 
@@ -210,16 +228,16 @@ export default function Home() {
       });
 
     try {
-      const images = await Promise.all([
-        selected.background ? loadImage(selected.background) : Promise.resolve(null),
-        selected.body ? loadImage(selected.body) : Promise.resolve(null),
-        selected.skin ? loadImage(selected.skin) : Promise.resolve(null),
-        selected.eyes ? loadImage(selected.eyes) : Promise.resolve(null),
-        selected.top ? loadImage(selected.top) : Promise.resolve(null),
-        selected.mouth ? loadImage(selected.mouth) : Promise.resolve(null),
-        selected.glasses ? loadImage(selected.glasses) : Promise.resolve(null),
-        selected.earrings ? loadImage(selected.earrings) : Promise.resolve(null),
-      ]);
+      const loadSelectedImage = async (key: keyof typeof selected) => {
+        if (selected[key]) {
+          const { folder, file } = extractFolderAndFileName(selected[key]);
+          const hdFolder = folder.replace('LD_ASSETS', 'LD_ASSETS');
+          return loadImage(await fetchSingleImage(hdFolder, file));
+        }
+        return null;
+      };
+
+      const images = await Promise.all(['background', 'body', 'skin', 'eyes', 'top', 'mouth', 'glasses', 'earrings'].map((key) => loadSelectedImage(key as keyof typeof selected)));
 
       images.forEach((img) => {
         if (img) {
