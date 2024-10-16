@@ -209,26 +209,20 @@ export default function Home() {
   };
 
   const captureImage = async () => {
-    addDownload({
-      data: {
-        name: 'yeti',
-        data: 'data',
-      },
-      timestamp: Timestamp.now(),
-    });
+    const dataUrl = await combineImages();
 
-    // const dataUrl = await combineImages();
+    console.log(dataUrl);
 
-    // if (dataUrl) {
-    //   const link = document.createElement('a');
-    //   link.href = dataUrl;
-    //   link.download = 'combined-pfp.png';
-    //   document.body.appendChild(link);
-    //   link.click();
-    //   document.body.removeChild(link);
-    // } else {
-    //   alert('Failed to generate image.');
-    // }
+    if (dataUrl) {
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = 'combined-pfp.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      alert('Failed to generate image.');
+    }
   };
 
   const renderTabContent = () => {

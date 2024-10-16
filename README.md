@@ -45,3 +45,8 @@ service firebase.storage {
 
 https://cloud.google.com/datastore/docs/firestore-or-datastore
 
+### Dev mode for avoiding image cors error
+
+```bash
+gsutil cors set cors.json gs://<your-bucket-name>
+```
