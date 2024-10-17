@@ -2,7 +2,7 @@
 'use client';
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import faqData from '../../data/faq.json';
+import faqData from '../../../data/faq.json';
 
 const Faq: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);

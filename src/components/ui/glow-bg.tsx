@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { colors } from '../../data/colors';
+import { colors } from '../../../data/colors';
 
 export const GlowBg = ({ className, variant = 'primary' }: { className?: string; variant?: 'primary' | 'secondary' }) => {
   const stopColor = variant === 'primary' ? 'var(--primary-lighter-hex)' : 'var(--secondary-lighter-hex)';

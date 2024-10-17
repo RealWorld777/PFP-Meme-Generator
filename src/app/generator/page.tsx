@@ -11,12 +11,16 @@ import 'react-dots-loader/index.css';
 import { Button } from '../../components/ui/button';
 import { addDownload } from '../../config/firestore';
 import { serverTimestamp, Timestamp } from 'firebase/firestore';
+import fortuneCookies from '../../../data/fortune-cookie.json';
+import { Cookie } from 'lucide-react';
 
 export default function Home() {
   const captureRef = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState('#aabbcc');
   const [tab, setTab] = useState<'background' | 'body' | 'skin' | 'eyes' | 'top' | 'mouth' | 'glasses' | 'earrings'>('background');
   const [skinType, setSkinType] = useState<string | null>(null);
+  const [fortuneCookie, setFortuneCookie] = useState<string | null>(null);
+  const [fortuneCookieVisible, setFortuneCookieVisible] = useState<boolean>(false);
 
   const imageCategories = {
     background: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
@@ -127,7 +131,7 @@ export default function Home() {
       let tmp = selected.body;
       const { folder, file } = extractFolderAndFileName(tmp);
       console.log(file.replaceAll('/', '%2F').replace(/skin\d{1,2}/, varIdentifier));
-      console.log(file)
+      console.log(file);
       const newBodyUrl = matchedBodyImages.find((img) => img.includes(file.replaceAll('/', '%2F').replace(/skin\d{1,2}/, varIdentifier)))!;
       console.log('newBodyUrl', newBodyUrl);
 
@@ -147,6 +151,9 @@ export default function Home() {
   };
 
   const getRandomImages = useCallback(() => {
+    setFortuneCookieVisible(false);
+    setFortuneCookie(null);
+
     if (Object.values(imageCategories).some((category) => category.initial[0].length === 0)) return;
 
     const newSelected = { ...selected };
@@ -273,11 +280,14 @@ export default function Home() {
     }
   };
 
-  const captureImage = async () => {
+  const downloadImage = async () => {
     const dataUrl = await combineImages();
 
     console.log('Selected', selected);
     console.log('Data URL', dataUrl);
+
+    setFortuneCookieVisible(false);
+    setFortuneCookie(getRandomElement(fortuneCookies));
 
     if (dataUrl) {
       const link = document.createElement('a');
@@ -502,14 +512,14 @@ export default function Home() {
                 <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImages}>
                   SHUFFLE
                 </Button>
-                <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={captureImage}>
+                <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadImage}>
                   DOWNLOAD
                 </Button>
               </div>
             </div>
           </div>
 
-          <div className="w-1/3 min-h-[400px]">
+          <div className="w-full md:w-1/3 min-h-[400px] flex md:flex-col">
             <div ref={captureRef} className="border-2 border-black relative w-80 h-80">
               {selected.background ? (
                 <NextImage alt="Background" src={selected.background} className="absolute top-0 left-0 z-0 w-full h-full" fill loading="eager" />
@@ -523,6 +533,17 @@ export default function Home() {
               {selected.mouth && <NextImage alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-5 w-full h-full" fill loading="eager" />}
               {selected.glasses && <NextImage alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-6 w-full h-full" fill loading="eager" />}
               {selected.earrings && <NextImage alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-7 w-full h-full" fill loading="eager" />}
+            </div>
+
+            <div>
+              {fortuneCookie && (
+                <>
+                  <Button className="bricolageSemibold text-3xl mt-10" variant="outlineSecondary" onClick={() => setFortuneCookieVisible(true)}>
+                    <Cookie className="mr-2 h-6 w-6" /> Fourtune Cookie
+                  </Button>
+                  {fortuneCookieVisible && <div className="bricolageSemibold text-3xl mt-10">{fortuneCookie}</div>}
+                </>
+              )}
             </div>
           </div>
         </div>
