@@ -122,6 +122,27 @@ export default function Home() {
     setSkinType(varIdentifier);
     const matchedBodyImages = filterImagesByVar(initialBody, varIdentifier);
     setBodyImages(matchedBodyImages);
+
+    if (varIdentifier && selected.body) {
+      let tmp = selected.body;
+      const { folder, file } = extractFolderAndFileName(tmp);
+      console.log(file.replaceAll('/', '%2F').replace(/skin\d{1,2}/, varIdentifier));
+      console.log(file)
+      const newBodyUrl = matchedBodyImages.find((img) => img.includes(file.replaceAll('/', '%2F').replace(/skin\d{1,2}/, varIdentifier)))!;
+      console.log('newBodyUrl', newBodyUrl);
+
+      // Check if the new body URL exists in the matchedBodyImages
+      if (matchedBodyImages.includes(newBodyUrl)) {
+        console.log('newBodyUrl exists in matchedBodyImages');
+        setSelected((prev) => ({ ...prev, body: newBodyUrl }));
+      } else {
+        console.log('newBodyUrl does not exist in matchedBodyImages');
+        const randomMatchedBody = getRandomElement(matchedBodyImages);
+        console.log('randomMatchedBody', randomMatchedBody);
+        setSelected((prev) => ({ ...prev, body: randomMatchedBody }));
+      }
+    }
+
     return varIdentifier;
   };
 
@@ -270,7 +291,6 @@ export default function Home() {
         selected,
         createdAt: serverTimestamp(),
       });
-
     } else {
       alert('Failed to generate image.');
     }
@@ -366,7 +386,7 @@ export default function Home() {
             </div>
             {imagesLoaded.skin ? (
               <div className="flex flex-wrap gap-3 h-[400px] pt-3 pl-3 overflow-y-scroll">
-                {(skinType ? skinImages.filter((url) => new RegExp(`(${skinType})(?!\\d)`).test(url) || url.includes('universal')) : skinImages).map((url, index) => (
+                {skinImages.map((url, index) => (
                   <div
                     key={index}
                     className="border-2 z-20 border-black cursor-pointer max-h-[150px]"
