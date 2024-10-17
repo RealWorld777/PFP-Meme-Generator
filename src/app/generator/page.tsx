@@ -231,7 +231,7 @@ export default function Home() {
       const loadSelectedImage = async (key: keyof typeof selected) => {
         if (selected[key]) {
           const { folder, file } = extractFolderAndFileName(selected[key]);
-          const hdFolder = folder.replace('LD_ASSETS', 'LD_ASSETS');
+          const hdFolder = folder.replace('LD_ASSETS', 'HD_ASSETS');
           return loadImage(await fetchSingleImage(hdFolder, file));
         }
         return null;
