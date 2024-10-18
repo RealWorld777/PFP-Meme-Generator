@@ -13,6 +13,7 @@ import { addDownload } from '../../config/firestore';
 import { serverTimestamp, Timestamp } from 'firebase/firestore';
 import fortuneCookies from '../../../data/fortune-cookie.json';
 import { Cookie } from 'lucide-react';
+import FortuneCookieButton from '../../components/ui/fortune-cookie';
 
 export default function Home() {
   const captureRef = useRef<HTMLDivElement>(null);
@@ -535,16 +536,7 @@ export default function Home() {
               {selected.earrings && <NextImage alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-7 w-full h-full" fill loading="eager" />}
             </div>
 
-            <div>
-              {fortuneCookie && (
-                <>
-                  <Button className="bricolageSemibold text-3xl mt-10" variant="outlineSecondary" onClick={() => setFortuneCookieVisible(true)}>
-                    <Cookie className="mr-2 h-6 w-6" /> Fourtune Cookie
-                  </Button>
-                  {fortuneCookieVisible && <div className="bricolageSemibold text-3xl mt-10">{fortuneCookie}</div>}
-                </>
-              )}
-            </div>
+            <div>{fortuneCookie && <FortuneCookieButton fortuneCookieText={fortuneCookie} isVisible={true} onClick={() => {}} fortuneCookieTextClassName="bricolageSemibold text-3xl mt-10" />}</div>
           </div>
         </div>
       </div>

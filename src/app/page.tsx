@@ -58,7 +58,7 @@ function Home() {
           <Link href="/generator">Generate Now</Link>
         </Button>
 
-        {/* <LandingDiscount discountValueText="$350 off" discountDescriptionText="for the first 10 customers (2 left)" /> */}
+        <LandingDiscount discountValueText="$350 off" discountDescriptionText="for the first 10 customers (2 left)" />
 
         <LandingSocialProof className="w-full mt-12" showRating numberOfUsers={100000} suffixText="happy users" avatarItems={avatarItems} size="medium" />
 
