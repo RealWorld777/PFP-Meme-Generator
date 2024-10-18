@@ -536,7 +536,13 @@ export default function Home() {
               {selected.earrings && <NextImage alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-7 w-full h-full" fill loading="eager" />}
             </div>
 
-            <div>{fortuneCookie && <FortuneCookieButton fortuneCookieText={fortuneCookie} isVisible={true} onClick={() => {}} fortuneCookieTextClassName="bricolageSemibold text-3xl mt-10" />}</div>
+            <div className="flex flex-1 flex-col justify-center">
+              <>
+                {fortuneCookie && (
+                  <FortuneCookieButton fortuneCookieText={fortuneCookie} isVisible={true} onClick={() => {}} fortuneCookieTextClassName="bricolageSemibold text-3xl mt-10" width={200} height={150} />
+                )}
+              </>
+            </div>
           </div>
         </div>
       </div>

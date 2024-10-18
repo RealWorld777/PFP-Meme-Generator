@@ -72,7 +72,7 @@ const FortuneCookieButton: React.FC<FortuneCookieButtonProps> = ({ onClick, fort
             </motion.div>
             <AnimatePresence>
               {showText && (
-                <motion.div key="fortuneText" variants={textVariants} initial="hidden" animate="visible" exit="hidden" className="absolute inset-0 flex items-center justify-center text-center">
+                <motion.div key="fortuneText" variants={textVariants} initial="hidden" animate="visible" exit="hidden" className="absolute flex items-center justify-center text-center">
                   <p className={clsx('text-xl', fortuneCookieTextClassName)}>{fortuneCookieText}</p>
                 </motion.div>
               )}
