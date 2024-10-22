@@ -15,6 +15,8 @@ import { Cookie } from 'lucide-react';
 import FortuneCookieButton from '../../components/ui/fortune-cookie';
 import ShareButton from '../../components/ui/share-button';
 
+const skinTypes = ['skin1', 'skin2', 'skin3', 'skin4', 'skin5', 'skin6', 'skin7', 'skin8', 'skin9', 'skin10', 'universal'];
+
 export default function Generator() {
   const captureRef = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState('#aabbcc');
@@ -161,7 +163,8 @@ export default function Generator() {
     }
 
     // Body and Skin type matching
-    const randomBody = getRandomElement(initialBody);
+    const randomSkinType = getRandomElement(skinTypes);
+    const randomBody = getRandomElement(filterImagesByVar(initialBody, randomSkinType));
     newSelected.body = randomBody;
     const skinType = setBodyType(randomBody);
 
