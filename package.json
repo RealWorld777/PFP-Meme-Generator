@@ -32,6 +32,7 @@
     "react-lottie-player": "^2.1.0",
     "react-share": "^5.1.0",
     "react-spinner-animated": "^3.1.1",
+    "react-spinners": "^0.14.1",
     "sharp": "^0.33.5",
     "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7"

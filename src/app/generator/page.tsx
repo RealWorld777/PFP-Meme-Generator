@@ -1,3 +1,4 @@
+ // Start of Selection
 'use client';
 import NextImage from 'next/image';
 import { useEffect, useRef, useState, useCallback } from 'react';
@@ -14,6 +15,8 @@ import fortuneCookies from '../../../data/fortune-cookie.json';
 import { Cookie } from 'lucide-react';
 import FortuneCookieButton from '../../components/ui/fortune-cookie';
 import ShareButton from '../../components/ui/share-button';
+import ImagePanel from './components/ImagePanel';
+import SelectPanel from './components/SelectPanel';
 
 const skinTypes = ['skin1', 'skin2', 'skin3', 'skin4', 'skin5', 'skin6', 'skin7', 'skin8', 'skin9', 'skin10', 'universal'];
 
@@ -208,20 +211,46 @@ export default function Generator() {
     fetchImages('earrings', 'LD_ASSETS/earrings/');
   }, []);
 
-  const resetSelections = () => {
+  // Define default trait filenames
+  const DEFAULT_TRAITS = {
+    background: 'iceblue.png',
+    body: 'tshirtwhite_skin1.png',
+    skin: 'skin1_rosy.png',
+    eyes: 'blue.png',
+    top: 'originalbrown.png',
+    mouth: 'trollgrin.png',
+    glasses: 'cfbglasses.png',
+    earrings: 'noearrings.png',
+  };
+
+  // Function to set selected traits to default
+  const setDefaultSelected = useCallback(() => {
+    const newSelected: typeof selected = { ...selected };
+    for (const [category, filename] of Object.entries(DEFAULT_TRAITS)) {
+      const imagesArray = imageCategories[category as keyof typeof imageCategories].state[0];
+      const matchedImage = imagesArray.find((url) => url.endsWith(filename));
+      if (matchedImage) {
+        newSelected[category as keyof typeof selected] = matchedImage;
+      } else {
+        newSelected[category as keyof typeof selected] = '';
+      }
+    }
+    setSelected(newSelected);
     setColor('#aabbcc');
-    setSelected({
-      background: '',
-      body: '',
-      skin: '',
-      eyes: '',
-      top: '',
-      mouth: '',
-      glasses: '',
-      earrings: '',
-    });
     setSkinType(null);
-    setBodyImages(initialBody);
+  }, [imageCategories, selected]);
+
+  // Set default selected traits once all images are loaded
+  useEffect(() => {
+    const allLoaded = Object.values(imagesLoaded).every((loaded) => loaded);
+    if (allLoaded) {
+      setDefaultSelected();
+    }
+  }, [imagesLoaded]);
+
+  const resetSelections = () => {
+    setDefaultSelected();
+    clearState();
   };
 
   const combineImages = async (): Promise<string> => {
@@ -326,164 +355,6 @@ export default function Generator() {
     }
   };
 
-  const renderTabContent = () => {
-    switch (tab) {
-      case 'background':
-        return (
-          <div>
-            <div className="flex justify-between px-10 pt-3">
-              <div className=" text-xl font-semibold">Select Background</div>
-              <div className=" text-xl font-bold underline cursor-pointer" onClick={resetSelections}>
-                Reset
-              </div>
-            </div>
-            <div className="sm:flex pt-3">
-              <div className="mr-10 pl-3 mb-5 sm:mb-0">
-                <HexColorPicker
-                  color={color}
-                  onChange={(newColor) => {
-                    setSelected((prev) => ({ ...prev, background: '' }));
-                    setColor(newColor);
-                  }}
-                />
-                <HexColorInput
-                  color={color}
-                  onChange={(newColor) => {
-                    setSelected((prev) => ({ ...prev, background: '' }));
-                    setColor(newColor);
-                  }}
-                />
-              </div>
-              <div className="flex-1 pl-3">
-                {imagesLoaded.background ? (
-                  <div className="flex flex-wrap gap-3 h-[400px] overflow-y-scroll">
-                    {backgroundImages.map((url, index) => (
-                      <div
-                        key={index}
-                        className={`border-2 z-20 border-black cursor-pointer max-h-[150px] ${selected.background === url ? 'border-blue-500' : ''}`}
-                        onClick={() => {
-                          setSelected((prev) => ({ ...prev, background: url }));
-                        }}
-                      >
-                        <NextImage src={url} alt={`Background ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <Loader />
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      case 'body':
-        return (
-          <div>
-            <div className="flex justify-between px-10 pt-3">
-              <div className=" text-xl font-semibold">Select Body</div>
-              <div className=" text-xl font-bold underline cursor-pointer" onClick={resetSelections}>
-                Reset
-              </div>
-            </div>
-            {imagesLoaded.body ? (
-              <div className="flex flex-wrap gap-3 h-[400px] pt-3 pl-3 overflow-y-scroll">
-                {bodyImages.map((url, index) => (
-                  <div
-                    key={index}
-                    className="border-2 z-20 border-black bg-white cursor-pointer max-h-[150px]"
-                    onClick={() => {
-                      setSelected((prev) => ({ ...prev, body: url }));
-                      setBodyType(url);
-                    }}
-                  >
-                    <NextImage src={url} alt={`body ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <Loader />
-            )}
-          </div>
-        );
-      case 'skin':
-        return (
-          <div>
-            <div className="flex justify-between px-10 pt-3">
-              <div className=" text-xl font-semibold">Select Skin</div>
-              <div className=" text-xl font-bold underline cursor-pointer" onClick={resetSelections}>
-                Reset
-              </div>
-            </div>
-            {imagesLoaded.skin ? (
-              <div className="flex flex-wrap gap-3 h-[400px] pt-3 pl-3 overflow-y-scroll">
-                {skinImages.map((url, index) => (
-                  <div
-                    key={index}
-                    className="border-2 z-20 border-black bg-white cursor-pointer max-h-[150px]"
-                    onClick={() => {
-                      setSelected((prev) => ({ ...prev, skin: url }));
-                      setSkinTypeFromSkin(url);
-                    }}
-                  >
-                    <NextImage src={url} alt={`skin ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <Loader />
-            )}
-          </div>
-        );
-      case 'eyes':
-      case 'top':
-      case 'mouth':
-      case 'glasses':
-      case 'earrings':
-        const categoryMap: Record<string, { images: string[]; loaded: boolean }> = {
-          background: { images: backgroundImages, loaded: imagesLoaded.background },
-          body: { images: bodyImages, loaded: imagesLoaded.body },
-          skin: { images: skinImages, loaded: imagesLoaded.skin },
-          eyes: { images: eyesImages, loaded: imagesLoaded.eyes },
-          top: { images: topImages, loaded: imagesLoaded.top },
-          mouth: { images: mouthImages, loaded: imagesLoaded.mouth },
-          glasses: { images: glassesImages, loaded: imagesLoaded.glasses },
-          earrings: { images: earringsImages, loaded: imagesLoaded.earrings },
-        };
-
-        const currentCategory = categoryMap[tab];
-
-        return (
-          <div>
-            <div className="flex justify-between px-10 pt-3">
-              <div className=" text-xl font-semibold">Select {tab.charAt(0).toUpperCase() + tab.slice(1)}</div>
-              <div className=" text-xl font-bold underline cursor-pointer" onClick={resetSelections}>
-                Reset
-              </div>
-            </div>
-            {currentCategory.loaded ? (
-              <div className="flex flex-wrap gap-3 h-[400px] pt-3 pl-3 overflow-y-scroll">
-                {currentCategory.images.map((url, index) => (
-                  <div
-                    key={index}
-                    className="border-2 z-20 border-black bg-white cursor-pointer max-h-[150px]"
-                    onClick={() => {
-                      setSelected((prev) => ({ ...prev, [tab]: url }));
-                    }}
-                  >
-                    <NextImage src={url} alt={`${tab} ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <Loader />
-            )}
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <div className="flex justify-center">
       <div className="w-full flex flex-col">
@@ -503,66 +374,36 @@ export default function Generator() {
         </div>
 
         <div className="lg:flex p-6 lg:p-12 justify-between gap-4">
-          <div className="border-2 border-black">
-            <div className="grid grid-cols-4 bricolageSemibold text-xl md:text-3xl border-b-2 border-black">
-              {[
-                { label: 'Background', value: 'background' },
-                { label: 'Body', value: 'body' },
-                { label: 'Skin', value: 'skin' },
-                { label: 'Eyes', value: 'eyes' },
-                { label: 'Top', value: 'top' },
-                { label: 'Mouth', value: 'mouth' },
-                { label: 'Glasses', value: 'glasses' },
-                { label: 'Earrings', value: 'earrings' },
-              ].map((tabItem) => (
-                <div
-                  key={tabItem.value}
-                  className={`p-3 text-center border-b-2 border-r-2 border-black cursor-pointer hover:bg-[#FF6B00] transition duration-200 ${tab === tabItem.value ? 'bg-[#FF6B00]' : ''}`}
-                  onClick={() => setTab(tabItem.value as any)}
-                >
-                  {tabItem.label}
-                </div>
-              ))}
-            </div>
+          <SelectPanel
+            tab={tab}
+            setTab={setTab}
+            selected={selected}
+            setSelected={setSelected}
+            imageCategories={imageCategories}
+            imagesLoaded={imagesLoaded}
+            resetSelections={resetSelections}
+            getRandomImages={getRandomImages}
+            downloadImage={downloadImage}
+            setBodyType={setBodyType}
+            setSkinTypeFromSkin={setSkinTypeFromSkin}
+            color={color}
+            setColor={setColor}
+          />
 
-            <div className="flex flex-col justify-between p-4">
-              {renderTabContent()}
-
-              <div className="grid grid-cols-2 bricolageSemibold gap-5 mt-5">
-                <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImages}>
-                  SHUFFLE
-                </Button>
-                <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadImage}>
-                  DOWNLOAD
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-1 md:flex-col text-center">
-            <div ref={captureRef} className="border-2 border-black relative w-[400px] h-[400px]">
-              {selected.background ? (
-                <NextImage alt="Background" src={selected.background} className="absolute top-0 left-0 z-0 w-full h-full" fill loading="eager" />
-              ) : (
-                <div style={{ backgroundColor: color, width: '100%', height: '100%' }}></div>
-              )}
-              {selected.body && <NextImage alt="Body" src={selected.body} className="absolute top-0 left-0 z-1 w-full h-full" fill loading="eager" />}
-              {selected.skin && <NextImage alt="Skin" src={selected.skin} className="absolute top-0 left-0 z-2 w-full h-full" fill loading="eager" />}
-              {selected.eyes && <NextImage alt="Eyes" src={selected.eyes} className="absolute top-0 left-0 z-3 w-full h-full" fill loading="eager" />}
-              {selected.top && <NextImage alt="Top" src={selected.top} className="absolute top-0 left-0 z-4 w-full h-full" fill loading="eager" />}
-              {selected.mouth && <NextImage alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-5 w-full h-full" fill loading="eager" />}
-              {selected.glasses && <NextImage alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-6 w-full h-full" fill loading="eager" />}
-              {selected.earrings && <NextImage alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-7 w-full h-full" fill loading="eager" />}
-
-              {shareUrl && <ShareButton url={shareUrl} title="Check out this awesome CFB PFP!" className="absolute bottom-2 right-2 hover:scale-110 transition duration-200" />}
-            </div>
+          <div className="flex md:flex-col text-center">
+            <ImagePanel selected={selected} color={color} shareUrl={shareUrl} captureRef={captureRef} />
 
             <div className="flex flex-1 flex-col justify-center">
-              <>
-                {fortuneCookie && (
-                  <FortuneCookieButton fortuneCookieText={fortuneCookie} isVisible={true} onClick={() => {}} fortuneCookieTextClassName="bricolageSemibold text-3xl mt-10" width={200} height={150} />
-                )}
-              </>
+              {fortuneCookie && (
+                <FortuneCookieButton
+                  fortuneCookieText={fortuneCookie}
+                  isVisible={true}
+                  onClick={() => {}}
+                  fortuneCookieTextClassName="bricolageSemibold text-3xl mt-10"
+                  width={200}
+                  height={150}
+                />
+              )}
             </div>
           </div>
         </div>
