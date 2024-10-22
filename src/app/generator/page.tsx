@@ -499,8 +499,8 @@ export default function Generator() {
           </div>
         </div>
 
-        <div className="lg:flex p-6 lg:p-12 justify-between">
-          <div className="w-full mb-5 lg:mb-0 lg:w-3/5 border-2 border-black">
+        <div className="lg:flex p-6 lg:p-12 justify-between gap-4">
+          <div className="border-2 border-black">
             <div className="grid grid-cols-4 bricolageSemibold text-xl md:text-3xl border-b-2 border-black">
               {[
                 { label: 'Background', value: 'background' },
@@ -536,8 +536,8 @@ export default function Generator() {
             </div>
           </div>
 
-          <div className="w-full md:w-1/3 min-h-[400px] flex md:flex-col">
-            <div ref={captureRef} className="border-2 border-black relative w-80 h-80">
+          <div className="flex flex-1 md:flex-col text-center">
+            <div ref={captureRef} className="border-2 border-black relative w-[400px] h-[400px]">
               {selected.background ? (
                 <NextImage alt="Background" src={selected.background} className="absolute top-0 left-0 z-0 w-full h-full" fill loading="eager" />
               ) : (
@@ -551,7 +551,7 @@ export default function Generator() {
               {selected.glasses && <NextImage alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-6 w-full h-full" fill loading="eager" />}
               {selected.earrings && <NextImage alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-7 w-full h-full" fill loading="eager" />}
 
-              {shareUrl && <ShareButton url={shareUrl} title="Check out this awesome CFB PFP!" className="absolute bottom-2 right-2" />}
+              {shareUrl && <ShareButton url={shareUrl} title="Check out this awesome CFB PFP!" className="absolute bottom-2 right-2 hover:scale-110 transition duration-200" />}
             </div>
 
             <div className="flex flex-1 flex-col justify-center">

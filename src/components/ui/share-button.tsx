@@ -1,4 +1,5 @@
-import { TwitterShareButton, XIcon } from 'react-share';
+import clsx from 'clsx';
+import { FacebookIcon, FacebookShareButton, TwitterShareButton, XIcon } from 'react-share';
 
 interface ShareButtonsProps {
   url: string;
@@ -8,9 +9,14 @@ interface ShareButtonsProps {
 
 const ShareButton = ({ url, title, className }: ShareButtonsProps) => {
   return (
-    <TwitterShareButton url={url} title={title} className={className}>
-      <XIcon size={36} round />
-    </TwitterShareButton>
+    <div className={clsx('flex gap-1', className)}>
+      <TwitterShareButton url={url} title={title}>
+        <XIcon size={36} round />
+      </TwitterShareButton>
+      {/* <FacebookShareButton url={url} title={title}>
+        <FacebookIcon size={36} round />
+      </FacebookShareButton> */}
+    </div>
   );
 };
 
