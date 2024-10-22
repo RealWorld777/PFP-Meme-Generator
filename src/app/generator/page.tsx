@@ -228,7 +228,7 @@ export default function Generator() {
     const newSelected: typeof selected = { ...selected };
     for (const [category, filename] of Object.entries(DEFAULT_TRAITS)) {
       const imagesArray = imageCategories[category as keyof typeof imageCategories].state[0];
-      const matchedImage = imagesArray.find((url) => url.endsWith(filename));
+      const matchedImage = imagesArray.find((url) => url.includes(filename));
       if (matchedImage) {
         newSelected[category as keyof typeof selected] = matchedImage;
       } else {
@@ -238,7 +238,7 @@ export default function Generator() {
     setSelected(newSelected);
     setColor('#aabbcc');
     setSkinType(null);
-  }, [imageCategories, selected]);
+  }, [imageCategories]);
 
   // Set default selected traits once all images are loaded
   useEffect(() => {
