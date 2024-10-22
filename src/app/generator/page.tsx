@@ -15,17 +15,15 @@ import { Cookie } from 'lucide-react';
 import FortuneCookieButton from '../../components/ui/fortune-cookie';
 import ShareButton from '../../components/ui/share-button';
 
-export default function Home() {
+export default function Generator() {
   const captureRef = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState('#aabbcc');
   const [tab, setTab] = useState<'background' | 'body' | 'skin' | 'eyes' | 'top' | 'mouth' | 'glasses' | 'earrings'>('background');
   const [skinType, setSkinType] = useState<string | null>(null);
   const [fortuneCookie, setFortuneCookie] = useState<string | null>(null);
-  const [fortuneCookieVisible, setFortuneCookieVisible] = useState<boolean>(false);
   const [shareUrl, setShareUrl] = useState<string>('');
 
   const clearState = () => {
-    setFortuneCookieVisible(false);
     setFortuneCookie(null);
     setShareUrl('');
   };
@@ -107,7 +105,7 @@ export default function Home() {
   };
 
   const filterImagesByVar = (images: string[], varIdentifier: string): string[] =>
-    varIdentifier === 'universal' ? images : images.filter((img) => new RegExp(`(${varIdentifier})(?!\\d)`).test(img) || img.includes('universal'));
+    images.filter((img) => new RegExp(`(${varIdentifier})(?!\\d)`).test(img) || img.includes('universal'));
 
   const setBodyType = (url: string): string | null => {
     const varIdentifier = url.match(/(skin\d{1,2}|universal)/)?.[1];
@@ -297,7 +295,6 @@ export default function Home() {
   const downloadImage = async () => {
     const dataUrl = await combineImages();
 
-    setFortuneCookieVisible(false);
     setFortuneCookie(getRandomElement(fortuneCookies));
 
     if (dataUrl) {
@@ -390,7 +387,7 @@ export default function Home() {
                 {bodyImages.map((url, index) => (
                   <div
                     key={index}
-                    className="border-2 z-20 border-black cursor-pointer max-h-[150px]"
+                    className="border-2 z-20 border-black bg-white cursor-pointer max-h-[150px]"
                     onClick={() => {
                       setSelected((prev) => ({ ...prev, body: url }));
                       setBodyType(url);
@@ -419,7 +416,7 @@ export default function Home() {
                 {skinImages.map((url, index) => (
                   <div
                     key={index}
-                    className="border-2 z-20 border-black cursor-pointer max-h-[150px]"
+                    className="border-2 z-20 border-black bg-white cursor-pointer max-h-[150px]"
                     onClick={() => {
                       setSelected((prev) => ({ ...prev, skin: url }));
                       setSkinTypeFromSkin(url);
@@ -465,7 +462,7 @@ export default function Home() {
                 {currentCategory.images.map((url, index) => (
                   <div
                     key={index}
-                    className="border-2 z-20 border-black cursor-pointer max-h-[150px]"
+                    className="border-2 z-20 border-black bg-white cursor-pointer max-h-[150px]"
                     onClick={() => {
                       setSelected((prev) => ({ ...prev, [tab]: url }));
                     }}
