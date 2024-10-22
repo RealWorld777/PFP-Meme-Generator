@@ -1,4 +1,3 @@
-// Start of Selection
 'use client';
 import NextImage from 'next/image';
 import { useEffect, useRef, useState, useCallback } from 'react';
@@ -14,6 +13,7 @@ import { serverTimestamp, Timestamp } from 'firebase/firestore';
 import fortuneCookies from '../../../data/fortune-cookie.json';
 import { Cookie } from 'lucide-react';
 import FortuneCookieButton from '../../components/ui/fortune-cookie';
+import ShareButton from '../../components/ui/share-button';
 
 export default function Home() {
   const captureRef = useRef<HTMLDivElement>(null);
@@ -22,6 +22,13 @@ export default function Home() {
   const [skinType, setSkinType] = useState<string | null>(null);
   const [fortuneCookie, setFortuneCookie] = useState<string | null>(null);
   const [fortuneCookieVisible, setFortuneCookieVisible] = useState<boolean>(false);
+  const [shareUrl, setShareUrl] = useState<string>('');
+
+  const clearState = () => {
+    setFortuneCookieVisible(false);
+    setFortuneCookie(null);
+    setShareUrl('');
+  };
 
   const imageCategories = {
     background: { state: useState<string[]>(['']), initial: useState<string[]>(['']) },
@@ -87,8 +94,6 @@ export default function Home() {
     earrings: false,
   });
 
-  const shuffleColours = ['#fb85ab', '#f8d63f', '#5d71fc', '#b3fbfe'];
-
   const getRandomElement = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
   const extractFolderAndFileName = (url: string): { folder: string; file: string } => {
@@ -106,7 +111,7 @@ export default function Home() {
 
   const setBodyType = (url: string): string | null => {
     const varIdentifier = url.match(/(skin\d{1,2}|universal)/)?.[1];
-    console.log('0.8.SETTING BODY TYPE varIdentifier', varIdentifier);
+
     if (!varIdentifier) return null;
     const matchedImages = filterImagesByVar(initialBody, varIdentifier);
     setBodyImages(matchedImages);
@@ -121,7 +126,7 @@ export default function Home() {
 
   const setSkinTypeFromSkin = (url: string): string | null => {
     const varIdentifier = url.match(/(skin\d{1,2})/)?.[1];
-    console.log('SETTING SKIN TYPE varIdentifier', url, varIdentifier);
+
     if (!varIdentifier) return null;
 
     setSkinType(varIdentifier);
@@ -131,19 +136,13 @@ export default function Home() {
     if (varIdentifier && selected.body) {
       let tmp = selected.body;
       const { folder, file } = extractFolderAndFileName(tmp);
-      console.log(file.replaceAll('/', '%2F').replace(/skin\d{1,2}/, varIdentifier));
-      console.log(file);
-      const newBodyUrl = matchedBodyImages.find((img) => img.includes(file.replaceAll('/', '%2F').replace(/skin\d{1,2}/, varIdentifier)))!;
-      console.log('newBodyUrl', newBodyUrl);
 
-      // Check if the new body URL exists in the matchedBodyImages
+      const newBodyUrl = matchedBodyImages.find((img) => img.includes(file.replaceAll('/', '%2F').replace(/skin\d{1,2}/, varIdentifier)))!;
+
       if (matchedBodyImages.includes(newBodyUrl)) {
-        console.log('newBodyUrl exists in matchedBodyImages');
         setSelected((prev) => ({ ...prev, body: newBodyUrl }));
       } else {
-        console.log('newBodyUrl does not exist in matchedBodyImages');
         const randomMatchedBody = getRandomElement(matchedBodyImages);
-        console.log('randomMatchedBody', randomMatchedBody);
         setSelected((prev) => ({ ...prev, body: randomMatchedBody }));
       }
     }
@@ -152,8 +151,7 @@ export default function Home() {
   };
 
   const getRandomImages = useCallback(() => {
-    setFortuneCookieVisible(false);
-    setFortuneCookie(null);
+    clearState();
 
     if (Object.values(imageCategories).some((category) => category.initial[0].length === 0)) return;
 
@@ -168,17 +166,14 @@ export default function Home() {
     const randomBody = getRandomElement(initialBody);
     newSelected.body = randomBody;
     const skinType = setBodyType(randomBody);
-    console.log('1.RANDOMMING skinType', skinType);
 
     let matchingSkins: any;
     if (skinType !== null) matchingSkins = skinImages.filter((url) => new RegExp(`(${skinType})(?!\\d)`).test(url));
     else matchingSkins = skinImages;
-    console.log('matchingSkins', matchingSkins);
     newSelected.skin = getRandomElement(matchingSkins);
 
     setSelected(newSelected);
 
-    console.log(newSelected);
     return newSelected;
   }, [initialBackground, initialBody, imageCategories, selected, setBodyType, skinImages, skinType]);
 
@@ -198,7 +193,6 @@ export default function Home() {
   const fetchSingleImage = async (folder: string, imageName: string) => {
     const listRef = ref(storage, `${folder}/${imageName}`);
     const url = await getDownloadURL(listRef);
-    console.log('fetched Image: ', url);
     return url;
   };
 
@@ -281,11 +275,27 @@ export default function Home() {
     }
   };
 
+  const uploadImage = async (dataUrl: string): Promise<string> => {
+    const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+    const formData = new FormData();
+    formData.append('image', dataUrl.split(',')[1]); // Remove the data URL prefix
+
+    const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      return result.data.url;
+    } else {
+      throw new Error('Image upload failed');
+    }
+  };
+
   const downloadImage = async () => {
     const dataUrl = await combineImages();
-
-    console.log('Selected', selected);
-    console.log('Data URL', dataUrl);
 
     setFortuneCookieVisible(false);
     setFortuneCookie(getRandomElement(fortuneCookies));
@@ -297,6 +307,15 @@ export default function Home() {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
+      try {
+        const uploadedImageUrl = await uploadImage(dataUrl);
+        console.log('uploadedImageUrl', uploadedImageUrl);
+        setShareUrl(uploadedImageUrl);
+      } catch (error) {
+        console.error('Image upload failed:', error);
+        alert('Image upload failed. Please try again.');
+      }
 
       addDownload({
         selected,
@@ -534,6 +553,8 @@ export default function Home() {
               {selected.mouth && <NextImage alt="Mouth" src={selected.mouth} className="absolute top-0 left-0 z-5 w-full h-full" fill loading="eager" />}
               {selected.glasses && <NextImage alt="Glasses" src={selected.glasses} className="absolute top-0 left-0 z-6 w-full h-full" fill loading="eager" />}
               {selected.earrings && <NextImage alt="Earrings" src={selected.earrings} className="absolute top-0 left-0 z-7 w-full h-full" fill loading="eager" />}
+
+              {shareUrl && <ShareButton url={shareUrl} title="Check out this awesome CFB PFP!" className="absolute bottom-2 right-2" />}
             </div>
 
             <div className="flex flex-1 flex-col justify-center">
