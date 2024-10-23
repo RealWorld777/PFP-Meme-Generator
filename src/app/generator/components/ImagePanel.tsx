@@ -65,7 +65,7 @@ const ImagePanel: React.FC<ImagePanelProps> = ({ selected, color, shareUrl, capt
   }, [color]);
 
   return (
-    <div ref={captureRef} className="relative border-2 border-black w-[400px] h-[400px]">
+    <div ref={captureRef} className="relative border-2 border-black w-full md:w-[400px] md:h-[400px] aspect-square">
       {!allImagesLoaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
           <HashLoader color="white" size={100} />
@@ -140,7 +140,6 @@ const ImagePanel: React.FC<ImagePanelProps> = ({ selected, color, shareUrl, capt
         onLoad={() => handleImageLoad('earrings')}
         onError={() => handleImageError('earrings')}
       />
-
       {shareUrl && allImagesLoaded && <ShareButton url={shareUrl} title="Check out this awesome CFB PFP!" className="absolute bottom-2 right-2 hover:scale-110 transition duration-200" />}
     </div>
   );

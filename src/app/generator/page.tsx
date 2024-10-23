@@ -103,8 +103,7 @@ export default function Generator() {
     return { folder, file };
   };
 
-  const filterImagesByVar = (images: string[], varIdentifier: string): string[] =>
-    images.filter((img) => new RegExp(`(${varIdentifier})(?!\\d)`).test(img) || img.includes('universal'));
+  const filterImagesByVar = (images: string[], varIdentifier: string): string[] => images.filter((img) => new RegExp(`(${varIdentifier})(?!\\d)`).test(img) || img.includes('universal'));
 
   const setBodyType = (url: string): string | null => {
     const varIdentifier = url.match(/(skin\d{1,2}|universal)/)?.[1];
@@ -383,19 +382,14 @@ export default function Generator() {
             setColor={setColor}
           />
 
-          <div className="flex md:flex-col text-center">
-            <ImagePanel selected={selected} color={color} shareUrl={shareUrl} captureRef={captureRef} />
+          <div className="flex flex-col md:flex-row lg:flex-col text-center justify-around">
+            <div className="flex justify-center">
+              <ImagePanel selected={selected} color={color} shareUrl={shareUrl} captureRef={captureRef} />
+            </div>
 
             <div className="flex flex-1 flex-col justify-center">
               {fortuneCookie && (
-                <FortuneCookieButton
-                  fortuneCookieText={fortuneCookie}
-                  isVisible={true}
-                  onClick={() => {}}
-                  fortuneCookieTextClassName="bricolageSemibold text-3xl mt-10"
-                  width={200}
-                  height={150}
-                />
+                <FortuneCookieButton fortuneCookieText={fortuneCookie} isVisible={true} onClick={() => {}} fortuneCookieTextClassName="bricolageSemibold text-3xl mt-10" width={200} height={150} />
               )}
             </div>
           </div>
