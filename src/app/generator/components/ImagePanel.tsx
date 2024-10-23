@@ -60,6 +60,10 @@ const ImagePanel: React.FC<ImagePanelProps> = ({ selected, color, shareUrl, capt
     prevSelectedRef.current = selected;
   }, [selected]);
 
+  useEffect(() => {
+    setLoadedImages((prev) => ({ ...prev, background: true }));
+  }, [color]);
+
   return (
     <div ref={captureRef} className="relative border-2 border-black w-[400px] h-[400px]">
       {!allImagesLoaded && (
