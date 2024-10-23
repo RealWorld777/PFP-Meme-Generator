@@ -1,22 +1,16 @@
- // Start of Selection
 'use client';
 import NextImage from 'next/image';
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { HexColorPicker, HexColorInput } from 'react-colorful';
 import { storage } from '../../config/firebase';
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
-import mainImg from '../../assets/Frame5.svg';
-import Loader from 'react-dots-loader';
 import 'react-dots-loader/index.css';
-import { Button } from '../../components/ui/button';
 import { addDownload } from '../../config/firestore';
 import { serverTimestamp, Timestamp } from 'firebase/firestore';
 import fortuneCookies from '../../../data/fortune-cookie.json';
-import { Cookie } from 'lucide-react';
 import FortuneCookieButton from '../../components/ui/fortune-cookie';
-import ShareButton from '../../components/ui/share-button';
 import ImagePanel from './components/ImagePanel';
 import SelectPanel from './components/SelectPanel';
+import { genratorImg } from '../../config/images';
 
 const skinTypes = ['skin1', 'skin2', 'skin3', 'skin4', 'skin5', 'skin6', 'skin7', 'skin8', 'skin9', 'skin10', 'universal'];
 
@@ -359,7 +353,7 @@ export default function Generator() {
       <div className="w-full flex flex-col">
         <div className="sm:flex w-full border-t-2 border-b-2 border-black">
           <div className="w-full sm:w-1/2 border-b-2 sm:border-b-0 sm:border-r-2 border-black">
-            <NextImage alt="Main Image" src={mainImg} className="w-full" />
+            <NextImage alt="Main Image" src={genratorImg} className="w-full" />
           </div>
           <div className="flex flex-col justify-between px-7 py-5 md:px-12 md:py-8 w-full sm:w-1/2">
             <div>
