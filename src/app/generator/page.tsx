@@ -116,15 +116,14 @@ export default function Generator() {
     const varIdentifier = url.match(/(skin\d{1,2}|universal)/)?.[1];
 
     if (!varIdentifier) return null;
-    const matchedImages = filterImagesByVar(initialBody, varIdentifier);
-    setBodyImages(matchedImages);
-    if (varIdentifier !== 'universal') {
-      setSkinType(varIdentifier);
-      return varIdentifier;
-    } else {
+    if (varIdentifier === 'universal') {
       setSkinType(null);
       return null;
     }
+    const matchedImages = filterImagesByVar(initialBody, varIdentifier);
+    setBodyImages(matchedImages);
+    setSkinType(varIdentifier);
+    return varIdentifier;
   };
 
   const setSkinTypeFromSkin = (url: string): string | null => {
