@@ -245,7 +245,23 @@ export default function Generator() {
     clearState();
   };
 
-  const combineImages = async (): Promise<string> => {
+  const loadImage = async (src: string): Promise<HTMLImageElement | null> => {
+    try {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = src;
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+      });
+      return img;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
+  const combineImages = async (width: number, height: number, isHD: boolean): Promise<string> => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
 
@@ -253,8 +269,6 @@ export default function Generator() {
       throw new Error('Canvas context not available');
     }
 
-    const width = 2400;
-    const height = 2400;
     canvas.width = width;
     canvas.height = height;
 
@@ -263,26 +277,21 @@ export default function Generator() {
       ctx.fillRect(0, 0, width, height);
     }
 
-    const loadImage = (src: string): Promise<HTMLImageElement> =>
-      new Promise((resolve, reject) => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
-        img.src = src;
-      });
+    const getImageSrc = async (key: keyof typeof selected): Promise<string | null> => {
+      if (!selected[key]) return null;
+      if (isHD) {
+        const { folder, file } = extractFolderAndFileName(selected[key]);
+        const hdFolder = folder.replace('LD_ASSETS', 'HD_ASSETS');
+        return fetchSingleImage(hdFolder, file);
+      }
+      return selected[key];
+    };
 
     try {
-      const loadSelectedImage = async (key: keyof typeof selected) => {
-        if (selected[key]) {
-          const { folder, file } = extractFolderAndFileName(selected[key]);
-          const hdFolder = folder.replace('LD_ASSETS', 'HD_ASSETS');
-          return loadImage(await fetchSingleImage(hdFolder, file));
-        }
-        return null;
-      };
-
-      const images = await Promise.all(['background', 'body', 'skin', 'eyes', 'top', 'mouth', 'glasses', 'earrings'].map((key) => loadSelectedImage(key as keyof typeof selected)));
+      const keys: (keyof typeof selected)[] = ['background', 'body', 'skin', 'eyes', 'top', 'mouth', 'glasses', 'earrings'];
+      const imagePromises = keys.map((key) => getImageSrc(key));
+      const imageSrcs = await Promise.all(imagePromises);
+      const images = await Promise.all(imageSrcs.map((src) => (src ? loadImage(src) : Promise.resolve(null))));
 
       images.forEach((img) => {
         if (img) {
@@ -292,9 +301,17 @@ export default function Generator() {
 
       return canvas.toDataURL('image/png');
     } catch (error) {
-      console.error('Error combining images:', error);
+      console.error(`Error combining ${isHD ? 'HD' : 'LD'} images:`, error);
       return '';
     }
+  };
+
+  const combineImagesHD = async (): Promise<string> => {
+    return combineImages(6400, 6400, true);
+  };
+
+  const combineImagesLD = async (): Promise<string> => {
+    return combineImages(400, 400, false);
   };
 
   const uploadImage = async (dataUrl: string): Promise<string> => {
@@ -316,15 +333,15 @@ export default function Generator() {
     }
   };
 
-  const downloadImage = async () => {
-    const dataUrl = await combineImages();
+  const downloadHDImage = async () => {
+    const dataUrl = await combineImagesHD();
 
     setFortuneCookie(getRandomElement(fortuneCookies));
 
     if (dataUrl) {
       const link = document.createElement('a');
       link.href = dataUrl;
-      link.download = 'combined-pfp.png';
+      link.download = 'combined-pfp-HD.png';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -343,7 +360,29 @@ export default function Generator() {
         createdAt: serverTimestamp(),
       });
     } else {
-      alert('Failed to generate image.');
+      alert('Failed to generate HD image.');
+    }
+  };
+
+  const downloadLDImage = async () => {
+    const dataUrl = await combineImagesLD();
+
+    setFortuneCookie(getRandomElement(fortuneCookies));
+
+    if (dataUrl) {
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = 'combined-pfp-LD.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      addDownload({
+        selected,
+        createdAt: serverTimestamp(),
+      });
+    } else {
+      alert('Failed to generate LD image.');
     }
   };
 
@@ -375,7 +414,8 @@ export default function Generator() {
             imagesLoaded={imagesLoaded}
             resetSelections={resetSelections}
             getRandomImages={getRandomImages}
-            downloadImage={downloadImage}
+            downloadHDImage={downloadHDImage}
+            downloadLDImage={downloadLDImage}
             setBodyType={setBodyType}
             setSkinTypeFromSkin={setSkinTypeFromSkin}
             color={color}

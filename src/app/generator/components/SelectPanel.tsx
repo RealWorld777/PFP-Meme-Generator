@@ -29,7 +29,8 @@ const SelectPanel: React.FC<SelectPanelProps> = ({
   imagesLoaded,
   resetSelections,
   getRandomImages,
-  downloadImage,
+  downloadHDImage,
+  downloadLDImage,
   setBodyType,
   setSkinTypeFromSkin,
   color,
@@ -164,12 +165,15 @@ const SelectPanel: React.FC<SelectPanelProps> = ({
       <div className="flex flex-col justify-between p-4">
         {renderTabContent()}
 
-        <div className="grid grid-cols-2 bricolageSemibold gap-5 mt-5">
-          <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImages}>
+        <div className="w-full flex justify-around bricolageSemibold gap-5 mt-5">
+          <Button className="w-1/3 text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImages}>
             SHUFFLE
           </Button>
-          <Button className="border-2 border-black text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadImage}>
-            DOWNLOAD
+          <Button className="w-1/3 text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadHDImage}>
+            DOWNLOAD HD
+          </Button>
+          <Button className="w-1/3 text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadLDImage}>
+            DOWNLOAD LD
           </Button>
         </div>
       </div>
