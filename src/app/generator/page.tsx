@@ -18,7 +18,7 @@ export default function Generator() {
   const captureRef = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState('#aabbcc');
   const [tab, setTab] = useState<'background' | 'body' | 'skin' | 'eyes' | 'top' | 'mouth' | 'glasses' | 'earrings'>('background');
-  const [skinType, setSkinType] = useState<string | null>(null);
+  const [skinType, setSkinType] = useState<string | null>('skin1');
   const [fortuneCookie, setFortuneCookie] = useState<string | null>(null);
   const [shareUrl, setShareUrl] = useState<string>('');
 
@@ -229,7 +229,7 @@ export default function Generator() {
     }
     setSelected(newSelected);
     setColor('#aabbcc');
-    setSkinType(null);
+    setBodyType(newSelected.body);
   }, [imageCategories]);
 
   // Set default selected traits once all images are loaded
