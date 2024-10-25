@@ -10,7 +10,8 @@ import fortuneCookies from '../../../data/fortune-cookie.json';
 import FortuneCookieButton from '../../components/ui/fortune-cookie';
 import ImagePanel from './components/ImagePanel';
 import SelectPanel from './components/SelectPanel';
-import { genratorImg } from '../../config/images';
+import images, { genratorImg } from '../../config/images';
+import { LandingMarquee } from '../../components/landing/LandingMarquee';
 
 const skinTypes = ['skin1', 'skin2', 'skin3', 'skin4', 'skin5', 'skin6', 'skin7', 'skin8', 'skin9', 'skin10', 'universal'];
 
@@ -400,6 +401,13 @@ export default function Generator() {
             </div>
             <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
               Read <span className="text-[#FF6B00] underline cursor-pointer">instructions</span> for more info
+            </div>
+            <div className="p-2">
+              <LandingMarquee variant="secondary" animationDirection="left" animationDurationInSeconds={25}>
+                {Object.values(images).map((image, index) => {
+                  return <NextImage key={index} src={image} alt="CFB" className="h-48 w-auto" />;
+                })}
+              </LandingMarquee>
             </div>
           </div>
         </div>

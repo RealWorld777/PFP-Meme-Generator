@@ -13,7 +13,8 @@ interface SelectPanelProps {
   imagesLoaded: any;
   resetSelections: () => void;
   getRandomImages: () => void;
-  downloadImage: () => void;
+  downloadHDImage: () => void;
+  downloadLDImage: () => void;
   setBodyType?: (body: string) => void;
   setSkinTypeFromSkin?: (skin: string) => void;
   color: string;

@@ -2,19 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { LandingPrimaryImageCtaSection } from '../components/landing/LandingPrimaryCta';
-import { Button } from '../components/ui/button';
-import Link from 'next/link';
-import { LandingMarquee } from '../components/landing/LandingMarquee';
-import images, { homeImg, homeImg2 } from '../config/images';
-import Image from 'next/image';
-
-import { LandingProductHuntAward } from '../components/landing/LandingProductHuntAward';
-import { LandingDiscount } from '../components/landing/LandingDiscount';
-import { LandingSocialProof } from '../components/landing/LandingSocialProof';
-import { LandingProductFeature } from '../components/landing/LandingProductFeature';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import images, { homeImg } from '../config/images';
 import { getDownloadsCount } from '../config/firestore';
+import { FaDollarSign, FaGlobe, FaDiscord, FaTelegram, FaShoppingBag } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import Link from 'next/link';
 
 const avatarItems = [
   {
@@ -31,66 +23,67 @@ const avatarItems = [
   },
 ];
 
+const content = (
+  <div>
+    <div className="text-2xl">
+      <span className="font-bold text-yellow-500">$CFB</span> is the first ever meme token to be released on the Qubic tickchain, a blockchain that aims to create true AGI (Artificial General
+      Intelligence). At the heart of our meme token there is CFB Generator, a free tool with which users can create unique CFB avatars or irreverent faces to create their own memes, through the use of
+      personalized traits that reflect their personality or style.
+    </div>
+    <div className="text-2xl">Create and share your personal CFB avatar or meme on X, let&apos;s spread the word.</div>
+    <div className="text-2xl">
+      <div className="flex justify-around py-5">
+        <div className="flex items-center">
+          <Link href="https://twitter.com/c_f_b_token" target="_blank" rel="noopener noreferrer">
+            <FaXTwitter size={40}/>
+          </Link>
+        </div>
+        <div className="flex items-center">
+          <Link href="https://safetrade.com/exchange/CFB-USDT?type=basic" target="_blank" rel="noopener noreferrer">
+            <FaShoppingBag size={40}/>
+          </Link>
+        </div>
+        <div className="flex items-center">
+          <Link href="https://coinpaprika.com/coin/cfb-cfb-token/" target="_blank" rel="noopener noreferrer">
+            <FaDollarSign size={40}/>
+          </Link>
+        </div>
+        <div className="flex items-center">
+          <Link href="https://cfbtoken.com" target="_blank" rel="noopener noreferrer">
+            <FaGlobe size={40}/>
+          </Link>
+        </div>
+        <div className="flex items-center">
+          <Link href="https://discord.gg/cAbXK8Kx35" target="_blank" rel="noopener noreferrer">
+            <FaDiscord size={40}/>
+          </Link>
+        </div>
+        <div className="flex items-center">
+          <Link href="https://t.me/+0NJgRzFxPXMxMjk8" target="_blank" rel="noopener noreferrer">
+            <FaTelegram size={40}/>
+          </Link>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 function Home() {
   const downloadCnt = getDownloadsCount();
 
   return (
-    <>
-      <LandingPrimaryImageCtaSection
-        title=""
-        titleComponent={<h1 className="text-6xl">PFP Generator</h1>}
-        description=""
-        descriptionComponent={<p className="text-4xl">Generate your own PFP with CFB</p>}
-        imageSrc={homeImg.src}
-        withBackground
-        withBackgroundGlow
-        imageAlt="CFB"
-        imageShadow="hard"
-        minHeight={350}
-        backgroundGlowVariant="secondary"
-        leadingComponent={<LandingProductHuntAward grayscale={false} />}
-        className="bricolageSemibold text-xl py-0 lg:py-0 px-16"
-      >
-        <Button size="xl">
-          <Link href="#">Read more</Link>
-        </Button>
-        <Button size="xl" asChild variant="outlinePrimary">
-          <Link href="/generator">Generate Now</Link>
-        </Button>
-
-        <LandingDiscount discountValueText="$350 off" discountDescriptionText="for the first 10 customers (2 left)" />
-
-        <LandingSocialProof className="w-full mt-12" showRating numberOfUsers={100000} suffixText="happy users" avatarItems={avatarItems} size="medium" />
-
-        <div className="text-lg">Total Downloads : {downloadCnt}</div>
-      </LandingPrimaryImageCtaSection>
-
-      <div className="p-12">
-        <LandingMarquee withBackground variant="secondary">
-          {Object.values(images).map((image, index) => {
-            return <Image key={index} src={image} alt="CFB" className="h-48 w-auto" />;
-          })}
-        </LandingMarquee>
-      </div>
-
-      <LandingProductFeature
-        title="PFP Generator"
-        descriptionComponent={
-          <>
-            <p className="text-xl">Our PFP Meme Generator allows you to create unique and personalized CFB profile images for your Discord, X, or other platforms.</p>
-
-            <Button className="text-lg mt-8" variant="outline" asChild>
-              <Link href="/generator">Generate Now</Link>
-            </Button>
-          </>
-        }
-        imageSrc={homeImg2.src}
-        imageAlt="Craft Unique Solutions with Ease"
-        imagePosition="left"
-        imagePerspective="none"
-        variant="secondary"
-      />
-    </>
+    <LandingPrimaryImageCtaSection
+      title=""
+      titleComponent={<h1 className="text-6xl">CFB PFP Generator</h1>}
+      description=""
+      descriptionComponent={content}
+      imageSrc={homeImg.src}
+      imageAlt="CFB"
+      imageShadow="hard"
+      minHeight={350}
+      backgroundGlowVariant="secondary"
+      className="bricolageSemibold text-xl py-0 lg:py-0 px-16"
+    ></LandingPrimaryImageCtaSection>
   );
 }
 
