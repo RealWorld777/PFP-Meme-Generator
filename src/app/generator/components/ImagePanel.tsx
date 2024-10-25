@@ -124,4 +124,6 @@ const ImagePanel: React.FC<ImagePanelProps> = React.memo(({ selected, color, sha
   );
 });
 
+ImagePanel.displayName = 'ImagePanel';
+
 export default ImagePanel;
