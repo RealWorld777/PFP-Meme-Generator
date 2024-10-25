@@ -40,12 +40,12 @@ const content = (
         </div>
         <div className="flex items-center">
           <Link href="https://safetrade.com/exchange/CFB-USDT?type=basic" target="_blank" rel="noopener noreferrer">
-            <FaShoppingBag size={40}/>
+            <img src="https://s2.coinmarketcap.com/static/img/exchanges/128x128/491.png" alt="SafeTrade" width={40} height={40}/>
           </Link>
         </div>
         <div className="flex items-center">
           <Link href="https://coinpaprika.com/coin/cfb-cfb-token/" target="_blank" rel="noopener noreferrer">
-            <FaDollarSign size={40}/>
+            <img src="https://coinpaprika.com/assets/img/cp-logo-small.svg" alt="CoinPaprika" width={40} height={40}/>
           </Link>
         </div>
         <div className="flex items-center">
