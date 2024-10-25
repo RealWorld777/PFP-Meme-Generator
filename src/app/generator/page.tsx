@@ -12,6 +12,7 @@ import ImagePanel from './components/ImagePanel';
 import SelectPanel from './components/SelectPanel';
 import images, { genratorImg } from '../../config/images';
 import { LandingMarquee } from '../../components/landing/LandingMarquee';
+import Link from 'next/link';
 
 const skinTypes = ['skin1', 'skin2', 'skin3', 'skin4', 'skin5', 'skin6', 'skin7', 'skin8', 'skin9', 'skin10', 'universal'];
 
@@ -22,6 +23,7 @@ export default function Generator() {
   const [skinType, setSkinType] = useState<string | null>('skin1');
   const [fortuneCookie, setFortuneCookie] = useState<string | null>(null);
   const [shareUrl, setShareUrl] = useState<string>('');
+  const [latestImgs, setLatestImgs] = useState<string[]>([]);
 
   const clearState = () => {
     setFortuneCookie(null);
@@ -90,6 +92,11 @@ export default function Generator() {
     mouth: false,
     glasses: false,
     earrings: false,
+  });
+
+  // Fetching Latest Images
+  useEffect(() => {
+
   });
 
   const getRandomElement = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
@@ -356,17 +363,18 @@ export default function Generator() {
       link.click();
       document.body.removeChild(link);
 
-      // try {
-      //   const uploadedImageUrl = await uploadImage(dataUrl);
-      //   console.log('uploadedImageUrl', uploadedImageUrl);
-      //   setShareUrl(uploadedImageUrl);
-      // } catch (error) {
-      //   console.error('Image upload failed:', error);
-      //   alert('Image upload failed. Please try again.');
-      // }
+      try {
+        const uploadedImageUrl = await uploadImage(await combineImagesLD());
+        console.log('uploadedImageUrl', uploadedImageUrl);
+        setShareUrl(uploadedImageUrl);
+      } catch (error) {
+        console.error('Image upload failed:', error);
+        alert('Image upload failed. Please try again.');
+      }
 
       addDownload({
         selected,
+        link: shareUrl,
         createdAt: serverTimestamp(),
       });
     } else {
@@ -387,17 +395,18 @@ export default function Generator() {
       link.click();
       document.body.removeChild(link);
 
-      // try {
-      //   const uploadedImageUrl = await uploadImage(dataUrl);
-      //   console.log('uploadedImageUrl', uploadedImageUrl);
-      //   setShareUrl(uploadedImageUrl);
-      // } catch (error) {
-      //   console.error('Image upload failed:', error);
-      //   alert('Image upload failed. Please try again.');
-      // }
+      try {
+        const uploadedImageUrl = await uploadImage(dataUrl);
+        console.log('uploadedImageUrl', uploadedImageUrl);
+        setShareUrl(uploadedImageUrl);
+      } catch (error) {
+        console.error('Image upload failed:', error);
+        alert('Image upload failed. Please try again.');
+      }
 
       addDownload({
         selected,
+        link: shareUrl,
         createdAt: serverTimestamp(),
       });
     } else {
@@ -418,7 +427,11 @@ export default function Generator() {
               <p className="mt-3 text-base md:text-xl lg:text-2xl workSans">Pick and choose between various elements to compose your CFB PFP</p>
             </div>
             <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
-              Read <span className="text-[#FF6B00] underline cursor-pointer">instructions</span> for more info
+              Read{' '}
+              <Link href="/faq" className="text-[#FF6B00] cursor-pointer">
+                FAQ
+              </Link>{' '}
+              for more info
             </div>
             <div className="p-2">
               <LandingMarquee variant="secondary" animationDirection="left" animationDurationInSeconds={25}>

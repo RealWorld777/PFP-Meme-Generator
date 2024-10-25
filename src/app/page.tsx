@@ -69,8 +69,6 @@ const content = (
 );
 
 function Home() {
-  const downloadCnt = getDownloadsCount();
-
   return (
     <LandingPrimaryImageCtaSection
       title=""
