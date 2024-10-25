@@ -1,22 +1,22 @@
 [
   {
-    "title": "What is Meme Generator?",
-    "content": "Meme Generator is an online tool that allows users to create custom memes by adding text to popular images or uploading their own images."
+    "title": "What is $CFB?",
+    "content": "$CFB is the first ever memetoken to be released on Qubic tickchain. It was created as a tribute to Sergey Ivancheglo (aka “Come From Beyond”), known in the community not only for being the founder of Qubic, as well as other successful projects such as NXT and IOTA, but also for his keen sense of humor, hence the inspiration of the viral \"trollface\". Launched fairly without pre-sale, CFB is a community-driven project, built by the people for the people, forever."
   },
   {
-    "title": "How do I create a meme?",
-    "content": "To create a meme, choose a popular image template or upload your own image, add text in the provided fields, and click the 'Generate' button to create your meme."
+    "title": "How does the customizable CFB generator work?",
+    "content": "The CFB Generator allows users to create their own customized PFP, choosing from the various assets/traits available. They will be able to manually choose their traits or use the \"shuffle\" function which will assemble the PFP randomly.\nIn addition to the ability to create a full PFP, users will also be able to create just an HD head/face that they can use to assemble their own memes. Once the full PFP or face has been created, users will be able to download them for free and share them on their X account.\n\nP.S. After downloading the PFP, a fortune cookie will appear, the user will have to click on it to read the sentence inside."
   },
   {
-    "title": "Can I upload my own images?",
-    "content": "Yes, you can upload your own images to create personalized memes. Simply click the 'Upload Image' button and select your desired image file."
+    "title": "Can I mint the generated PFP?",
+    "content": "Although our generator has all the assets/traits typical of an NFT collection, unfortunately NFTs are currently not yet a reality on Qubic tickchain. However, as NFTs are implemented in the future, we will consider adding the mint function, if the community agrees. In any case, our tool can be easily considered as the generator of the first true NFT-like collection on Qubic."
   },
   {
-    "title": "Is Meme Generator free to use?",
-    "content": "Yes, Meme Generator is free to use. However, we offer premium features for those who want access to additional tools and options."
+    "title": "Who is the artist who created the assets/traits for the generator?",
+    "content": "Martin is the artist who created the entire collection. From his pen came the funniest and most fascinating ideas that you can admire in the generator. You can follow him on X @m4r71n_4r7."
   },
   {
-    "title": "How do I download or share my meme?",
-    "content": "After creating your meme, you can download it directly to your device or share it on social media platforms using the provided sharing options."
+    "title": "Will the PFP Generator be updated in the future?",
+    "content": "Certainly, during holidays, for example Halloween, Christmas, Easter, during important dates for the world of cryptocurrencies or symbolic dates (May the 4th), on all these dates we will add new traits to celebrate the events together.\nSo always keep an eye on our generator and stay tuned."
   }
 ]

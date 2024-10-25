@@ -119,7 +119,7 @@ const ImagePanel: React.FC<ImagePanelProps> = React.memo(({ selected, color, sha
         ) : null;
       })}
 
-      {shareUrl && allImagesLoaded && <ShareButton url={shareUrl} title="Check out this awesome CFB PFP!" className="absolute bottom-2 right-2 hover:scale-110 transition duration-200" />}
+      {shareUrl && allImagesLoaded && <ShareButton url={''} title="Check out this awesome $CFB PFP I just created!\n\n#CFBGENERATOR @c_f_b_token" className="absolute bottom-2 right-2 hover:scale-110 transition duration-200" />}
     </div>
   );
 });

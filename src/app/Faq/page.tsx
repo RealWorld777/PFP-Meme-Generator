@@ -25,7 +25,7 @@ const Faq: React.FC = () => {
                 <h3 className="bricolageSemibold text-black text-xl sm:text-4xl">{faq.title}</h3>
                 {activeIndex === index && <p className="workSans sm:text-2xl text-black mt-5 faq-content active">{faq.content}</p>}
               </div>
-              <div className="w-[50px] h-[50px] sm:w-[25px] sm:h-[25px] cursor-pointer flex items-center justify-center" onClick={() => toggleFaqActive(index)}>
+              <div className="w-[50px] h-[50px] sm:w-[25px] sm:h-[25px] cursor-pointer flex items-center justify-center text-black" onClick={() => toggleFaqActive(index)}>
                 {activeIndex === index ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
               </div>
             </div>
