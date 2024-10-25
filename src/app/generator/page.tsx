@@ -95,13 +95,22 @@ export default function Generator() {
   const getRandomElement = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
   const extractFolderAndFileName = (url: string): { folder: string; file: string } => {
-    const [, path] = decodeURIComponent(url).split('/o/');
-    const [pathWithoutQuery] = path.split('?');
-    const parts = pathWithoutQuery.split('%2F');
-    const folder = parts.slice(0, -1).join('/');
-    const file = parts[parts.length - 1];
-
-    return { folder, file };
+    try {
+      const parsedUrl = new URL(url);
+      const pathname = decodeURIComponent(parsedUrl.pathname);
+      const oIndex = pathname.indexOf('/o/');
+      if (oIndex === -1) {
+        throw new Error("Invalid URL format: '/o/' not found");
+      }
+      const path = pathname.substring(oIndex + 3);
+      const parts = path.split('/');
+      const file = parts.pop() || '';
+      const folder = parts.join('/');
+      return { folder, file };
+    } catch (error) {
+      console.error('Error extracting folder and file name:', error);
+      return { folder: '', file: '' };
+    }
   };
 
   const filterImagesByVar = (images: string[], varIdentifier: string): string[] => images.filter((img) => new RegExp(`(${varIdentifier})(?!\\d)`).test(img) || img.includes('universal'));
@@ -278,7 +287,7 @@ export default function Generator() {
       ctx.fillRect(0, 0, width, height);
     }
 
-    const getImageSrc = async (key: keyof typeof selected): Promise<string | null> => {
+    const getImageSrc = async (key: keyof typeof selected, isHD: boolean): Promise<string | null> => {
       if (!selected[key]) return null;
       if (isHD) {
         const { folder, file } = extractFolderAndFileName(selected[key]);
@@ -290,7 +299,7 @@ export default function Generator() {
 
     try {
       const keys: (keyof typeof selected)[] = ['background', 'body', 'skin', 'eyes', 'top', 'mouth', 'glasses', 'earrings'];
-      const imagePromises = keys.map((key) => getImageSrc(key));
+      const imagePromises = keys.map((key) => getImageSrc(key, isHD));
       const imageSrcs = await Promise.all(imagePromises);
       const images = await Promise.all(imageSrcs.map((src) => (src ? loadImage(src) : Promise.resolve(null))));
 
@@ -347,14 +356,14 @@ export default function Generator() {
       link.click();
       document.body.removeChild(link);
 
-      try {
-        const uploadedImageUrl = await uploadImage(dataUrl);
-        console.log('uploadedImageUrl', uploadedImageUrl);
-        setShareUrl(uploadedImageUrl);
-      } catch (error) {
-        console.error('Image upload failed:', error);
-        alert('Image upload failed. Please try again.');
-      }
+      // try {
+      //   const uploadedImageUrl = await uploadImage(dataUrl);
+      //   console.log('uploadedImageUrl', uploadedImageUrl);
+      //   setShareUrl(uploadedImageUrl);
+      // } catch (error) {
+      //   console.error('Image upload failed:', error);
+      //   alert('Image upload failed. Please try again.');
+      // }
 
       addDownload({
         selected,
@@ -377,6 +386,15 @@ export default function Generator() {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
+      // try {
+      //   const uploadedImageUrl = await uploadImage(dataUrl);
+      //   console.log('uploadedImageUrl', uploadedImageUrl);
+      //   setShareUrl(uploadedImageUrl);
+      // } catch (error) {
+      //   console.error('Image upload failed:', error);
+      //   alert('Image upload failed. Please try again.');
+      // }
 
       addDownload({
         selected,
