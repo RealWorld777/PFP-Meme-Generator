@@ -95,7 +95,7 @@ input:focus{
 }
 
 .faq-content.active {
-  max-height: 200px; /* Adjust based on content size */
+  max-height: 1000px; /* Adjust based on content size */
   opacity: 1;
   visibility: visible;
 }

@@ -1,22 +1,22 @@
 [
   {
-    "title": "What is $CFB?",
-    "content": "$CFB is the first ever memetoken to be released on Qubic tickchain. It was created as a tribute to Sergey Ivancheglo (aka “Come From Beyond”), known in the community not only for being the founder of Qubic, as well as other successful projects such as NXT and IOTA, but also for his keen sense of humor, hence the inspiration of the viral \"trollface\". Launched fairly without pre-sale, CFB is a community-driven project, built by the people for the people, forever."
+    "title": "<h2>What is $CFB?</h2>",
+    "content": "<p>$CFB is the first ever memetoken to be released on Qubic tickchain. It was created as a tribute to Sergey Ivancheglo (aka “Come From Beyond”), known in the community not only for being the founder of Qubic, as well as other successful projects such as NXT and IOTA, but also for his keen sense of humor, hence the inspiration of the viral \"trollface\". Launched fairly without pre-sale, CFB is a community-driven project, built by the people for the people, forever.</p>"
   },
   {
-    "title": "How does the customizable CFB generator work?",
-    "content": "The CFB Generator allows users to create their own customized PFP, choosing from the various assets/traits available. They will be able to manually choose their traits or use the \"shuffle\" function which will assemble the PFP randomly.\nIn addition to the ability to create a full PFP, users will also be able to create just an HD head/face that they can use to assemble their own memes. Once the full PFP or face has been created, users will be able to download them for free and share them on their X account.\n\nP.S. After downloading the PFP, a fortune cookie will appear, the user will have to click on it to read the sentence inside."
+    "title": "<h2>How does the CFB generator work?</h2>",
+    "content": "<p>The CFB Generator allows users to create their own customized PFP or meme face.</p><br/><h3>How it Works:</h3><ul>  <li><strong>Manual Selection:</strong> Users can browse through various assets and choose their preferred options for background, body, skin, eyes, top, mouth, glasses, and earrings.</li><li><strong>Random Selection:</strong> As an alternative, users can click the 'Shuffle' button for automatic random assembly.</li></ul><br/><h3>Downloading Options:</h3><p>Once assembled, users can download their custom CFB via:</p><ul>  <li><strong>Download HD</strong>: Suggested for publishing CFB on X or creating personalized memes.</li>  <li><strong>Download PFP</strong>: Recommended for using CFB as a profile picture on X, Discord, and other platforms.</li></ul><br/><h3>Sharing and Extras:</h3><ul>  <li>After downloading, a fortune cookie appears for added fun!</li>  <li>A share button appears at the bottom right of the created image, allowing easy posting on X.</li></ul><p>Users will need to manually upload the image to X after sharing.</p>"
   },
   {
-    "title": "Can I mint the generated PFP?",
-    "content": "Although our generator has all the assets/traits typical of an NFT collection, unfortunately NFTs are currently not yet a reality on Qubic tickchain. However, as NFTs are implemented in the future, we will consider adding the mint function, if the community agrees. In any case, our tool can be easily considered as the generator of the first true NFT-like collection on Qubic."
+    "title": "<h2>Can I mint the generated PFP?</h2>",
+    "content": "<p>Although our generator has all the assets/traits typical of an NFT collection, unfortunately NFTs are currently not yet a reality on Qubic tickchain. However, as NFTs are implemented in the future, we will consider adding the mint function, if the community agrees. In any case, our tool can be easily considered as the generator of the first true NFT-like collection on Qubic.</p>"
   },
   {
-    "title": "Who is the artist who created the assets/traits for the generator?",
-    "content": "Martin is the artist who created the entire collection. From his pen came the funniest and most fascinating ideas that you can admire in the generator. You can follow him on X @m4r71n_4r7."
+    "title": "<h2>Who is the artist who created the assets/traits for the generator?</h2>",
+    "content": "<p>Martin is the artist who created the entire collection. From his pen came the funniest and most fascinating ideas that you can admire in the generator. You can follow him on X @m4r71n_4r7.</p>"
   },
   {
-    "title": "Will the PFP Generator be updated in the future?",
-    "content": "Certainly, during holidays, for example Halloween, Christmas, Easter, during important dates for the world of cryptocurrencies or symbolic dates (May the 4th), on all these dates we will add new traits to celebrate the events together.\nSo always keep an eye on our generator and stay tuned."
+    "title": "<h2>Will the PFP Generator be updated in the future?</h2>",
+    "content": "<p>Certainly, during holidays, for example Halloween, Christmas, Easter, during important dates for the world of cryptocurrencies or symbolic dates (May the 4th), on all these dates we will add new traits to celebrate the events together.</p>\n<p>So always keep an eye on our generator and stay tuned.</p>"
   }
 ]
