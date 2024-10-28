@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import NextImage from 'next/image';
 import ShareButton from '../../../components/ui/share-button';
 import { HashLoader } from 'react-spinners';
+import { Button } from '../../../components/ui/button';
 
 interface SelectedImages {
   background?: string;

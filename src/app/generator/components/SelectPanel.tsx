@@ -13,8 +13,6 @@ interface SelectPanelProps {
   imagesLoaded: any;
   resetSelections: () => void;
   getRandomImages: () => void;
-  downloadHDImage: () => void;
-  downloadLDImage: () => void;
   setBodyType?: (body: string) => void;
   setSkinTypeFromSkin?: (skin: string) => void;
   color: string;
@@ -30,8 +28,6 @@ const SelectPanel: React.FC<SelectPanelProps> = ({
   imagesLoaded,
   resetSelections,
   getRandomImages,
-  downloadHDImage,
-  downloadLDImage,
   setBodyType,
   setSkinTypeFromSkin,
   color,
@@ -167,14 +163,8 @@ const SelectPanel: React.FC<SelectPanelProps> = ({
         {renderTabContent()}
 
         <div className="w-full flex justify-around bricolageSemibold gap-5 mt-5">
-          <Button className="w-1/3 text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImages}>
+          <Button className="w-full text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={getRandomImages}>
             SHUFFLE
-          </Button>
-          <Button className="w-1/3 text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadHDImage}>
-            DOWNLOAD HD
-          </Button>
-          <Button className="w-1/3 text-xl sm:text-3xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadLDImage}>
-            DOWNLOAD LD
           </Button>
         </div>
       </div>

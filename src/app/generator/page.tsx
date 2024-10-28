@@ -13,6 +13,7 @@ import SelectPanel from './components/SelectPanel';
 import images, { genratorImg } from '../../config/images';
 import { LandingMarquee } from '../../components/landing/LandingMarquee';
 import Link from 'next/link';
+import { Button } from '../../components/ui/button';
 
 const skinTypes = ['skin1', 'skin2', 'skin3', 'skin4', 'skin5', 'skin6', 'skin7', 'skin8', 'skin9', 'skin10', 'universal'];
 
@@ -95,9 +96,7 @@ export default function Generator() {
   });
 
   // Fetching Latest Images
-  useEffect(() => {
-
-  });
+  useEffect(() => {});
 
   const getRandomElement = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
@@ -453,8 +452,6 @@ export default function Generator() {
             imagesLoaded={imagesLoaded}
             resetSelections={resetSelections}
             getRandomImages={getRandomImages}
-            downloadHDImage={downloadHDImage}
-            downloadLDImage={downloadLDImage}
             setBodyType={setBodyType}
             setSkinTypeFromSkin={setSkinTypeFromSkin}
             color={color}
@@ -462,8 +459,18 @@ export default function Generator() {
           />
 
           <div className="flex flex-col md:flex-row lg:flex-col text-center justify-around">
-            <div className="flex justify-center">
-              <ImagePanel selected={selected} color={color} shareUrl={shareUrl} captureRef={captureRef} />
+            <div className="flex flex-col justify-center">
+              <div className="flex justify-center">
+                <ImagePanel selected={selected} color={color} shareUrl={shareUrl} captureRef={captureRef} />
+              </div>
+              <div className="flex gap-1 px-1 py-1">
+                <Button className="flex-1 text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadHDImage}>
+                  DOWNLOAD HD
+                </Button>
+                <Button className="flex-1 text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadLDImage}>
+                  DOWNLOAD PFP
+                </Button>
+              </div>
             </div>
 
             <div className="flex flex-1 flex-col justify-center">
