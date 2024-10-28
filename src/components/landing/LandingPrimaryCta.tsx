@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import Image from '../ui/Image';
 import { GlowBg } from '../ui/glow-bg';
+import { Button } from '../ui/button';
+import Link from 'next/link';
 
 const LandingPrimaryCtaContent = ({
   className,
@@ -24,40 +26,14 @@ const LandingPrimaryCtaContent = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <div
-      className={clsx(
-        'flex flex-col gap-4',
-        textPosition === 'center'
-          ? 'items-center text-center'
-          : 'justify-center',
-        className,
-      )}
-    >
+    <div className={clsx('flex flex-col gap-4', textPosition === 'center' ? 'items-center text-center' : 'justify-center', className)}>
       {leadingComponent}
 
-      {title ? (
-        <h1 className="text-4xl lg:text-5xl leading-tight font-semibold md:max-w-xl">
-          {title}
-        </h1>
-      ) : (
-        titleComponent
-      )}
+      {title ? <h1 className="text-4xl lg:text-5xl leading-tight font-semibold md:max-w-xl">{title}</h1> : titleComponent}
 
-      {description ? (
-        <p className="md:text-lg md:max-w-lg">{description}</p>
-      ) : (
-        descriptionComponent
-      )}
+      {description ? <p className="md:text-lg md:max-w-lg">{description}</p> : descriptionComponent}
 
-      <div
-        className={clsx(
-          'flex flex-wrap gap-4 mt-2',
-          textPosition === 'center' ? 'justify-center' : 'justify-start',
-          childrenClassName,
-        )}
-      >
-        {children}
-      </div>
+      <div className={clsx('flex flex-wrap gap-4 mt-2', textPosition === 'center' ? 'justify-center' : 'justify-start', childrenClassName)}>{children}</div>
     </div>
   );
 };
@@ -103,13 +79,7 @@ export const LandingPrimaryImageCtaSection = ({
   imageSrc?: string;
   imageAlt?: string;
   imagePosition?: 'left' | 'right' | 'center';
-  imagePerspective?:
-    | 'none'
-    | 'left'
-    | 'right'
-    | 'bottom'
-    | 'bottom-lg'
-    | 'paper';
+  imagePerspective?: 'none' | 'left' | 'right' | 'bottom' | 'bottom-lg' | 'paper';
   imageShadow?: 'none' | 'soft' | 'hard';
   minHeight?: number;
   withBackground?: boolean;
@@ -121,36 +91,26 @@ export const LandingPrimaryImageCtaSection = ({
     <section
       className={clsx(
         'w-full flex flex-col justify-center items-center gap-8 py-12 lg:py-16',
-        withBackground && variant === 'primary'
-          ? 'bg-primary-100/20 dark:bg-primary-900/10'
-          : '',
-        withBackground && variant === 'secondary'
-          ? 'bg-secondary-100/20 dark:bg-secondary-900/10'
-          : '',
-        withBackgroundGlow || imagePerspective !== 'none'
-          ? 'overflow-x-hidden'
-          : '',
+        withBackground && variant === 'primary' ? 'bg-primary-100/20 dark:bg-primary-900/10' : '',
+        withBackground && variant === 'secondary' ? 'bg-secondary-100/20 dark:bg-secondary-900/10' : '',
+        withBackgroundGlow || imagePerspective !== 'none' ? 'overflow-x-hidden' : '',
         imagePerspective === 'paper' ? 'md:pb-24' : '',
-        className,
+        className
       )}
     >
       <div
         className={clsx(
           'w-full p-6 flex flex-col gap-8 relative',
-          imagePosition === 'center'
-            ? 'container-narrow'
-            : 'max-w-full container-wide grid lg:grid-cols-2 items-center',
+          imagePosition === 'center' ? 'container-narrow' : 'max-w-full container-wide grid lg:grid-cols-2 items-center',
           textPosition === 'center' ? 'items-center' : 'items-start',
-          innerClassName,
+          innerClassName
         )}
         style={{
           minHeight,
         }}
       >
         <LandingPrimaryCtaContent
-          className={clsx(
-            imagePosition === 'left' && 'lg:col-start-2 lg:row-start-1',
-          )}
+          className={clsx(imagePosition === 'left' && 'lg:col-start-2 lg:row-start-1')}
           title={title}
           titleComponent={titleComponent}
           description={description}
@@ -166,11 +126,7 @@ export const LandingPrimaryImageCtaSection = ({
             {withBackgroundGlow ? (
               <div className="hidden lg:flex justify-center w-full h-full absolute pointer-events-none">
                 <GlowBg
-                  className={clsx(
-                    'w-full lg:w-1/2 h-auto z-0 dark:opacity-50',
-                    imagePosition === 'center' ? 'top-5' : ' -top-1/3',
-                    imagePerspective === 'paper' ? 'opacity-70' : 'opacity-100',
-                  )}
+                  className={clsx('w-full lg:w-1/2 h-auto z-0 dark:opacity-50', imagePosition === 'center' ? 'top-5' : ' -top-1/3', imagePerspective === 'paper' ? 'opacity-70' : 'opacity-100')}
                   variant={backgroundGlowVariant}
                 />
               </div>
@@ -179,39 +135,44 @@ export const LandingPrimaryImageCtaSection = ({
             {imagePosition === 'center' ? (
               <section className={clsx('w-full mt-6 md:mt-8')}>
                 <img
-                  className={clsx(
-                    'w-full rounded-md overflow-hidden',
-                    imageShadow === 'soft' && 'shadow-md',
-                    imageShadow === 'hard' && 'hard-shadow',
-                  )}
+                  className={clsx('w-full rounded-md overflow-hidden', imageShadow === 'soft' && 'shadow-md', imageShadow === 'hard' && 'hard-shadow')}
                   src={imageSrc}
                   alt={imageAlt}
                   width={minHeight + 75}
                   height={minHeight + 75}
                 />
+                <Link href="/generator" className="w-full bg-primary-300/70 rounded-md text-primary-foreground hover:bg-primary-300/90 dark:bg-primary-700 dark:hover:bg-primary-700/90 text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200">
+                  Generate Now
+                </Link>
               </section>
             ) : null}
 
             {imagePosition === 'left' || imagePosition === 'right' ? (
-              <img
-                className={clsx(
-                  'w-full rounded-md relative z-10',
-                  imageShadow === 'soft' && 'shadow-md',
-                  imageShadow === 'hard' && 'hard-shadow',
-                  imagePerspective === 'left' && 'lg:perspective-left',
-                  imagePerspective === 'right' && 'lg:perspective-right',
-                  imagePerspective === 'bottom' && 'lg:perspective-bottom',
-                  imagePerspective === 'bottom-lg' &&
-                    'lg:perspective-bottom-lg',
-                  imagePerspective === 'paper' &&
-                    'lg:ml-[7%] lg:perspective-paper',
-                  imagePerspective === 'none' ? 'my-4' : 'my-8',
-                )}
-                alt={imageAlt}
-                src={imageSrc}
-                width={minHeight + 75}
-                height={minHeight + 75}
-              />
+              <div className="flex flex-col items-center">
+                <img
+                  className={clsx(
+                    'w-full rounded-md relative z-10',
+                    imageShadow === 'soft' && 'shadow-md',
+                    imageShadow === 'hard' && 'hard-shadow',
+                    imagePerspective === 'left' && 'lg:perspective-left',
+                    imagePerspective === 'right' && 'lg:perspective-right',
+                    imagePerspective === 'bottom' && 'lg:perspective-bottom',
+                    imagePerspective === 'bottom-lg' && 'lg:perspective-bottom-lg',
+                    imagePerspective === 'paper' && 'lg:ml-[7%] lg:perspective-paper',
+                    imagePerspective === 'none' ? 'my-4' : 'my-8'
+                  )}
+                  alt={imageAlt}
+                  src={imageSrc}
+                  width={minHeight + 75}
+                  height={minHeight + 75}
+                />
+                <Link
+                  href="/generator"
+                  className="w-full bg-primary-300/70 text-primary-foreground rounded-md hover:bg-primary-300/90 dark:bg-primary-700 dark:hover:bg-primary-700/90 text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200"
+                >
+                  Generate Now
+                </Link>
+              </div>
             ) : null}
           </>
         ) : null}
@@ -259,32 +220,22 @@ export const LandingPrimaryTextCtaSection = ({
     <section
       className={clsx(
         'w-full flex flex-col justify-center items-center gap-8 py-12 lg:py-16',
-        withBackground && variant === 'primary'
-          ? 'bg-primary-100/20 dark:bg-primary-900/10'
-          : '',
-        withBackground && variant === 'secondary'
-          ? 'bg-secondary-100/20 dark:bg-secondary-900/10'
-          : '',
-        className,
+        withBackground && variant === 'primary' ? 'bg-primary-100/20 dark:bg-primary-900/10' : '',
+        withBackground && variant === 'secondary' ? 'bg-secondary-100/20 dark:bg-secondary-900/10' : '',
+        className
       )}
     >
       <div
         className={clsx(
           'w-full p-6 flex flex-col gap-8 relative',
-          textPosition === 'center'
-            ? 'container-narrow'
-            : 'max-w-full container-wide',
+          textPosition === 'center' ? 'container-narrow' : 'max-w-full container-wide',
           textPosition === 'center' ? 'items-center' : 'items-start',
-          innerClassName,
+          innerClassName
         )}
       >
         <LandingPrimaryCtaContent
-          className={clsx(
-            textPosition === 'center' ? 'items-center' : 'items-start',
-          )}
-          childrenClassName={clsx(
-            textPosition === 'center' ? 'flex-col items-center' : '',
-          )}
+          className={clsx(textPosition === 'center' ? 'items-center' : 'items-start')}
+          childrenClassName={clsx(textPosition === 'center' ? 'flex-col items-center' : '')}
           title={title}
           titleComponent={titleComponent}
           description={description}

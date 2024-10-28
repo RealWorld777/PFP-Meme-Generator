@@ -7,6 +7,7 @@ import { getDownloadsCount } from '../config/firestore';
 import { FaDollarSign, FaGlobe, FaDiscord, FaTelegram, FaShoppingBag } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import Link from 'next/link';
+import clsx from 'clsx';
 
 const avatarItems = [
   {
@@ -35,32 +36,32 @@ const content = (
       <div className="flex justify-around py-5">
         <div className="flex items-center">
           <Link href="https://twitter.com/c_f_b_token" target="_blank" rel="noopener noreferrer">
-            <FaXTwitter size={40}/>
+            <FaXTwitter size={40} />
           </Link>
         </div>
         <div className="flex items-center">
           <Link href="https://safetrade.com/exchange/CFB-USDT?type=basic" target="_blank" rel="noopener noreferrer">
-            <img src="https://s2.coinmarketcap.com/static/img/exchanges/128x128/491.png" alt="SafeTrade" width={40} height={40}/>
+            <img src="https://s2.coinmarketcap.com/static/img/exchanges/128x128/491.png" alt="SafeTrade" width={40} height={40} />
           </Link>
         </div>
         <div className="flex items-center">
           <Link href="https://coinpaprika.com/coin/cfb-cfb-token/" target="_blank" rel="noopener noreferrer">
-            <img src="https://coinpaprika.com/assets/img/cp-logo-small.svg" alt="CoinPaprika" width={40} height={40}/>
+            <img src="https://coinpaprika.com/assets/img/cp-logo-small.svg" alt="CoinPaprika" width={40} height={40} />
           </Link>
         </div>
         <div className="flex items-center">
           <Link href="https://cfbtoken.com" target="_blank" rel="noopener noreferrer">
-            <FaGlobe size={40}/>
+            <FaGlobe size={40} />
           </Link>
         </div>
         <div className="flex items-center">
           <Link href="https://discord.gg/cAbXK8Kx35" target="_blank" rel="noopener noreferrer">
-            <FaDiscord size={40}/>
+            <FaDiscord size={40} />
           </Link>
         </div>
         <div className="flex items-center">
           <Link href="https://t.me/+0NJgRzFxPXMxMjk8" target="_blank" rel="noopener noreferrer">
-            <FaTelegram size={40}/>
+            <FaTelegram size={40} />
           </Link>
         </div>
       </div>
@@ -80,7 +81,7 @@ function Home() {
       imageShadow="hard"
       minHeight={350}
       backgroundGlowVariant="secondary"
-      className="bricolageSemibold text-xl py-0 lg:py-0 px-16"
+      className="bricolageSemibold text-xl py-0 lg:py-0 px-4 lg:px-16"
     ></LandingPrimaryImageCtaSection>
   );
 }
