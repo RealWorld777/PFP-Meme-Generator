@@ -71,7 +71,7 @@ const SelectPanel: React.FC<SelectPanelProps> = ({
                         setSelected((prev: any) => ({ ...prev, background: url }));
                       }}
                     >
-                      <NextImage src={url} alt={`Background ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
+                      <NextImage src={url} alt={`Background ${index}`} width={144} height={144} className="object-cover" loading="lazy" />
                     </div>
                   ))}
                 </div>
@@ -108,7 +108,7 @@ const SelectPanel: React.FC<SelectPanelProps> = ({
           </div>
         </div>
         {currentCategory.loaded ? (
-          <div className="flex flex-wrap gap-3 h-[400px] pt-3 pl-3 overflow-y-scroll">
+          <div className="flex flex-wrap gap-1 lg:gap-3 h-[280px] lg:h-[400px] pt-3 pl-3 overflow-y-scroll">
             {currentCategory.images.map((url: string, index: number) => (
               <div
                 key={index}
@@ -123,7 +123,7 @@ const SelectPanel: React.FC<SelectPanelProps> = ({
                   }
                 }}
               >
-                <NextImage src={url} alt={`${tab} ${index}`} width={144} height={144} className="w-36 h-36 object-cover" loading="lazy" />
+                <NextImage src={url} alt={`${tab} ${index}`} width={144} height={144} className="object-cover" loading="lazy" />
               </div>
             ))}
           </div>
