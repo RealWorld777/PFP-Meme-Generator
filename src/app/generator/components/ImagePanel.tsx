@@ -32,7 +32,7 @@ const layers = [
   { key: 'earrings', zIndex: 7 },
 ] as const;
 
-const ImagePanel: React.FC<ImagePanelProps> = React.memo(({ selected, color, shareUrl, captureRef }) => {
+const ImagePanel: React.FC<ImagePanelProps> = ({ selected, color, shareUrl, captureRef }) => {
   const initialLoadedState = layers.reduce((acc, layer) => {
     acc[layer.key] = layer.key === 'background' ? Boolean(selected.background) : false;
     return acc;
@@ -71,8 +71,8 @@ const ImagePanel: React.FC<ImagePanelProps> = React.memo(({ selected, color, sha
   }, [selected]);
 
   useEffect(() => {
-    setLoadedImages((prev) => ({ ...prev, background: Boolean(selected.background) }));
-  }, [color, selected.background]);
+    setLoadedImages((prev) => ({ ...prev, background: true }));
+  }, [color]);
 
   return (
     <div ref={captureRef} className="relative border-2 border-black w-full md:w-[400px] md:h-[400px] aspect-square">
@@ -119,10 +119,12 @@ const ImagePanel: React.FC<ImagePanelProps> = React.memo(({ selected, color, sha
         ) : null;
       })}
 
-      {shareUrl && allImagesLoaded && <ShareButton url={''} title="Check out this awesome $CFB PFP I just created!\n\n#CFBGENERATOR @c_f_b_token" className="absolute bottom-2 right-2 hover:scale-110 transition duration-200" />}
+      {shareUrl && allImagesLoaded && (
+        <ShareButton url={''} title="Check out this awesome $CFB PFP I just created!\n\n#CFBGENERATOR @c_f_b_token" className="absolute bottom-2 right-2 hover:scale-110 transition duration-200" />
+      )}
     </div>
   );
-});
+};
 
 ImagePanel.displayName = 'ImagePanel';
 
