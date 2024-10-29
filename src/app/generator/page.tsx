@@ -424,7 +424,7 @@ export default function Generator() {
             <div>
               <h1 className="bricolageSemibold text-3xl md:text-4xl lg:text-6xl">Create, Download and Share your unique CFB</h1>
               <p className="mt-3 text-base md:text-md lg:text-xl workSans">
-                Choose from the different assets available and create your personalized CFB: be it a firehead, an android, a mythological character, an alien, a tech-ronin with diamond teeth, a cyber
+                Choose from the different assets available and create your personalized CFB: be it a firehead, an android, a mythological character, an alien, a tech-ronin with diamond teeth, a cypher 
                 punk with a bright red mohawk, the possibilities are endless .
               </p>
             </div>
