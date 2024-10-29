@@ -59,30 +59,46 @@ function Header() {
       {isMobileMenuOpen && (
         <div className="absolute top-16 right-4 bg-[#0c2b2fb3] backdrop-blur-md rounded-md shadow-lg w-48 flex flex-col">
           <NavigationMenuList className="flex flex-col">
-            <NavigationMenuItem>
+            <NavigationMenuItem className="w-full text-center hover:bg-[#ffffff1a]">
               <NavigationMenuLink asChild>
-                <Link href="/" className="px-4 py-2 text-xl workSans hover:bg-[#ffffff1a]">
+                <Link
+                  href="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-2 text-xl workSans"
+                >
                   Home
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem className="w-full text-center hover:bg-[#ffffff1a]">
               <NavigationMenuLink asChild>
-                <Link href="/generator" className="px-4 py-2 text-xl workSans hover:bg-[#ffffff1a]">
+                <Link
+                  href="/generator"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-2 text-xl workSans"
+                >
                   Generator
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem className="w-full text-center hover:bg-[#ffffff1a]">
               <NavigationMenuLink asChild>
-                <Link href="/faq" className="px-4 py-2 text-xl workSans hover:bg-[#ffffff1a]">
+                <Link
+                  href="/faq"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-2 text-xl workSans"
+                >
                   FAQ
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem className="w-full text-center hover:bg-[#ffffff1a]">
               <NavigationMenuLink asChild>
-                <Link href="/disclaimer" className="px-4 py-2 text-xl workSans hover:bg-[#ffffff1a]">
+                <Link
+                  href="/disclaimer"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-2 text-xl workSans"
+                >
                   Disclaimer
                 </Link>
               </NavigationMenuLink>
