@@ -15,7 +15,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <head>
-        <title>PFP Generator</title>
+        <title>CFB Generator</title>
       </head>
       <body className="text-white">
         <nav className="relative w-full">

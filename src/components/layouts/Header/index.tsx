@@ -17,8 +17,8 @@ function Header() {
   return (
     <NavigationMenu className="min-w-full px-4 py-2 bg-[#0c2b2fb3] backdrop-blur flex items-center justify-between">
       <Link href="/" className="flex items-center">
-        <Image src="/favicon.ico" alt="PFP Generator Logo" width={42} height={42} className="mr-2" />
-        <span className="text-2xl bricolageSemibold text-white">PFP GENERATOR</span>
+        <Image src="/favicon.ico" alt="CFB Generator Logo" width={42} height={42} className="mr-2" />
+        <span className="text-2xl bricolageSemibold text-white">CFB GENERATOR</span>
       </Link>
 
       <NavigationMenuList className="hidden md:flex gap-2 justify-around items-center">
