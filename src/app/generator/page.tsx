@@ -418,20 +418,22 @@ export default function Generator() {
       <div className="w-full flex flex-col">
         <div className="sm:flex w-full border-t-2 border-b-2 border-black">
           <div className="w-full sm:w-1/2 border-b-2 sm:border-b-0 sm:border-r-2 border-black">
-            <NextImage alt="Main Image" src={genratorImg} className="w-full" />
+            <NextImage alt="Main Image" src={genratorImg} className="h-full object-cover" />
           </div>
           <div className="flex flex-col justify-between px-7 py-5 md:px-12 md:py-8 w-full sm:w-1/2">
             <div>
-              <h1 className="bricolageSemibold text-3xl md:text-5xl lg:text-7xl">CREATE & DOWNLOAD YOUR FAVOURITE CFB PFP!</h1>
-              {/* <p className="mt-3 text-base md:text-xl lg:text-2xl workSans">Pick and choose between various elements to compose your CFB PFP</p> */}
+              <h1 className="bricolageSemibold text-3xl md:text-4xl lg:text-6xl">Create, Download and Share your unique CFB</h1>
+              <p className="mt-3 text-base md:text-md lg:text-xl workSans">
+                Choose from the different assets available and create your personalized CFB: be it a firehead, an android, a mythological character, an alien, a tech-ronin with diamond teeth, a cyber
+                punk with a bright red mohawk, the possibilities are endless .
+              </p>
             </div>
-            {/* <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
-              Read{' '}
+            <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
+              For more details on how to use CFB Generator read the
               <Link href="/faq" className="text-[#FF6B00] cursor-pointer">
                 FAQ
-              </Link>{' '}
-              for more info
-            </div> */}
+              </Link>
+            </div>
             <div className="p-2">
               <LandingMarquee variant="secondary" animationDirection="left" animationDurationInSeconds={25}>
                 {Object.values(images).map((image, index) => {
