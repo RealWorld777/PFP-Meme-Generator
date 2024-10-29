@@ -73,7 +73,7 @@ function Home() {
   return (
     <LandingPrimaryImageCtaSection
       title=""
-      titleComponent={<h1 className="text-6xl">CFB PFP Generator</h1>}
+      titleComponent={<h1 className="text-6xl">CFB Generator</h1>}
       description=""
       descriptionComponent={content}
       imageSrc={homeImg.src}
