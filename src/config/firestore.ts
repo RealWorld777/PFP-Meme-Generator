@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, orderBy, limit, query } from 'firebase/firestore';
 import { db } from './firebase';
 
 const downloadsCollection = collection(db, 'downloads');
@@ -16,12 +16,17 @@ export const getDownloadsCount = async (): Promise<number> => {
     const querySnapshot = await getDocs(downloadsCollection);
     return querySnapshot.size;
   } catch (error) {
-    console.error("Error fetching downloads count:", error);
+    console.error('Error fetching downloads count:', error);
     throw error;
   }
 };
 
 export const getLatestDownloads = async (numberOfDownloads: number): Promise<any[]> => {
-  const querySnapshot = await getDocs(downloadsCollection);
-  return querySnapshot.docs.map((doc) => doc.data()).slice(0, numberOfDownloads);
+  const downloadsCollection = collection(db, 'downloads');
+
+  const q = query(downloadsCollection, orderBy('createdAt', 'desc'), limit(numberOfDownloads));
+
+  const querySnapshot = await getDocs(q);
+
+  return querySnapshot.docs.map((doc) => doc.data());
 };

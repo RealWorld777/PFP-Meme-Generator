@@ -384,18 +384,17 @@ export default function Generator() {
 
         try {
           const uploadedImageUrl = await uploadImage(await combineImagesLD());
+          addDownload({
+            selected,
+            link: uploadedImageUrl,
+            createdAt: serverTimestamp(),
+          });
           console.log('uploadedImageUrl', uploadedImageUrl);
           setShareUrl(uploadedImageUrl);
         } catch (error) {
           console.error('Image upload failed:', error);
           alert('Image upload failed. Please try again.');
         }
-
-        addDownload({
-          selected,
-          link: shareUrl,
-          createdAt: serverTimestamp(),
-        });
       } else {
         alert('Failed to generate HD image.');
       }
@@ -416,18 +415,17 @@ export default function Generator() {
 
         try {
           const uploadedImageUrl = await uploadImage(dataUrl);
+          addDownload({
+            selected,
+            link: uploadedImageUrl,
+            createdAt: serverTimestamp(),
+          });
           console.log('uploadedImageUrl', uploadedImageUrl);
           setShareUrl(uploadedImageUrl);
         } catch (error) {
           console.error('Image upload failed:', error);
           alert('Image upload failed. Please try again.');
         }
-
-        addDownload({
-          selected,
-          link: shareUrl,
-          createdAt: serverTimestamp(),
-        });
       } else {
         alert('Failed to generate LD image.');
       }
@@ -454,7 +452,7 @@ export default function Generator() {
               <p className="mt-3 text-base md:text-md lg:text-xl workSans">N.B. For a better experience we recommend using CFB Generator on your PC</p>
             </div>
             <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
-              For more details on how to use CFB Generator read the{" "}
+              For more details on how to use CFB Generator read the{' '}
               <Link href="/faq" className="text-[#FF6B00] cursor-pointer">
                 FAQ
               </Link>

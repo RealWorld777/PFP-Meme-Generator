@@ -10,18 +10,17 @@ function RecentPFP() {
   const [latestDownloads, setLatestDownloads] = useState<any[]>([]);
 
   useEffect(() => {
-    getLatestDownloads(10).then(setLatestDownloads);
+    getLatestDownloads(6).then((res) => {
+      setLatestDownloads(res);
+    });
   }, []);
 
   return (
     <LandingMarquee variant="secondary" animationDirection="left" animationDurationInSeconds={25}>
-      {latestDownloads.length
-        ? latestDownloads.map((download, index) => {
-            return <NextImage key={index} src={download.link} width={200} height={200} alt="CFB" className="h-48 w-auto" />;
-          })
-        : Object.values(images).map((image, index) => {
-            return <NextImage key={index} src={image} width={200} height={200} alt="CFB" className="h-48 w-auto" />;
-          })}
+      {latestDownloads.map((download, index) => {
+        if (download.link) return <NextImage key={index} src={download.link} width={200} height={200} alt="CFB" className="h-48 w-auto" />;
+        return null;
+      })}
     </LandingMarquee>
   );
 }

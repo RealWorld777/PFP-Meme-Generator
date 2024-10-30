@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import faqData from '../../../data/faq.json';
 
-const Faq: React.FC = () => {
+export default function Faq() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleFaqActive = (index: number): void => {
@@ -36,6 +36,4 @@ const Faq: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default Faq;
+}
