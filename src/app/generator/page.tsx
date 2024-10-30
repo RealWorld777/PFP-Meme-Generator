@@ -10,10 +10,10 @@ import fortuneCookies from '../../../data/fortune-cookie.json';
 import FortuneCookieButton from '../../components/ui/fortune-cookie';
 import ImagePanel from './components/ImagePanel';
 import SelectPanel from './components/SelectPanel';
-import images, { genratorImg } from '../../config/images';
-import { LandingMarquee } from '../../components/landing/LandingMarquee';
+import { genratorImg } from '../../config/images';
 import Link from 'next/link';
 import { Button } from '../../components/ui/button';
+import RecentPFP from './components/RecentPFP';
 
 const skinTypes = ['skin1', 'skin2', 'skin3', 'skin4', 'skin5', 'skin6', 'skin7', 'skin8', 'skin9', 'skin10', 'universal'];
 
@@ -424,9 +424,10 @@ export default function Generator() {
             <div>
               <h1 className="bricolageSemibold text-3xl md:text-4xl lg:text-6xl">Create, Download and Share your unique CFB</h1>
               <p className="mt-3 text-base md:text-md lg:text-xl workSans">
-                Choose from the different assets available and create your personalized CFB: be it a firehead, an android, a mythological character, an alien, a tech-ronin with diamond teeth, a cypher 
+                Choose from the different assets available and create your personalized CFB: be it a firehead, an android, a mythological character, an alien, a tech-ronin with diamond teeth, a cypher
                 punk with a bright red mohawk, the possibilities are endless .
               </p>
+              <p className="mt-3 text-base md:text-md lg:text-xl workSans">N.B. For a better experience we recommend using CFB Generator on your PC</p>
             </div>
             <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
               For more details on how to use CFB Generator read the
@@ -435,11 +436,7 @@ export default function Generator() {
               </Link>
             </div>
             <div className="p-2">
-              <LandingMarquee variant="secondary" animationDirection="left" animationDurationInSeconds={25}>
-                {Object.values(images).map((image, index) => {
-                  return <NextImage key={index} src={image} alt="CFB" className="h-48 w-auto" />;
-                })}
-              </LandingMarquee>
+              <RecentPFP />
             </div>
           </div>
         </div>

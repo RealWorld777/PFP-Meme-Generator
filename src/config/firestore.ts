@@ -20,3 +20,8 @@ export const getDownloadsCount = async (): Promise<number> => {
     throw error;
   }
 };
+
+export const getLatestDownloads = async (numberOfDownloads: number): Promise<any[]> => {
+  const querySnapshot = await getDocs(downloadsCollection);
+  return querySnapshot.docs.map((doc) => doc.data()).slice(0, numberOfDownloads);
+};
