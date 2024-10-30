@@ -24,7 +24,8 @@ export default function Generator() {
   const [skinType, setSkinType] = useState<string | null>('skin1');
   const [fortuneCookie, setFortuneCookie] = useState<string | null>(null);
   const [shareUrl, setShareUrl] = useState<string>('');
-  const [latestImgs, setLatestImgs] = useState<string[]>([]);
+  const [isIOS, setIsIOS] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const clearState = () => {
     setFortuneCookie(null);
@@ -95,8 +96,14 @@ export default function Generator() {
     earrings: false,
   });
 
-  // Fetching Latest Images
-  useEffect(() => {});
+  // Detect if the user is on iOS
+  useEffect(() => {
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    if (/iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream) {
+      setIsIOS(true);
+    }
+  }, []);
+
 
   const getRandomElement = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
@@ -290,7 +297,7 @@ export default function Generator() {
 
     if (!selected.background) {
       ctx.fillStyle = color;
-      ctx.fillRect(0, 0, width, height);
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
     const getImageSrc = async (key: keyof typeof selected, isHD: boolean): Promise<string | null> => {
@@ -310,7 +317,7 @@ export default function Generator() {
 
       for (const img of images) {
         if (img) {
-          ctx.drawImage(img, 0, 0, width, height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         }
       }
 
@@ -337,7 +344,9 @@ export default function Generator() {
   };
 
   const combineImagesHD = async (): Promise<string> => {
-    return combineImages(6400, 6400, true);
+    const hdWidth = isIOS ? 3200 : 6400;
+    const hdHeight = isIOS ? 3200 : 6400;
+    return combineImages(hdWidth, hdHeight, true);
   };
 
   const combineImagesLD = async (): Promise<string> => {
@@ -345,21 +354,26 @@ export default function Generator() {
   };
 
   const uploadImage = async (dataUrl: string): Promise<string> => {
-    const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
-    const formData = new FormData();
-    formData.append('image', dataUrl.split(',')[1]); // Remove the data URL prefix
+    setUploading(true);
+    try {
+      const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+      const formData = new FormData();
+      formData.append('image', dataUrl.split(',')[1]); // Remove the data URL prefix
 
-    const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-      method: 'POST',
-      body: formData,
-    });
+      const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+        method: 'POST',
+        body: formData,
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (result.success) {
-      return result.data.url;
-    } else {
-      throw new Error('Image upload failed');
+      if (result.success) {
+        return result.data.url;
+      } else {
+        throw new Error('Image upload failed');
+      }
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -380,10 +394,10 @@ export default function Generator() {
       setFortuneCookie(getRandomElement(fortuneCookies));
 
       if (dataUrl) {
-        await downloadImage(dataUrl, 'combined-pfp-HD.png');
+        await downloadImage(dataUrl, isIOS ? 'combined-pfp-HD-ios.png' : 'combined-pfp-HD.png');
 
         try {
-          const uploadedImageUrl = await uploadImage(await combineImagesLD());
+          const uploadedImageUrl = await uploadImage(dataUrl);
           addDownload({
             selected,
             link: uploadedImageUrl,
@@ -449,7 +463,7 @@ export default function Generator() {
                 Choose from the different assets available and create your personalized CFB: be it a firehead, an android, a mythological character, an alien, a tech-ronin with diamond teeth, a cypher
                 punk with a bright red mohawk, the possibilities are endless .
               </p>
-              <p className="mt-3 text-base md:text-md lg:text-xl workSans">N.B. For a better experience we recommend using CFB Generator on your PC</p>
+              <p className="text-base md:text-md lg:text-xl workSans">N.B. For a better experience we recommend using CFB Generator on your PC.</p>
             </div>
             <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
               For more details on how to use CFB Generator read the{' '}
@@ -485,10 +499,10 @@ export default function Generator() {
                 <ImagePanel selected={selected} color={color} shareUrl={shareUrl} captureRef={captureRef} />
               </div>
               <div className="flex flex-col gap-1 px-1 py-1 bricolageSemibold">
-                <Button className="text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadLDImage}>
+                <Button className="text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadLDImage} disabled={uploading}>
                   DOWNLOAD PFP
                 </Button>
-                <Button className="text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadHDImage}>
+                <Button className="text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadHDImage} disabled={uploading}>
                   DOWNLOAD HD
                 </Button>
               </div>
