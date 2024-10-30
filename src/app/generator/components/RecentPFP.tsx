@@ -17,10 +17,10 @@ function RecentPFP() {
     <LandingMarquee variant="secondary" animationDirection="left" animationDurationInSeconds={25}>
       {latestDownloads.length
         ? latestDownloads.map((download, index) => {
-            return <NextImage key={index} src={download.link} alt="CFB" className="h-48 w-auto" />;
+            return <NextImage key={index} src={download.link} width={200} height={200} alt="CFB" className="h-48 w-auto" />;
           })
         : Object.values(images).map((image, index) => {
-            return <NextImage key={index} src={image} alt="CFB" className="h-48 w-auto" />;
+            return <NextImage key={index} src={image} width={200} height={200} alt="CFB" className="h-48 w-auto" />;
           })}
     </LandingMarquee>
   );

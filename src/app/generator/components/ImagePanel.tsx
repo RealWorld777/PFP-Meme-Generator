@@ -121,7 +121,7 @@ const ImagePanel: React.FC<ImagePanelProps> = ({ selected, color, shareUrl, capt
       })}
 
       {shareUrl && allImagesLoaded && (
-        <ShareButton url={''} title="Check out this awesome $CFB PFP I just created!\n\n#CFBGENERATOR @c_f_b_token" className="absolute bottom-2 right-2 hover:scale-110 transition duration-200" />
+        <ShareButton url={shareUrl} title="Check out this awesome $CFB PFP I just created!\n\n#CFBGENERATOR @c_f_b_token" className="absolute bottom-2 right-2 hover:scale-110 transition duration-200" />
       )}
     </div>
   );

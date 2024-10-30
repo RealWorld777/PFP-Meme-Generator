@@ -305,17 +305,31 @@ export default function Generator() {
 
     try {
       const keys: (keyof typeof selected)[] = ['background', 'body', 'skin', 'eyes', 'top', 'mouth', 'glasses', 'earrings'];
-      const imagePromises = keys.map((key) => getImageSrc(key, isHD));
-      const imageSrcs = await Promise.all(imagePromises);
+      const imageSrcs = await Promise.all(keys.map((key) => getImageSrc(key, isHD)));
       const images = await Promise.all(imageSrcs.map((src) => (src ? loadImage(src) : Promise.resolve(null))));
 
-      images.forEach((img) => {
+      for (const img of images) {
         if (img) {
           ctx.drawImage(img, 0, 0, width, height);
         }
-      });
+      }
 
-      return canvas.toDataURL('image/png');
+      return new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              resolve(reader.result as string);
+            };
+            reader.onerror = () => {
+              reject(new Error('Failed to convert blob to data URL'));
+            };
+            reader.readAsDataURL(blob);
+          } else {
+            reject(new Error('Canvas is empty'));
+          }
+        }, 'image/png');
+      });
     } catch (error) {
       console.error(`Error combining ${isHD ? 'HD' : 'LD'} images:`, error);
       return '';
@@ -349,67 +363,77 @@ export default function Generator() {
     }
   };
 
+  const downloadImage = async (dataUrl: string, filename: string) => {
+    // Trigger download for all devices
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const downloadHDImage = async () => {
-    const dataUrl = await combineImagesHD();
+    try {
+      const dataUrl = await combineImagesHD();
 
-    setFortuneCookie(getRandomElement(fortuneCookies));
+      setFortuneCookie(getRandomElement(fortuneCookies));
 
-    if (dataUrl) {
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'combined-pfp-HD.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      if (dataUrl) {
+        await downloadImage(dataUrl, 'combined-pfp-HD.png');
 
-      try {
-        const uploadedImageUrl = await uploadImage(await combineImagesLD());
-        console.log('uploadedImageUrl', uploadedImageUrl);
-        setShareUrl(uploadedImageUrl);
-      } catch (error) {
-        console.error('Image upload failed:', error);
-        alert('Image upload failed. Please try again.');
+        try {
+          const uploadedImageUrl = await uploadImage(await combineImagesLD());
+          console.log('uploadedImageUrl', uploadedImageUrl);
+          setShareUrl(uploadedImageUrl);
+        } catch (error) {
+          console.error('Image upload failed:', error);
+          alert('Image upload failed. Please try again.');
+        }
+
+        addDownload({
+          selected,
+          link: shareUrl,
+          createdAt: serverTimestamp(),
+        });
+      } else {
+        alert('Failed to generate HD image.');
       }
-
-      addDownload({
-        selected,
-        link: shareUrl,
-        createdAt: serverTimestamp(),
-      });
-    } else {
-      alert('Failed to generate HD image.');
+    } catch (error) {
+      console.error('Error in downloading HD image:', error);
+      alert('An error occurred while generating the HD image. Please try again.');
     }
   };
 
   const downloadLDImage = async () => {
-    const dataUrl = await combineImagesLD();
+    try {
+      const dataUrl = await combineImagesLD();
 
-    setFortuneCookie(getRandomElement(fortuneCookies));
+      setFortuneCookie(getRandomElement(fortuneCookies));
 
-    if (dataUrl) {
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'combined-pfp-LD.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      if (dataUrl) {
+        await downloadImage(dataUrl, 'combined-pfp-LD.png');
 
-      try {
-        const uploadedImageUrl = await uploadImage(dataUrl);
-        console.log('uploadedImageUrl', uploadedImageUrl);
-        setShareUrl(uploadedImageUrl);
-      } catch (error) {
-        console.error('Image upload failed:', error);
-        alert('Image upload failed. Please try again.');
+        try {
+          const uploadedImageUrl = await uploadImage(dataUrl);
+          console.log('uploadedImageUrl', uploadedImageUrl);
+          setShareUrl(uploadedImageUrl);
+        } catch (error) {
+          console.error('Image upload failed:', error);
+          alert('Image upload failed. Please try again.');
+        }
+
+        addDownload({
+          selected,
+          link: shareUrl,
+          createdAt: serverTimestamp(),
+        });
+      } else {
+        alert('Failed to generate LD image.');
       }
-
-      addDownload({
-        selected,
-        link: shareUrl,
-        createdAt: serverTimestamp(),
-      });
-    } else {
-      alert('Failed to generate LD image.');
+    } catch (error) {
+      console.error('Error in downloading LD image:', error);
+      alert('An error occurred while generating the LD image. Please try again.');
     }
   };
 
