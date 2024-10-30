@@ -454,7 +454,7 @@ export default function Generator() {
               <p className="mt-3 text-base md:text-md lg:text-xl workSans">N.B. For a better experience we recommend using CFB Generator on your PC</p>
             </div>
             <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
-              For more details on how to use CFB Generator read the
+              For more details on how to use CFB Generator read the{" "}
               <Link href="/faq" className="text-[#FF6B00] cursor-pointer">
                 FAQ
               </Link>
@@ -486,12 +486,12 @@ export default function Generator() {
               <div className="flex justify-center">
                 <ImagePanel selected={selected} color={color} shareUrl={shareUrl} captureRef={captureRef} />
               </div>
-              <div className="flex gap-1 px-1 py-1">
-                <Button className="flex-1 text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadHDImage}>
-                  DOWNLOAD HD
-                </Button>
-                <Button className="flex-1 text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadLDImage}>
+              <div className="flex flex-col gap-1 px-1 py-1 bricolageSemibold">
+                <Button className="text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadLDImage}>
                   DOWNLOAD PFP
+                </Button>
+                <Button className="text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200" onClick={downloadHDImage}>
+                  DOWNLOAD HD
                 </Button>
               </div>
             </div>
