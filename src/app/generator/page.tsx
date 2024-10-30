@@ -453,7 +453,7 @@ export default function Generator() {
             </div>
             <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
               For more details on how to use CFB Generator read the{' '}
-              <Link href="/faq" className="text-[#FF6B00] cursor-pointer">
+              <Link href="/Faq" className="text-[#FF6B00] cursor-pointer">
                 FAQ
               </Link>
             </div>

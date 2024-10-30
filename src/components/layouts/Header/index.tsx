@@ -84,7 +84,7 @@ function Header() {
             <NavigationMenuItem className="w-full text-center hover:bg-[#ffffff1a]">
               <NavigationMenuLink asChild>
                 <Link
-                  href="/faq"
+                  href="/Faq"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="px-4 py-2 text-xl workSans"
                 >
