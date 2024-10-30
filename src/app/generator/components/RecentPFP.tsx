@@ -1,13 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LandingMarquee } from '../../../components/landing/LandingMarquee';
 import NextImage from 'next/image';
 import images from '../../../config/images';
 import { getLatestDownloads } from '../../../config/firestore';
 
-async function RecentPFP() {
-  const latestDownloads = await getLatestDownloads(10);
+function RecentPFP() {
+  const [latestDownloads, setLatestDownloads] = useState<any[]>([]);
+
+  useEffect(() => {
+    getLatestDownloads(10).then(setLatestDownloads);
+  }, []);
 
   return (
     <LandingMarquee variant="secondary" animationDirection="left" animationDurationInSeconds={25}>

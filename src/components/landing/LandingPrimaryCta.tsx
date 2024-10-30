@@ -141,7 +141,10 @@ export const LandingPrimaryImageCtaSection = ({
                   width={minHeight + 75}
                   height={minHeight + 75}
                 />
-                <Link href="/generator" className="w-full bg-primary-300/70 rounded-md text-primary-foreground hover:bg-primary-300/90 dark:bg-primary-700 dark:hover:bg-primary-700/90 text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200">
+                <Link
+                  href="/generator"
+                  className="w-full bg-primary-300/70 rounded-md text-primary-foreground hover:bg-primary-300/90 dark:bg-primary-700 dark:hover:bg-primary-700/90 text-lg sm:text-xl text-center py-3 cursor-pointer transition duration-200"
+                >
                   GENERATOR NOW
                 </Link>
               </section>
@@ -168,7 +171,7 @@ export const LandingPrimaryImageCtaSection = ({
                 />
                 <Link
                   href="/generator"
-                  className="w-full bg-primary-300/70 text-primary-foreground rounded-md hover:bg-primary-300/90 dark:bg-primary-700 dark:hover:bg-primary-700/90 text-lg sm:text-xl text-center py-3 cursor-pointer hover:bg-[#FF6B00] transition duration-200"
+                  className="w-full bg-primary-300/70 text-primary-foreground rounded-md hover:bg-primary-300/90 dark:bg-primary-700 dark:hover:bg-primary-700/90 text-lg sm:text-xl text-center py-3 cursor-pointer transition duration-200"
                 >
                   GENERATOR NOW
                 </Link>
