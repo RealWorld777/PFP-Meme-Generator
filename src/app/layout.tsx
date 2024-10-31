@@ -18,13 +18,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <title>CFB Generator</title>
       </head>
       <body className="text-white">
-        {/* <nav className="relative w-full">
+        <nav className="relative w-full">
           <Header />
         </nav>
         <Background>
           <main>{children}</main>
-        </Background> */}
-        <div>Coming Soon...</div>
+        </Background>
       </body>
     </html>
   );
