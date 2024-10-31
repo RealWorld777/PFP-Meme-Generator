@@ -81,7 +81,7 @@ function Home() {
         <img className={clsx('w-full rounded-md relative z-10')} alt="CFB" src={homeImg.src} />
         <Link
           href="/generator"
-          className="w-full bg-primary-300/70 text-primary-foreground rounded-md hover:bg-primary-300/90 dark:bg-primary-700 dark:hover:bg-primary-700/90 text-lg sm:text-xl text-center py-3 cursor-pointer transition duration-200"
+          className="w-full bricolageSemibold bg-primary-300/70 text-primary-foreground rounded-md hover:bg-primary-300/90 dark:bg-primary-700 dark:hover:bg-primary-700/90 text-lg sm:text-xl text-center py-3 cursor-pointer transition duration-200"
         >
           GENERATE NOW
         </Link>
