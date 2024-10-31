@@ -38,7 +38,7 @@ function Header() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="/faq" className="text-xl workSans">
+            <Link href="/Faq" className="text-xl workSans">
               FAQ
             </Link>
           </NavigationMenuLink>

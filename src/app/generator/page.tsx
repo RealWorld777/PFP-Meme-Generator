@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { storage } from '../../config/firebase';
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import 'react-dots-loader/index.css';
-import { addDownload } from '../../config/firestore';
+import { addDownload, getDownloadsCount } from '../../config/firestore';
 import { serverTimestamp, Timestamp } from 'firebase/firestore';
 import fortuneCookies from '../../../data/fortune-cookie.json';
 import FortuneCookieButton from '../../components/ui/fortune-cookie';
@@ -26,6 +26,13 @@ export default function Generator() {
   const [shareUrl, setShareUrl] = useState<string>('');
   const [isIOS, setIsIOS] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [totalDownloads, setTotalDownloads] = useState(0);
+
+  useEffect(() => {
+    getDownloadsCount().then((res) => {
+      setTotalDownloads(res);
+    });
+  }, []);
 
   const clearState = () => {
     setFortuneCookie(null);
@@ -474,6 +481,7 @@ export default function Generator() {
               </Link>
             </div>
             <div className="p-2">
+              <Button className="w-full bricolageSemibold text-lg sm:text-xl text-center py-4 cursor-pointer hover:bg-[#FF6B00] transition duration-200">Total Downloads: {totalDownloads}</Button>
               <RecentPFP />
             </div>
           </div>

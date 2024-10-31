@@ -16,9 +16,9 @@ function RecentPFP() {
   }, []);
 
   return (
-    <LandingMarquee variant="secondary" animationDirection="left" animationDurationInSeconds={25}>
+    <LandingMarquee variant="secondary" animationDirection="left" animationDurationInSeconds={25} className='min-h-[200px]'>
       {latestDownloads.map((download, index) => {
-        if (download.link) return <NextImage key={index} src={download.link} width={200} height={200} alt="CFB" className="h-48 w-auto" />;
+        if (download.link) return <NextImage key={index} src={download.link} width={200} height={200} alt="CFB" className="h-48 w-auto"/>;
         return null;
       })}
     </LandingMarquee>
