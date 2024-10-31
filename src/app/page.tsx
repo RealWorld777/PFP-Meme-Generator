@@ -83,7 +83,7 @@ function Home() {
           href="/generator"
           className="w-full bg-primary-300/70 text-primary-foreground rounded-md hover:bg-primary-300/90 dark:bg-primary-700 dark:hover:bg-primary-700/90 text-lg sm:text-xl text-center py-3 cursor-pointer transition duration-200"
         >
-          GENERATOR NOW
+          GENERATE NOW
         </Link>
       </div>
     </div>
