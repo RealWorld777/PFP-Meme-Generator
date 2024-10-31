@@ -104,7 +104,6 @@ export default function Generator() {
     }
   }, []);
 
-
   const getRandomElement = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
   const extractFolderAndFileName = (url: string): { folder: string; file: string } => {
@@ -459,13 +458,16 @@ export default function Generator() {
           <div className="flex flex-col justify-between px-7 py-5 md:px-12 md:py-8 w-full sm:w-1/2">
             <div>
               <h1 className="bricolageSemibold text-3xl md:text-4xl lg:text-6xl">Create, Download and Share your unique CFB</h1>
-              <p className="mt-3 text-base md:text-md lg:text-xl workSans">
+              <p className="mt-5 text-base md:text-md lg:text-xl workSans">
                 Choose from the different assets available and create your personalized CFB: be it a firehead, an android, a mythological character, an alien, a tech-ronin with diamond teeth, a cypher
-                punk with a bright red mohawk, the possibilities are endless .
+                punk with a bright red mohawk, the possibilities are endless.
               </p>
-              <p className="text-base md:text-md lg:text-xl workSans">N.B. For a better experience we recommend using CFB Generator on your PC.</p>
+
+              <div className="text-base md:text-md lg:text-xl workSans">
+                <span className="text-orange-500">N.B. </span>For a better experience we recommend using CFB Generator on your PC.
+              </div>
             </div>
-            <div className="bricolageSemibold text-xl md:text-2xl lg:text-4xl">
+            <div className="mt-2 bricolageSemibold text-xl md:text-2xl lg:text-4xl">
               For more details on how to use CFB Generator read the{' '}
               <Link href="/Faq" className="text-[#FF6B00] cursor-pointer">
                 FAQ

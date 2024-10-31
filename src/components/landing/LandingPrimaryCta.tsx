@@ -4,7 +4,7 @@ import { GlowBg } from '../ui/glow-bg';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 
-const LandingPrimaryCtaContent = ({
+export const LandingPrimaryCtaContent = ({
   className,
   childrenClassName,
   textPosition = 'left',
@@ -138,8 +138,8 @@ export const LandingPrimaryImageCtaSection = ({
                   className={clsx('w-full rounded-md overflow-hidden', imageShadow === 'soft' && 'shadow-md', imageShadow === 'hard' && 'hard-shadow')}
                   src={imageSrc}
                   alt={imageAlt}
-                  width={minHeight + 75}
-                  height={minHeight + 75}
+                  width={minHeight + 100}
+                  height={minHeight + 100}
                 />
                 <Link
                   href="/generator"
@@ -166,8 +166,8 @@ export const LandingPrimaryImageCtaSection = ({
                   )}
                   alt={imageAlt}
                   src={imageSrc}
-                  width={minHeight + 75}
-                  height={minHeight + 75}
+                  width={minHeight + 100}
+                  height={minHeight + 100}
                 />
                 <Link
                   href="/generator"

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { LandingPrimaryImageCtaSection } from '../components/landing/LandingPrimaryCta';
+import { LandingPrimaryCtaContent, LandingPrimaryImageCtaSection } from '../components/landing/LandingPrimaryCta';
 import images, { homeImg } from '../config/images';
 import { getDownloadsCount } from '../config/firestore';
 import { FaDollarSign, FaGlobe, FaDiscord, FaTelegram, FaShoppingBag } from 'react-icons/fa';
@@ -71,18 +71,22 @@ const content = (
 
 function Home() {
   return (
-    <LandingPrimaryImageCtaSection
-      title=""
-      titleComponent={<h1 className="text-6xl">CFB Generator</h1>}
-      description=""
-      descriptionComponent={content}
-      imageSrc={homeImg.src}
-      imageAlt="CFB"
-      imageShadow="hard"
-      minHeight={350}
-      backgroundGlowVariant="secondary"
-      className="bricolageSemibold text-xl py-0 lg:py-0 px-4 lg:px-16"
-    ></LandingPrimaryImageCtaSection>
+    <div className="p-6 flex flex-col lg:flex-row items-center justify-between">
+      <div className="flex flex-col gap-4 justify-center bricolageSemibold text-xl py-0 lg:py-0 px-4 lg:px-16 w-full lg:w-2/5">
+        <h1 className="text-6xl">CFB Generator</h1>
+        {content}
+      </div>
+
+      <div className="flex flex-col gap-3 items-center w-full lg:w-3/5">
+        <img className={clsx('w-full rounded-md relative z-10')} alt="CFB" src={homeImg.src} />
+        <Link
+          href="/generator"
+          className="w-full bg-primary-300/70 text-primary-foreground rounded-md hover:bg-primary-300/90 dark:bg-primary-700 dark:hover:bg-primary-700/90 text-lg sm:text-xl text-center py-3 cursor-pointer transition duration-200"
+        >
+          GENERATOR NOW
+        </Link>
+      </div>
+    </div>
   );
 }
 
